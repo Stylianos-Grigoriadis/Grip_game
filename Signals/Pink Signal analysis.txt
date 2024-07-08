@@ -1,0 +1,39 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Input Values
+number_of_sets = 5                      # Συνολικά τα σετ που θα κάνει ο κάθε ένας
+time_for_each_set =30                   # Ο χρόνος του κάθε σετ, εκφρασμένο σε δευτερόλεπτα
+RM = 100                                # Η μέγιστη δύναμη που κατάφερε να βάλει στο τεστ μέγιστης προσπάθειας, εκφρασμένο σε κιλά.
+max_percentage= 90                      # Αυτό αναφέρεται στην μέγιστη τιμή που θα έχει το σήμα και εκφράζεται ως ποσοστό της μέγιστης προσπάθειας.
+min_percentage = 50                     # Αυτό αναφέρεται στην ελάχιστη τιμή που θα έχει το σήμα και εκφράζεται ως ποσοστό της μέγιστης προσπάθειας.
+df = pd.read_excel(r"File Path\Pink Noise Signal.xlsx") # Διαβάζουμε το αρχείο
+
+# Οι παρακάτω 11 γραμμές έχουν ως αποτέλεσμα τα data μας να έρθουν σε μία μορφή όπου εκφράζονται από την ελάχιστη ως την μεγιστη τιμή που επιλέξαμε πιο πάνω (min_percentage, max_percentage)
+
+diff_perc = max_percentage-min_percentage
+for i in range(len(df[0])):
+    df[0][i] = (df[0][i] * diff_perc / 100)
+for i in range(len(df[0])):
+    df[0][i] = df[0][i] + min_percentage
+for i in range(len(df[0])):
+    df[0][i] = df[0][i] *RM/100
+
+plt.plot(df[0])
+plt.show()
+
+# Οι παρακάτω 13 γραμμές έχουν ως αποτέλεσμα τα data μας να εκφράζονται ως ποσοστά από 0 ως 100%
+
+min = np.min(df[0])
+for i in range(len(df[0])):
+    df[0][i] = df[0][i] *100/RM
+max = np.max(df[0])
+for i in range(len(df[0])):
+    df[0][i] = df[0][i]- min_percentage
+
+for i in range(len(df[0])):
+    df[0][i] = (df[0][i] * 100 / diff_perc)
+
+plt.plot(df[0])
+plt.show()
