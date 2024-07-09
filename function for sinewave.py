@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+
 plt.rcParams.update({'font.size':16})
 
 def sine(Number_of_targets,frequency, Total_Time):
@@ -15,8 +17,16 @@ def sine(Number_of_targets,frequency, Total_Time):
     plt.ylabel('% of 1 RM')
     plt.xlabel('Time')
     plt.show()
+    y = list(y)
+    print(type(y))
     return time,y
 
-sine(Number_of_targets=100,
-     frequency=0.1,
+signal = sine(Number_of_targets=500,
+     frequency=1,
      Total_Time=60)
+
+df = pd.DataFrame(signal[1])
+df.rename(columns={0: 'Signal'}, inplace=True)
+
+print(df)
+df.to_excel('Sine Signal.xlsx', index=False)
