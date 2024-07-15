@@ -13,7 +13,6 @@ def read_kinvent(path):
             index.append(i)
     print(index)
 
-
     df_set_1 = pd.read_csv(path, skiprows=2, nrows=index[1]-index[0] - 3)
     df_set_2 = pd.read_csv(path, skiprows=index[1]+2, nrows=index[2]-index[1] -3)
     df_set_3 = pd.read_csv(path, skiprows=index[2]+2, nrows=index[3]-index[2] -3)
