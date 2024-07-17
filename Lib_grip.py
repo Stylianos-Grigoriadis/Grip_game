@@ -21,16 +21,15 @@ def DFA(variable):
     n, F = pydfa.computeFlucVec(winSizes, revSeg=revSeg, polOrd=polOrd)
 
     H, H_intercept = pydfa.fitFlucVec()
-    plt.plot(np.log(n), np.log(F), 'ro')
-    plt.plot(np.log(n), H_intercept + H * np.log(n), 'k-', label='H = {:.2f}'.format(H))
-    plt.xlabel('ln(n)', fontsize=14)
-    plt.ylabel('ln(F(n))', fontsize=14)
-    plt.title('DFA', fontsize=14)
-    plt.legend(loc=0, fontsize=14)
-    #plt.clf()
-    plt.show()
+    # plt.plot(np.log(n), np.log(F), 'ro')
+    # plt.plot(np.log(n), H_intercept + H * np.log(n), 'k-', label='H = {:.2f}'.format(H))
+    # plt.xlabel('ln(n)', fontsize=14)
+    # plt.ylabel('ln(F(n))', fontsize=14)
+    # plt.title('DFA', fontsize=14)
+    # plt.legend(loc=0, fontsize=14)
+    # #plt.clf()
+    # plt.show()
     return H
-
 
 def Perc(signal , upper_lim, lower_lim):
     """This function takes a signal as a np.array and turns it as values from upper_lim to lower_lim"""
@@ -43,7 +42,6 @@ def Perc(signal , upper_lim, lower_lim):
     new_range = upper_lim - lower_lim
     signal = signal * new_range + lower_lim
     return signal
-
 
 def read_kinvent(path):
     """This funcion reads the Kinvent csv file for the grip"""
@@ -62,7 +60,6 @@ def read_kinvent(path):
 
     return df_set_1,df_set_2,df_set_3,df_set_4,df_set_5
 
-
 def pink_signal_generator(Number_of_data_points, upper_lim, lower_lim):
     """This function creates a pink noise signal as a np.array with N Number_of_data_points between upper_lim and lower_lim"""
     dfa = False
@@ -75,16 +72,26 @@ def pink_signal_generator(Number_of_data_points, upper_lim, lower_lim):
 
     return signal
 
-
-def sine_signal_generator(Number_of_data_points, frequency, Total_Time, upper_lim, lower_lim):
+def sine_signal_generator(Number_of_data_points, frequency, upper_lim, lower_lim):
 
     x = np.arange(0, Number_of_data_points)
     signal = np.sin(x*frequency)
     signal = Perc(signal, upper_lim, lower_lim)
 
-    time = np.arange(0, Total_Time, Total_Time / Number_of_data_points)
-    return signal, time
+    # time = np.arange(0, Total_Time, Total_Time / Number_of_data_points)
+    # return signal, time
+    return signal
 
+def isometric_generator(Number_of_data_points,value):
+    reps_in_set = 20
+    total_reps = Number_of_data_points/reps_in_set
+    targets_in_each_rep = Number_of_data_points/total_reps
+    print(targets_in_each_rep/2)
+    array_force = np.full(int(targets_in_each_rep/2), value)
+    array_zero = np.zeros(int(targets_in_each_rep/2))
+    array_single_rep = np.concatenate((array_zero, array_force))
+    signal = np.tile(array_single_rep,reps_in_set)
+    return signal
 
 def create_txt_file(signal, name, path):
     "This Function takes a np.array and turns it into a txt file so that it can be used in the KINVENT grip game"
@@ -97,13 +104,11 @@ def create_txt_file(signal, name, path):
     print(df)
     df.to_csv(rf'{path}\{name}.txt',header=False, index=False, sep=' ')
 
-
 def make_it_random(up_1, up_2, up_3, down_1, down_2, down_3):
     list1 = [up_1, up_2, up_3, down_1, down_2, down_3]
     random.shuffle(list1)
     print(type(list1))
     return list1
-
 
 def perturbation_both_force(up_1, up_2, up_3, down_1, down_2, down_3, step_1, step_2, step_3, data_num):
     baseline = np.zeros(data_num)
@@ -113,9 +118,9 @@ def perturbation_both_force(up_1, up_2, up_3, down_1, down_2, down_3, step_1, st
     pert_down_1 = np.full(data_num, down_1)
     pert_down_2 = np.full(data_num, down_2)
     pert_down_3 = np.full(data_num, down_3)
-    pert_step_1 = np.full(int(data_num/5), step_1)
-    pert_step_2 = np.full(int(data_num/5), step_2)
-    pert_step_3 = np.full(int(data_num/5), step_3)
+    pert_step_1 = np.full(int(data_num/3), step_1)
+    pert_step_2 = np.full(int(data_num/3), step_2)
+    pert_step_3 = np.full(int(data_num/3), step_3)
     pert_down_whole_1 = np.concatenate((pert_step_1, pert_down_1))
     pert_down_whole_2 = np.concatenate((pert_step_2, pert_down_2))
     pert_down_whole_3 = np.concatenate((pert_step_3, pert_down_3))
@@ -126,18 +131,40 @@ def perturbation_both_force(up_1, up_2, up_3, down_1, down_2, down_3, step_1, st
                                  baseline, overall_list[5]))
     return final_pert
 
+def total_force(signal):
+    total = np.sum(signal)
+    return total
+
+def isolate_Target(df):
+    target = []
+    time = []
+    for i in range(len(df['Target'])):
+        print(df['Target'][i])
+        if df['Target'][i] != 0.0:
+            print('YES')
+            target.append(df['Target'][i])
+            time.append(df['Time'][i])
+        df_targets = pd.DataFrame({'Target' : target,
+                      'Time' : time})
+    print(df_targets)
+    return df_targets
+
+def spacial_error(set):
+    spacial_error = []
+    for i in range(len(set['Target'])):
+        if set['Target'][i] != 0:
+            spacial_error.append(abs(set['Performance'][i] - set['Target'][i]))
+
+    return spacial_error
 
 
-perturbation = perturbation_both_force(20,40,80,30,60,10,50,90,70,100)
-print(len(perturbation))
-plt.plot(perturbation)
-plt.show()
-create_txt_file(perturbation,'Perturbation signal 1', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals')
+
+    # Target_isolated = isolate_Target(set)
+    # spacial_error = []
+    # for i in range(len(set['Time'])):
+    #     if set['Time'][i] == Target_isolated['Time'][i]:
+    #         spacial_error.append(set['Performance'][i] - Target_isolated['Target'][i])
 
 
 
-# pink_signal = pink_signal_generator(500,80,20)
-# DFA(pink_signal)
-# create_txt_file(pink_signal,'Pink signal 1', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals')
 
-print()
