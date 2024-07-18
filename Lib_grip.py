@@ -165,6 +165,15 @@ def spacial_error(set):
     #     if set['Time'][i] == Target_isolated['Time'][i]:
     #         spacial_error.append(set['Performance'][i] - Target_isolated['Target'][i])
 
+def read_my_txt_file(path):
+    df = pd.read_csv(path, delimiter=',', decimal='.',header=None)
+
+    signal_list = []
+    for i in range(df.shape[1]):
+        signal_list.append(df[i][0])
+    signal = np.array(signal_list)
+
+    return signal
 
 
 
