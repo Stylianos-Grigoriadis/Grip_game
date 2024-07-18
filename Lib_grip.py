@@ -107,27 +107,33 @@ def create_txt_file(signal, name, path):
 def make_it_random(up_1, up_2, up_3, down_1, down_2, down_3):
     list1 = [up_1, up_2, up_3, down_1, down_2, down_3]
     random.shuffle(list1)
-    print(type(list1))
+
     return list1
 
 def perturbation_both_force(up_1, up_2, up_3, down_1, down_2, down_3, step_1, step_2, step_3, data_num):
-    baseline = np.zeros(data_num)
-    pert_up_1 = np.full(data_num, up_1)
-    pert_up_2 = np.full(data_num, up_2)
-    pert_up_3 = np.full(data_num, up_3)
-    pert_down_1 = np.full(data_num, down_1)
-    pert_down_2 = np.full(data_num, down_2)
-    pert_down_3 = np.full(data_num, down_3)
-    pert_step_1 = np.full(int(data_num/3), step_1)
-    pert_step_2 = np.full(int(data_num/3), step_2)
-    pert_step_3 = np.full(int(data_num/3), step_3)
+    dat_for_each_pert = int(data_num/12)
+
+    baseline = np.zeros(dat_for_each_pert)
+    pert_up_1 = np.full(dat_for_each_pert, up_1)
+    pert_up_2 = np.full(dat_for_each_pert, up_2)
+    pert_up_3 = np.full(dat_for_each_pert, up_3)
+    pert_down_1 = np.full(dat_for_each_pert, down_1)
+    pert_down_2 = np.full(dat_for_each_pert, down_2)
+    pert_down_3 = np.full(dat_for_each_pert, down_3)
+    pert_step_1 = np.full(int(dat_for_each_pert/3), step_1)
+    pert_step_2 = np.full(int(dat_for_each_pert/3), step_2)
+    pert_step_3 = np.full(int(dat_for_each_pert/3), step_3)
     pert_down_whole_1 = np.concatenate((pert_step_1, pert_down_1))
     pert_down_whole_2 = np.concatenate((pert_step_2, pert_down_2))
     pert_down_whole_3 = np.concatenate((pert_step_3, pert_down_3))
 
     overall_list = make_it_random(pert_up_1, pert_up_2, pert_up_3, pert_down_whole_1, pert_down_whole_2, pert_down_whole_3)
 
-    final_pert = np.concatenate((baseline, overall_list[0], baseline, overall_list[1], baseline, overall_list[2], baseline, overall_list[3], baseline, overall_list[4],
+    final_pert = np.concatenate((baseline, overall_list[0],
+                                 baseline, overall_list[1],
+                                 baseline, overall_list[2],
+                                 baseline, overall_list[3],
+                                 baseline, overall_list[4],
                                  baseline, overall_list[5]))
     return final_pert
 
@@ -144,8 +150,9 @@ def isolate_Target(df):
             print('YES')
             target.append(df['Target'][i])
             time.append(df['Time'][i])
-        df_targets = pd.DataFrame({'Target' : target,
-                      'Time' : time})
+
+    df_targets = pd.DataFrame({'Target' : target,'Time' : time})
+
     print(df_targets)
     return df_targets
 
@@ -156,14 +163,6 @@ def spacial_error(set):
             spacial_error.append(abs(set['Performance'][i] - set['Target'][i]))
 
     return spacial_error
-
-
-
-    # Target_isolated = isolate_Target(set)
-    # spacial_error = []
-    # for i in range(len(set['Time'])):
-    #     if set['Time'][i] == Target_isolated['Time'][i]:
-    #         spacial_error.append(set['Performance'][i] - Target_isolated['Target'][i])
 
 def read_my_txt_file(path):
     df = pd.read_csv(path, delimiter=',', decimal='.',header=None)

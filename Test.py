@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import Lib_grip as lb
 #
 #
 #
@@ -100,23 +101,29 @@ import numpy as np
 #     plt.plot(scaled_array)
 #     plt.show()
 #     print(f"Scaled array with min_target = {min_target}:\n", scaled_array, "\n")
+#
+#
+# # Create some data
+# x = np.linspace(0, 10, 100)
+# y = np.sin(x)
+#
+# # Create the plot
+# plt.plot(x, y, label='sin(x)')
+#
+# # Fill the area between the plot and the x-axis
+# # plt.fill_between(x, y, color='skyblue', alpha=0.4)
+#
+# # Add labels and title
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.title('Filling Between Plot and X-Axis')
+# plt.legend()
+#
+# # Show the plot
+# plt.show()
 
 
-# Create some data
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
-
-# Create the plot
-plt.plot(x, y, label='sin(x)')
-
-# Fill the area between the plot and the x-axis
-# plt.fill_between(x, y, color='skyblue', alpha=0.4)
-
-# Add labels and title
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Filling Between Plot and X-Axis')
-plt.legend()
-
-# Show the plot
-plt.show()
+path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40.csv')
+# set_1_sine,set_2_sine,set_3_sine,set_4_sine,set_5_sine = lb.read_kinvent(path_sine)
+df= lb.read_kinvent(path_sine)
+print(df)
