@@ -6,6 +6,7 @@ from scipy.stats import linregress
 import pandas as pd
 import colorednoise as cn
 import random
+from scipy.optimize import curve_fit
 
 
 def DFA(variable):
@@ -144,25 +145,27 @@ def total_force(signal):
 def isolate_Target(df):
     target = []
     time = []
+    performance = []
     for i in range(len(df['Target'])):
         print(df['Target'][i])
         if df['Target'][i] != 0.0:
             print('YES')
             target.append(df['Target'][i])
             time.append(df['Time'][i])
+            performance.append(df['Performance'][i])
 
-    df_targets = pd.DataFrame({'Target' : target,'Time' : time})
+    df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance})
 
     print(df_targets)
     return df_targets
 
-def spacial_error(set):
-    spacial_error = []
+def spatial_error(set):
+    spatial_error = []
     for i in range(len(set['Target'])):
         if set['Target'][i] != 0:
-            spacial_error.append(abs(set['Performance'][i] - set['Target'][i]))
+            spatial_error.append(abs(set['Performance'][i] - set['Target'][i]))
 
-    return spacial_error
+    return spatial_error
 
 def read_my_txt_file(path):
     df = pd.read_csv(path, delimiter=',', decimal='.',header=None)
@@ -173,6 +176,29 @@ def read_my_txt_file(path):
     signal = np.array(signal_list)
 
     return signal
+
+def asymptotes(error,sd,mean):
+
+    index = np.array([i for i in range(len(error))])
+    def f(x, a, b, c):
+        return a * (b ** x) + c
+
+    popt, _ = curve_fit(f, index, error, bounds=((0, 0, -np.inf), (np.inf, 1, np.inf)), maxfev=30000)
+    a, b, c = popt
+    print(f'y = {a} * {b}**x + {c}')
+    x_line = np.arange(0, len(index), 1)
+    y_line = f(x_line, a, b, c)
+
+    plt.plot(x_line, y_line, '--', color='green', label='fit')
+    plt.axhline(y=c, c='k')
+
+
+    c = mean
+    plt.axhline(y=c, c='red')
+    plt.axhline(y=c + 2 * sd, c='red', ls=":")
+    plt.axhline(y=c - 2 * sd, c='red', ls=":")
+    plt.scatter(index,error)
+    plt.show()
 
 
 

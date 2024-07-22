@@ -178,80 +178,102 @@ import Lib_grip as lb
 
 
 
-sine_generated = lb.read_my_txt_file(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals\Sine signal 3 N350 freq0.5 Max60 Min40.txt')
-
-path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40 UpperPerc30 LowerPerc1.csv')
-set_1_sine_30,set_2_sine_30,set_3_sine_30,set_4_sine_30,set_5_sine_30 = lb.read_kinvent(path_sine)
-
-set_1_Target_sine_30 = lb.isolate_Target(set_1_sine_30)
-set_2_Target_sine_30 = lb.isolate_Target(set_2_sine_30)
-set_3_Target_sine_30 = lb.isolate_Target(set_3_sine_30)
-set_4_Target_sine_30 = lb.isolate_Target(set_4_sine_30)
-set_5_Target_sine_30 = lb.isolate_Target(set_5_sine_30)
-
-set_1_only_Target_sine_30 = set_1_Target_sine_30['Target'].to_list()
-set_2_only_Target_sine_30 = set_2_Target_sine_30['Target'].to_list()
-set_3_only_Target_sine_30 = set_3_Target_sine_30['Target'].to_list()
-set_4_only_Target_sine_30 = set_4_Target_sine_30['Target'].to_list()
-set_5_only_Target_sine_30 = set_5_Target_sine_30['Target'].to_list()
-
-target_sine_30 = set_1_only_Target_sine_30 + set_2_only_Target_sine_30 + set_3_only_Target_sine_30 + set_4_only_Target_sine_30 + set_5_only_Target_sine_30
-
-path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40 UpperPerc10 LowerPerc1.csv')
-set_1_sine_10,set_2_sine_10,set_3_sine_10,set_4_sine_10,set_5_sine_10 = lb.read_kinvent(path_sine)
-
-set_1_Target_sine_10 = lb.isolate_Target(set_1_sine_10)
-set_2_Target_sine_10 = lb.isolate_Target(set_2_sine_10)
-set_3_Target_sine_10 = lb.isolate_Target(set_3_sine_10)
-set_4_Target_sine_10 = lb.isolate_Target(set_4_sine_10)
-set_5_Target_sine_10 = lb.isolate_Target(set_5_sine_10)
-
-set_1_only_Target_sine_10 = set_1_Target_sine_10['Target'].to_list()
-set_2_only_Target_sine_10 = set_2_Target_sine_10['Target'].to_list()
-set_3_only_Target_sine_10 = set_3_Target_sine_10['Target'].to_list()
-set_4_only_Target_sine_10 = set_4_Target_sine_10['Target'].to_list()
-set_5_only_Target_sine_10 = set_5_Target_sine_10['Target'].to_list()
-
-target_sine_10 = set_1_only_Target_sine_10 + set_2_only_Target_sine_10 + set_3_only_Target_sine_10 + set_4_only_Target_sine_10 + set_5_only_Target_sine_10
-
-path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40 UpperPerc5 LowerPerc1.csv')
-set_1_sine_5,set_2_sine_5,set_3_sine_5,set_4_sine_5,set_5_sine_5 = lb.read_kinvent(path_sine)
-
-set_1_Target_sine_5 = lb.isolate_Target(set_1_sine_5)
-set_2_Target_sine_5 = lb.isolate_Target(set_2_sine_5)
-set_3_Target_sine_5 = lb.isolate_Target(set_3_sine_5)
-set_4_Target_sine_5 = lb.isolate_Target(set_4_sine_5)
-set_5_Target_sine_5 = lb.isolate_Target(set_5_sine_5)
-
-set_1_only_Target_sine_5 = set_1_Target_sine_5['Target'].to_list()
-set_2_only_Target_sine_5 = set_2_Target_sine_5['Target'].to_list()
-set_3_only_Target_sine_5 = set_3_Target_sine_5['Target'].to_list()
-set_4_only_Target_sine_5 = set_4_Target_sine_5['Target'].to_list()
-set_5_only_Target_sine_5 = set_5_Target_sine_5['Target'].to_list()
-
-target_sine_5 = set_1_only_Target_sine_5 + set_2_only_Target_sine_5 + set_3_only_Target_sine_5 + set_4_only_Target_sine_5 + set_5_only_Target_sine_5
-
-sine_generated_0_to_30 = lb.Perc(sine_generated, 30,1)
-sine_generated_0_to_10 = lb.Perc(sine_generated, 10,1)
-sine_generated_0_to_5 = lb.Perc(sine_generated, 5,1)
-
+# sine_generated = lb.read_my_txt_file(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals\Sine signal 3 N350 freq0.5 Max60 Min40.txt')
 #
-# plt.plot(sine_generated_0_to_10, label='Sine Generated')
-# plt.plot(target_sine_30, label='Sine from Kinvent')
+# path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40 UpperPerc30 LowerPerc1.csv')
+# set_1_sine_30,set_2_sine_30,set_3_sine_30,set_4_sine_30,set_5_sine_30 = lb.read_kinvent(path_sine)
+#
+# set_1_Target_sine_30 = lb.isolate_Target(set_1_sine_30)
+# set_2_Target_sine_30 = lb.isolate_Target(set_2_sine_30)
+# set_3_Target_sine_30 = lb.isolate_Target(set_3_sine_30)
+# set_4_Target_sine_30 = lb.isolate_Target(set_4_sine_30)
+# set_5_Target_sine_30 = lb.isolate_Target(set_5_sine_30)
+#
+# set_1_only_Target_sine_30 = set_1_Target_sine_30['Target'].to_list()
+# set_2_only_Target_sine_30 = set_2_Target_sine_30['Target'].to_list()
+# set_3_only_Target_sine_30 = set_3_Target_sine_30['Target'].to_list()
+# set_4_only_Target_sine_30 = set_4_Target_sine_30['Target'].to_list()
+# set_5_only_Target_sine_30 = set_5_Target_sine_30['Target'].to_list()
+#
+# target_sine_30 = set_1_only_Target_sine_30 + set_2_only_Target_sine_30 + set_3_only_Target_sine_30 + set_4_only_Target_sine_30 + set_5_only_Target_sine_30
+#
+# path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40 UpperPerc10 LowerPerc1.csv')
+# set_1_sine_10,set_2_sine_10,set_3_sine_10,set_4_sine_10,set_5_sine_10 = lb.read_kinvent(path_sine)
+#
+# set_1_Target_sine_10 = lb.isolate_Target(set_1_sine_10)
+# set_2_Target_sine_10 = lb.isolate_Target(set_2_sine_10)
+# set_3_Target_sine_10 = lb.isolate_Target(set_3_sine_10)
+# set_4_Target_sine_10 = lb.isolate_Target(set_4_sine_10)
+# set_5_Target_sine_10 = lb.isolate_Target(set_5_sine_10)
+#
+# set_1_only_Target_sine_10 = set_1_Target_sine_10['Target'].to_list()
+# set_2_only_Target_sine_10 = set_2_Target_sine_10['Target'].to_list()
+# set_3_only_Target_sine_10 = set_3_Target_sine_10['Target'].to_list()
+# set_4_only_Target_sine_10 = set_4_Target_sine_10['Target'].to_list()
+# set_5_only_Target_sine_10 = set_5_Target_sine_10['Target'].to_list()
+#
+# target_sine_10 = set_1_only_Target_sine_10 + set_2_only_Target_sine_10 + set_3_only_Target_sine_10 + set_4_only_Target_sine_10 + set_5_only_Target_sine_10
+#
+# path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40 UpperPerc5 LowerPerc1.csv')
+# set_1_sine_5,set_2_sine_5,set_3_sine_5,set_4_sine_5,set_5_sine_5 = lb.read_kinvent(path_sine)
+#
+# set_1_Target_sine_5 = lb.isolate_Target(set_1_sine_5)
+# set_2_Target_sine_5 = lb.isolate_Target(set_2_sine_5)
+# set_3_Target_sine_5 = lb.isolate_Target(set_3_sine_5)
+# set_4_Target_sine_5 = lb.isolate_Target(set_4_sine_5)
+# set_5_Target_sine_5 = lb.isolate_Target(set_5_sine_5)
+#
+# set_1_only_Target_sine_5 = set_1_Target_sine_5['Target'].to_list()
+# set_2_only_Target_sine_5 = set_2_Target_sine_5['Target'].to_list()
+# set_3_only_Target_sine_5 = set_3_Target_sine_5['Target'].to_list()
+# set_4_only_Target_sine_5 = set_4_Target_sine_5['Target'].to_list()
+# set_5_only_Target_sine_5 = set_5_Target_sine_5['Target'].to_list()
+#
+# target_sine_5 = set_1_only_Target_sine_5 + set_2_only_Target_sine_5 + set_3_only_Target_sine_5 + set_4_only_Target_sine_5 + set_5_only_Target_sine_5
+#
+# sine_generated_0_to_30 = lb.Perc(sine_generated, 30,1)
+# sine_generated_0_to_10 = lb.Perc(sine_generated, 10,1)
+# sine_generated_0_to_5 = lb.Perc(sine_generated, 5,1)
+#
+# #
+# # plt.plot(sine_generated_0_to_10, label='Sine Generated')
+# # plt.plot(target_sine_30, label='Sine from Kinvent')
+# # plt.legend()
+# # plt.show()
+#
+# fig, axs = plt.subplots(3, 1, figsize=(12, 15))
+# axs[0].plot(sine_generated_0_to_30)
+# axs[0].plot(target_sine_30)
+# axs[0].set_title("Sine with 30 max force")
+#
+# axs[1].plot(sine_generated_0_to_10)
+# axs[1].plot(target_sine_10)
+# axs[1].set_title("Sine with 10 max force")
+#
+# axs[2].plot(sine_generated_0_to_5, label='Sine Generated')
+# axs[2].plot(target_sine_5, label='Sine Kinvent')
+# axs[2].set_title("Sine with 5 max force")
 # plt.legend()
 # plt.show()
 
-fig, axs = plt.subplots(3, 1, figsize=(12, 15))
-axs[0].plot(sine_generated_0_to_30)
-axs[0].plot(target_sine_30)
-axs[0].set_title("Sine with 30 max force")
+path = r'C:\Users\Βασίλης\OneDrive\Υπολογιστής\Python\Grip_strength\grip_strength_Grig_Styl___22Jul24_17_51_56.csv'
+df = pd.read_csv(path, skiprows=2)
 
-axs[1].plot(sine_generated_0_to_10)
-axs[1].plot(target_sine_10)
-axs[1].set_title("Sine with 10 max force")
+target = lb.isolate_Target(df)
 
-axs[2].plot(sine_generated_0_to_5, label='Sine Generated')
-axs[2].plot(target_sine_5, label='Sine Kinvent')
-axs[2].set_title("Sine with 5 max force")
-plt.legend()
+plt.plot(target['Performance'])
+plt.plot(target['Target'])
+
+spatial_error = lb.spatial_error(df)
+plt.plot(spatial_error)
+
+sd_baseline = np.std(spatial_error[:49])
+mean_baseline = np.mean(spatial_error[:49])
+print(sd_baseline)
+print(mean_baseline)
 plt.show()
+spatial_error = spatial_error[50:65]
+
+
+
+lb.asymptotes(spatial_error,sd_baseline,mean_baseline)
