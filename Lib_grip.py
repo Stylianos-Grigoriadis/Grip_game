@@ -200,5 +200,14 @@ def asymptotes(error,sd,mean):
     plt.scatter(index,error)
     plt.show()
 
+def single_perturbation_generator(baseline, perturbation, data_num):
+    baseline_array = np.full(int(data_num/2), baseline)
+    perturbation_array = np.full(int(data_num/2), perturbation)
+    final_pert = np.concatenate((baseline_array, perturbation_array))
+
+    return final_pert
+
+
+
 
 

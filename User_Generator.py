@@ -29,10 +29,30 @@ import Lib_grip as lb
 # plt.show()
 # lb.create_txt_file(pert,'Perturbation N117', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals')
 
-zero = np.zeros(50)
-print(zero)
-pert = np.full(50,50)
-print(pert)
-signal = np.concatenate((zero,pert))
-print(signal)
-lb.create_txt_file(signal,'Perturbation Constant N100 P50', r'C:\Users\Βασίλης\OneDrive\Υπολογιστής\Python\Grip_strength')
+# Create single perturbation signals
+pert_1 = lb.single_perturbation_generator(50,65,200)
+step = 30/200
+time = np.arange(0,30,step)
+plt.scatter(time, pert_1)
+plt.ylim(0, 100)
+# plt.show()
+
+pert_2 = lb.single_perturbation_generator(50,80,200)
+plt.scatter(time, pert_2)
+plt.ylim(0, 100)
+# plt.show()
+
+pert_3 = lb.single_perturbation_generator(50,35,200)
+plt.scatter(time, pert_3)
+plt.ylim(0, 100)
+# plt.show()
+
+pert_4 = lb.single_perturbation_generator(50,20,200)
+plt.scatter(time, pert_4)
+plt.ylim(0, 100)
+# plt.show()
+
+lb.create_txt_file(pert_1, 'Perturbation N200 B50 P65', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals')
+lb.create_txt_file(pert_2, 'Perturbation N200 B50 P80', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals')
+lb.create_txt_file(pert_3, 'Perturbation N200 B50 P35', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals')
+lb.create_txt_file(pert_4, 'Perturbation N200 B50 P20', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals')
