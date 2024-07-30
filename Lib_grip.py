@@ -207,7 +207,60 @@ def single_perturbation_generator(baseline, perturbation, data_num):
 
     return final_pert
 
+def isometric_min_max(MVC):
+    sd = 10
+    iso_90 = 90
+    iso_70 = 70
+    iso_50 = 50
+    iso_40 = 40
+    iso_30 = 30
+    iso_15 = 15
+    iso_5 = 5
+    iso_2_half = 2.5
+    
+    iso_90_perc = MVC*iso_90/100
+    iso_70_perc = MVC*iso_70/100
+    iso_50_perc = MVC*iso_50/100
+    iso_40_perc = MVC*iso_40/100
+    iso_30_perc = MVC*iso_30/100
+    iso_15_perc = MVC*iso_15/100
+    iso_5_perc = MVC*iso_5/100
+    iso_2_half_perc = MVC*iso_2_half/100
 
+    iso_90_min = (iso_90 - sd)*MVC/100
+    iso_70_min = (iso_70 - sd)*MVC/100
+    iso_50_min = (iso_50 - sd)*MVC/100
+    iso_40_min = (iso_40 - sd)*MVC/100
+    iso_30_min = (iso_30 - sd)*MVC/100
+    iso_15_min = (iso_15 - sd)*MVC/100
+    iso_5_min = (iso_5 - iso_5)*MVC/100
+    iso_2_half_min = (iso_2_half - iso_2_half)*MVC/100
 
+    iso_90_max = (iso_90 + sd) * MVC / 100
+    iso_70_max = (iso_70 + sd) * MVC / 100
+    iso_50_max = (iso_50 + sd) * MVC / 100
+    iso_40_max = (iso_40 + sd) * MVC / 100
+    iso_30_max = (iso_30 + sd) * MVC / 100
+    iso_15_max = (iso_15 + sd) * MVC / 100
+    iso_5_max = (iso_5 + iso_5) * MVC / 100
+    iso_2_half_max = (iso_2_half + iso_2_half) * MVC / 100
+
+    print(f"For 90% of MVC ({iso_90_perc}) the min values is {iso_90_min} and the max values is {iso_90_max}")
+    print(f"For 70% of MVC ({iso_70_perc}) the min values is {iso_70_min} and the max values is {iso_70_max}")
+    print(f"For 50% of MVC ({iso_50_perc}) the min values is {iso_50_min} and the max values is {iso_50_max}")
+    print(f"For 40% of MVC ({iso_40_perc}) the min values is {iso_40_min} and the max values is {iso_40_max}")
+    print(f"For 30% of MVC ({iso_30_perc}) the min values is {iso_30_min} and the max values is {iso_30_max}")
+    print(f"For 15% of MVC ({iso_15_perc}) the min values is {iso_15_min} and the max values is {iso_15_max}")
+    print(f"For 5% of MVC ({iso_5_perc}) the min values is {iso_5_min} and the max values is {iso_5_max}")
+    print(f"For 2.5% of MVC ({iso_2_half_perc}) the min values is {iso_2_half_min} and the max values is {iso_2_half_max}")
+
+    
+    
+    
+    
+    
+    
+    
+    
 
 
