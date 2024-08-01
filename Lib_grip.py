@@ -146,24 +146,25 @@ def isolate_Target(df):
     target = []
     time = []
     performance = []
+    index = []
     for i in range(len(df['Target'])):
         print(df['Target'][i])
         if df['Target'][i] != 0.0:
-            print('YES')
+            print('Yes')
+            index.append(i)
             target.append(df['Target'][i])
             time.append(df['Time'][i])
             performance.append(df['Performance'][i])
 
     df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance})
-
-    print(df_targets)
-    return df_targets
+    print('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo')
+    return df_targets, index
 
 def spatial_error(set):
     spatial_error = []
-    for i in range(len(set['Target'])):
-        if set['Target'][i] != 0:
-            spatial_error.append(abs(set['Performance'][i] - set['Target'][i]))
+    for i in range(len(set['Signal'])):
+        if set['Signal'][i] != 0:
+            spatial_error.append(abs(set['Performance'][i] - set['Signal'][i]))
 
     return spatial_error
 
@@ -177,7 +178,16 @@ def read_my_txt_file(path):
 
     return signal
 
-def asymptotes(error,sd,mean):
+def asymptotes(df):
+    index_where_perturbation_occured = 99
+    time = 10
+    error = spatial_error(df)
+    mean = np.mean(error[int(index_where_perturbation_occured/2):index_where_perturbation_occured-1])
+    sd = np.std(error[int(index_where_perturbation_occured/2):index_where_perturbation_occured-1])
+    error = error[index_where_perturbation_occured:]
+    print(len(df['Time']))
+    time_for_each_target = time/len(df['Time'])
+    print(time_for_each_target)
 
     index = np.array([i for i in range(len(error))])
     def f(x, a, b, c):
@@ -190,15 +200,25 @@ def asymptotes(error,sd,mean):
     y_line = f(x_line, a, b, c)
 
     plt.plot(x_line, y_line, '--', color='green', label='fit')
-    plt.axhline(y=c, c='k')
-
-
+    plt.axhline(y=c, c='k', label='Asymptote')
+    sd_factor = 1
     c = mean
-    plt.axhline(y=c, c='red')
-    plt.axhline(y=c + 2 * sd, c='red', ls=":")
-    plt.axhline(y=c - 2 * sd, c='red', ls=":")
+    plt.axhline(y=c, c='red', label='Mean error before perturbation')
+    plt.axhline(y=c + sd_factor * sd, c='red', ls=":", label="sd error before perturbation")
+    plt.axhline(y=c - sd_factor * sd, c='red', ls=":")
     plt.scatter(index,error)
+    plt.legend()
     plt.show()
+    for i in range(len(error)-5):
+        if c - sd_factor * sd < error[i] < c + sd_factor * sd and c - sd_factor * sd < error[i+1] < c + sd_factor * sd and c - sd_factor * sd < error[i+sd_factor] < c + sd_factor * sd and c - sd_factor * sd < error[i+3] < c + sd_factor * sd and c - sd_factor * sd < error[i+4] < c + sd_factor * sd:
+            print(i)
+            adaptation_index = i
+            break
+    print(f'adaptation index was {adaptation_index}')
+    print(f'adaptation time was {adaptation_index*time_for_each_target}')
+    dict = {'adaptation_index' : adaptation_index,
+            'adaptation_time' : adaptation_index*time_for_each_target}
+    return dict
 
 def single_perturbation_generator(baseline, perturbation, data_num):
     baseline_array = np.full(int(data_num/2), baseline)
@@ -253,6 +273,19 @@ def isometric_min_max(MVC):
     print(f"For 15% of MVC ({iso_15_perc}) the min values is {iso_15_min} and the max values is {iso_15_max}")
     print(f"For 5% of MVC ({iso_5_perc}) the min values is {iso_5_min} and the max values is {iso_5_max}")
     print(f"For 2.5% of MVC ({iso_2_half_perc}) the min values is {iso_2_half_min} and the max values is {iso_2_half_max}")
+
+def add_generated_signal(kinvent_path, generated_signal_path, max_force, min_force):
+    df_kinvent = pd.read_csv(kinvent_path, skiprows=2)
+
+    generated_signal = read_my_txt_file(generated_signal_path)
+    generated_signal = Perc(generated_signal , max_force, min_force)
+    df_kinvent_no_zeros = isolate_Target(df_kinvent)
+    df_kinvent_no_zeros['Signal'] = generated_signal[2:]
+    # df_kinvent_no_zeros['Signal'] = generated_signal[2:-3]
+    # df_kinvent_no_zeros['Signal'] = generated_signal[1:]
+
+    return df_kinvent_no_zeros
+
 
     
     
