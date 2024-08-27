@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+
+import Lib_grip
 import Lib_grip as lb
 #
 #
@@ -123,7 +125,9 @@ import Lib_grip as lb
 # plt.show()
 
 
-path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40.csv')
-# set_1_sine,set_2_sine,set_3_sine,set_4_sine,set_5_sine = lb.read_kinvent(path_sine)
-df= lb.read_kinvent(path_sine)
-print(df)
+# path_sine = (r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Data\Sine signal 3 N350 freq0.5 Max60 Min40.csv')
+# # set_1_sine,set_2_sine,set_3_sine,set_4_sine,set_5_sine = lb.read_kinvent(path_sine)
+# df= lb.read_kinvent(path_sine)
+# print(df)
+
+Lib_grip.isometric_min_max(49.6)
