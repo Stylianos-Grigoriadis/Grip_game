@@ -14,10 +14,10 @@ import Lib_grip as lb
 
 
 # Create a sine signal
-sine_signal = lb.sine_signal_generator(500,0.5,80,0)
+# sine_signal = lb.sine_signal_generator(500,0.5,80,0)
 # plt.plot(sine_signal)
 # plt.show()
-lb.create_txt_file(sine_signal,'Sine signal N500 freq0.5 Max80 Min40', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals')
+# lb.create_txt_file(sine_signal,'Sine signal N500 freq0.5 Max80 Min40', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals')
 
 
 # Create an isometric signal
@@ -31,3 +31,14 @@ lb.create_txt_file(sine_signal,'Sine signal N500 freq0.5 Max80 Min40', r'C:\User
 # plt.show()
 # lb.create_txt_file(pert,'Perturbation N117', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals')
 
+# Create a single perturbation 30-45
+pert = lb.single_perturbation_generator(30, 45,500)
+# plt.plot(pert)
+# plt.show()
+lb.create_txt_file(pert,'Single Perturbation N500 bas30 pert45,', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals')
+
+# Create a single perturbation 30-15
+pert = lb.single_perturbation_generator(30, 15,500)
+# plt.plot(pert)
+# plt.show()
+lb.create_txt_file(pert,'Single Perturbation N500 bas30 pert15,', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals')
