@@ -83,7 +83,7 @@ def sine_signal_generator(Number_of_data_points, frequency, upper_lim, lower_lim
     # return signal, time
     return signal
 
-def isometric_generator(Number_of_data_points,value):
+def isometric_generator_with_reps(Number_of_data_points,value):
     reps_in_set = 20
     total_reps = Number_of_data_points/reps_in_set
     targets_in_each_rep = Number_of_data_points/total_reps
@@ -94,6 +94,9 @@ def isometric_generator(Number_of_data_points,value):
     signal = np.tile(array_single_rep,reps_in_set)
     return signal
 
+def isometric_generator_single_rep(Number_of_data_points,value):
+    signal = np.full(Number_of_data_points,value)
+    return signal
 def create_txt_file(signal, name, path):
     "This Function takes a np.array and turns it into a txt file so that it can be used in the KINVENT grip game"
     element = ''
