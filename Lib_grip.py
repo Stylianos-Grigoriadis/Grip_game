@@ -32,6 +32,106 @@ def DFA(variable):
     # plt.show()
     return H
 
+def Ent_Ap(data, dim, r):
+    """
+    Ent_Ap20120321
+      data : time-series data
+      dim : embedded dimension
+      r : tolerance (typically 0.2)
+
+      Changes in version 1
+          Ver 0 had a minor error in the final step of calculating ApEn
+          because it took logarithm after summation of phi's.
+          In Ver 1, I restored the definition according to original paper's
+          definition, to be consistent with most of the work in the
+          literature. Note that this definition won't work for Sample
+          Entropy which doesn't count self-matching case, because the count
+          can be zero and logarithm can fail.
+
+      *NOTE: This code is faster and gives the same result as ApEn =
+             ApEnt(data,m,R) created by John McCamley in June of 2015.
+             -Will Denton
+
+    ---------------------------------------------------------------------
+    coded by Kijoon Lee,  kjlee@ntu.edu.sg
+    Ver 0 : Aug 4th, 2011
+    Ver 1 : Mar 21st, 2012
+    ---------------------------------------------------------------------
+    """
+
+    r = r * np.std(data)
+    N = len(data)
+    phim = np.zeros(2)
+    for j in range(2):
+        m = dim + j
+        phi = np.zeros(N - m + 1)
+        data_mat = np.zeros((N - m + 1, m))
+        for i in range(m):
+            data_mat[:, i] = data[i:N - m + i + 1]
+        for i in range(N - m + 1):
+            temp_mat = np.abs(data_mat - data_mat[i, :])
+            AorB = np.unique(np.where(temp_mat > r)[0])
+            AorB = len(temp_mat) - len(AorB)
+            phi[i] = AorB / (N - m + 1)
+        phim[j] = np.sum(np.log(phi)) / (N - m + 1)
+    AE = phim[0] - phim[1]
+    return AE
+
+def Ent_Samp(data, m, r):
+    """
+    function SE = Ent_Samp20200723(data,m,r)
+    SE = Ent_Samp20200723(data,m,R) Returns the sample entropy value.
+    inputs - data, single column time seres
+            - m, length of vectors to be compared
+            - r, radius for accepting matches (as a proportion of the
+              standard deviation)
+
+    output - SE, sample entropy
+    Remarks
+    - This code finds the sample entropy of a data series using the method
+      described by - Richman, J.S., Moorman, J.R., 2000. "Physiological
+      time-series analysis using approximate entropy and sample entropy."
+      Am. J. Physiol. Heart Circ. Physiol. 278, H2039–H2049.
+    - m is generally recommendation as 2
+    - R is generally recommendation as 0.2
+    May 2016 - Modified by John McCamley, unonbcf@unomaha.edu
+             - This is a faster version of the previous code.
+    May 2019 - Modified by Will Denton
+             - Added code to check version number in relation to a server
+               and to automatically update the code.
+    Jul 2020 - Modified by Ben Senderling, bmchnonan@unomaha.edu
+             - Removed the code that automatically checks for updates and
+               keeps a version history.
+    Define r as R times the standard deviation
+    """
+    R = r * np.std(data)
+    N = len(data)
+
+    data = np.array(data)
+
+    dij = np.zeros((N - m, m + 1))
+    dj = np.zeros((N - m, 1))
+    dj1 = np.zeros((N - m, 1))
+    Bm = np.zeros((N - m, 1))
+    Am = np.zeros((N - m, 1))
+
+    for i in range(N - m):
+        for k in range(m + 1):
+            dij[:, k] = np.abs(data[k:N - m + k] - data[i + k])
+        dj = np.max(dij[:, 0:m], axis=1)
+        dj1 = np.max(dij, axis=1)
+        d = np.where(dj <= R)
+        d1 = np.where(dj1 <= R)
+        nm = d[0].shape[0] - 1  # subtract the self match
+        Bm[i] = nm / (N - m)
+        nm1 = d1[0].shape[0] - 1  # subtract the self match
+        Am[i] = nm1 / (N - m)
+
+    Bmr = np.sum(Bm) / (N - m)
+    Amr = np.sum(Am) / (N - m)
+
+    return -np.log(Amr / Bmr)
+
 def Perc(signal , upper_lim, lower_lim):
     """This function takes a signal as a np.array and turns it as values from upper_lim to lower_lim"""
     if np.min(signal) < 0:
@@ -55,11 +155,15 @@ def read_kinvent(path):
 
     df_set_1 = pd.read_csv(path, skiprows=2, nrows=index[1]-index[0] - 3)
     df_set_2 = pd.read_csv(path, skiprows=index[1]+2, nrows=index[2]-index[1] -3)
-    df_set_3 = pd.read_csv(path, skiprows=index[2]+2, nrows=index[3]-index[2] -3)
-    df_set_4 = pd.read_csv(path, skiprows=index[3]+2, nrows=index[4]-index[3] -3)
-    df_set_5 = pd.read_csv(path, skiprows=index[4]+2)
+    df_set_3 = pd.read_csv(path, skiprows=index[2]+2)
+    # df_set_4 = pd.read_csv(path, skiprows=index[3]+2, nrows=index[4]-index[3] -3)
+    # df_set_5 = pd.read_csv(path, skiprows=index[4]+2)
 
-    return df_set_1,df_set_2,df_set_3,df_set_4,df_set_5
+    return (df_set_1,
+            df_set_2,
+            df_set_3)
+            # df_set_4,
+            # df_set_5)
 
 def pink_signal_generator(Number_of_data_points, upper_lim, lower_lim):
     """This function creates a pink noise signal as a np.array with N Number_of_data_points between upper_lim and lower_lim"""
@@ -97,6 +201,7 @@ def isometric_generator_with_reps(Number_of_data_points,value):
 def isometric_generator_single_rep(Number_of_data_points,value):
     signal = np.full(Number_of_data_points,value)
     return signal
+
 def create_txt_file(signal, name, path):
     "This Function takes a np.array and turns it into a txt file so that it can be used in the KINVENT grip game"
     element = ''

@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import lib
 
+
 Isometric_90 = pd.read_csv(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Data\Stylianos 30-7-2024\Isometric 90.csv', skiprows=2)
 Isometric_70 = pd.read_csv(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Data\Stylianos 30-7-2024\Isometric 70.csv', skiprows=2)
 Isometric_50 = pd.read_csv(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Data\Stylianos 30-7-2024\Isometric 50.csv', skiprows=2)
