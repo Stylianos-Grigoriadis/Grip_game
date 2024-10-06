@@ -151,8 +151,6 @@ def read_kinvent(path):
     for i, string in enumerate(df[0]):
         if 'Repetition: ' in string:
             index.append(i)
-    print(index)
-
     df_set_1 = pd.read_csv(path, skiprows=2, nrows=index[1]-index[0] - 3)
     df_set_2 = pd.read_csv(path, skiprows=index[1]+2, nrows=index[2]-index[1] -3)
     df_set_3 = pd.read_csv(path, skiprows=index[2]+2)
@@ -191,7 +189,6 @@ def isometric_generator_with_reps(Number_of_data_points,value):
     reps_in_set = 20
     total_reps = Number_of_data_points/reps_in_set
     targets_in_each_rep = Number_of_data_points/total_reps
-    print(targets_in_each_rep/2)
     array_force = np.full(int(targets_in_each_rep/2), value)
     array_zero = np.zeros(int(targets_in_each_rep/2))
     array_single_rep = np.concatenate((array_zero, array_force))
@@ -210,7 +207,6 @@ def create_txt_file(signal, name, path):
     element = element[:-1]
     list_to_save = [element]
     df = pd.DataFrame(list_to_save)
-    print(df)
     df.to_csv(rf'{path}\{name}.txt',header=False, index=False, sep=' ')
 
 def make_it_random(up_1, up_2, up_3, down_1, down_2, down_3):
@@ -256,9 +252,7 @@ def isolate_Target(df):
     performance = []
     index = []
     for i in range(len(df['Target'])):
-        print(df['Target'][i])
         if df['Target'][i] != 0.0:
-            print('Yes')
             index.append(i)
             target.append(df['Target'][i])
             time.append(df['Time'][i])
@@ -267,12 +261,12 @@ def isolate_Target(df):
     df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance})
     return df_targets, index
 
-def spatial_error(set):
+def spatial_error(force, signal):
     spatial_error = []
-    for i in range(len(set['Signal'])):
-        if set['Signal'][i] != 0:
-            spatial_error.append(abs(set['Performance'][i] - set['Signal'][i]))
-
+    for i in range(len(signal)):
+        if signal[i] != 0:
+            spatial_error.append(abs(force[i] - signal[i]))
+    spatial_error = np.array(spatial_error)
     return spatial_error
 
 def read_my_txt_file(path):
@@ -288,7 +282,7 @@ def read_my_txt_file(path):
 def asymptotes(df):
     index_where_perturbation_occured = 99
     time = 10
-    error = spatial_error(df)
+    error = spatial_error(df['Performance'], df['Target'])
     mean = np.mean(error[int(index_where_perturbation_occured/2):index_where_perturbation_occured-1])
     sd = np.std(error[int(index_where_perturbation_occured/2):index_where_perturbation_occured-1])
     error = error[index_where_perturbation_occured:]
@@ -326,6 +320,47 @@ def asymptotes(df):
     dict = {'adaptation_index' : adaptation_index,
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
+
+
+def adaptation_time_using_sd(time, force, signal, perturbation_index, sd_factor, first_values, consecutive_values):
+    """This function returns the time after the perturbation which was needed to adapt to the perturbation
+        Variables explanation:
+            time:               the whole time from 0 until the end
+            force:              the whole force from 0 until the end
+            signal:             the whole signal of perturbation from 0 until the end
+            perturbation_index: the index at which the perturbation occurred
+            sd_factor:          this will be multiplied with the sd of the error before the perturbation
+                                and if the error after the is less than the mean + sd*sd_factor and more than
+                                the mean - sd*sd_factor, the algorithm will consider that the adaptation of the
+                                perturbation occurred
+            first_values:       at first the error will be too much so to calculate the mean and sd before the perturbation
+                                right, we erase some values from the beginning
+            consecutive_values: this is how many values the algorithm needs to consider so that it decides of the adaptation occurred.
+            """
+
+    spatial_er = spatial_error(force, signal)
+    mean = np.mean(spatial_er[first_values:perturbation_index])
+    sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
+
+    plt.plot(spatial_er)
+    plt.axhline(y=mean, color='k')
+    plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='red', ls=":")
+    plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='red', ls=":")
+    plt.show()
+
+
+    consecutive_values_list = np.arange(0,consecutive_values,1)
+
+    for i in range(len(spatial_er) - consecutive_values+1):
+        if i >= perturbation_index:
+            print(i)
+            if (all(spatial_er[i + j] < mean + sd_before_perturbation * sd_factor for j in consecutive_values_list) and
+                all(spatial_er[i + j] > mean - sd_before_perturbation * sd_factor for j in consecutive_values_list)
+            ):
+                time_of_adaptation = time[i] -  time[perturbation_index]
+                index_after_pert = i - perturbation_index
+                break
+    return time_of_adaptation, index_after_pert
 
 def single_perturbation_generator(baseline, perturbation, data_num):
     baseline_array = np.full(int(data_num/2), baseline)
@@ -402,26 +437,34 @@ def isometric_min_max(MVC):
     print(f"For 5% of MVC ({iso_5_perc}) the min values is {iso_5_min} and the max values is {iso_5_max}")
     print(f"For 2.5% of MVC ({iso_2_half_perc}) the min values is {iso_2_half_min} and the max values is {iso_2_half_max}")
 
-def add_generated_signal(kinvent_path, generated_signal_path, max_force, min_force):
+def signal_from_min_to_max(signal,max):
+    signal = np.array(signal)
+    signal = signal * max / 100
+    return signal
+
+def add_generated_signal(kinvent_path, generated_signal_path, max_force):
     df_kinvent = pd.read_csv(kinvent_path, skiprows=2)
 
     generated_signal = read_my_txt_file(generated_signal_path)
-    generated_signal = Perc(generated_signal , max_force, min_force)
-    df_kinvent_no_zeros = isolate_Target(df_kinvent)
-    df_kinvent_no_zeros['Signal'] = generated_signal[2:]
+    generated_signal = signal_from_min_to_max(generated_signal,max_force)
+
+
+
+    generated_signal = generated_signal[155:845]
+    for i in range(len(generated_signal)):
+        if generated_signal[i] == 24.3:
+            generated_signal[i] = 23.3
+    df_kinvent_no_zeros, index = isolate_Target(df_kinvent)
+    # Probably you should erase this after correcting the game with kinvent
+    df_kinvent
+
+    print(df_kinvent_no_zeros)
+    print(len(df_kinvent_no_zeros['Target']))
+    print(len(generated_signal))
+    df_kinvent_no_zeros['Signal'] = generated_signal
     # df_kinvent_no_zeros['Signal'] = generated_signal[2:-3]
     # df_kinvent_no_zeros['Signal'] = generated_signal[1:]
 
     return df_kinvent_no_zeros
-
-
-    
-    
-    
-    
-    
-    
-    
-    
 
 
