@@ -321,7 +321,6 @@ def asymptotes(df):
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
 
-
 def adaptation_time_using_sd(time, force, signal, perturbation_index, sd_factor, first_values, consecutive_values):
     """This function returns the time after the perturbation which was needed to adapt to the perturbation
         Variables explanation:
@@ -357,7 +356,7 @@ def adaptation_time_using_sd(time, force, signal, perturbation_index, sd_factor,
             if (all(spatial_er[i + j] < mean + sd_before_perturbation * sd_factor for j in consecutive_values_list) and
                 all(spatial_er[i + j] > mean - sd_before_perturbation * sd_factor for j in consecutive_values_list)
             ):
-                time_of_adaptation = time[i] -  time[perturbation_index]
+                time_of_adaptation = time[i] - time[perturbation_index]
                 index_after_pert = i - perturbation_index
                 break
     return time_of_adaptation, index_after_pert
