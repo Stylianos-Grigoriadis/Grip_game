@@ -257,9 +257,13 @@ def isolate_Target(df):
             target.append(df['Target'][i])
             time.append(df['Time'][i])
             performance.append(df['Performance'][i])
+    index = list(index)
+    target = list(target)
+    time = list(time)
+    performance = list(performance)
 
-    df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance})
-    return df_targets, index
+    df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance, 'Index' : index})
+    return df_targets
 
 def spatial_error(force, signal):
     spatial_error = []
