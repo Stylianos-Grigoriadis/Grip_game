@@ -271,13 +271,3 @@ plt.show()
 # plt.plot(Percentage_list, SaEn_mean_list)
 # plt.legend()
 # plt.show()
-
-
-Perturbation_up = pd.read_csv(r'Perturbation_up.csv', skiprows=2)
-Perturbation_down = pd.read_csv(r'Perturbation_down.csv', skiprows=2)
-
-Perturbation_up = lb.isolate_Target(Perturbation_up)
-
-plt.plot(Perturbation_up['Time'], Perturbation_up['Performance'])
-plt.scatter(Perturbation_up['Time'],Perturbation_up['Target'])
-plt.show()

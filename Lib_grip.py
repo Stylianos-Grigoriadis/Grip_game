@@ -257,10 +257,6 @@ def isolate_Target(df):
             target.append(df['Target'][i])
             time.append(df['Time'][i])
             performance.append(df['Performance'][i])
-    index = list(index)
-    target = list(target)
-    time = list(time)
-    performance = list(performance)
 
     df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance, 'Index' : index})
     return df_targets
@@ -441,32 +437,45 @@ def isometric_min_max(MVC):
     print(f"For 2.5% of MVC ({iso_2_half_perc}) the min values is {iso_2_half_min} and the max values is {iso_2_half_max}")
 
 def signal_from_min_to_max(signal,max):
+    ''' Where:
+                signal: is the signal I want to change
+                max:    is the max force I inserted into Kinvent app
+                '''
     signal = np.array(signal)
     signal = signal * max / 100
     return signal
 
 def add_generated_signal(kinvent_path, generated_signal_path, max_force):
     df_kinvent = pd.read_csv(kinvent_path, skiprows=2)
+    df_kinvent_no_zeros = isolate_Target(df_kinvent)
+    length_kinvent = len(df_kinvent_no_zeros['Target'])
 
     generated_signal = read_my_txt_file(generated_signal_path)
-    generated_signal = signal_from_min_to_max(generated_signal,max_force)
+    print(generated_signal)
+    generated_signal = signal_from_min_to_max(generated_signal, max_force)
+
+    length_generated_signal = len(generated_signal)
+    length_erase = length_generated_signal - length_kinvent
+
+    length_generated_signal_erase = length_erase//2
+    length_generated_signal_start = length_generated_signal_erase +2
+    print(f'reminder {length_erase % 2}')
+    length_generated_signal_end = length_generated_signal - length_generated_signal_erase + length_erase % 2
 
 
 
-    generated_signal = generated_signal[155:845]
-    for i in range(len(generated_signal)):
-        if generated_signal[i] == 24.3:
-            generated_signal[i] = 23.3
-    df_kinvent_no_zeros, index = isolate_Target(df_kinvent)
-    # Probably you should erase this after correcting the game with kinvent
-    df_kinvent
 
-    print(df_kinvent_no_zeros)
-    print(len(df_kinvent_no_zeros['Target']))
-    print(len(generated_signal))
-    df_kinvent_no_zeros['Signal'] = generated_signal
-    # df_kinvent_no_zeros['Signal'] = generated_signal[2:-3]
-    # df_kinvent_no_zeros['Signal'] = generated_signal[1:]
+    print(rf"length_generated_signal_start: {length_generated_signal_start}")
+    print(rf"length_generated_signal_end: {length_generated_signal_end}")
+
+    print(rf"length_kinvent: {length_kinvent}")
+    print(rf"length_generated_signal_before: {length_generated_signal}")
+    print(rf"length_erase: {length_erase}")
+
+    generated_signal = generated_signal[length_generated_signal_start:length_generated_signal_end]
+    print(rf"generated_signal: {len(generated_signal)}")
+
+    df_kinvent_no_zeros['Generated_Signal'] = generated_signal
 
     return df_kinvent_no_zeros
 

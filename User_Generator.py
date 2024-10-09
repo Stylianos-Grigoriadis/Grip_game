@@ -34,11 +34,11 @@ import Lib_grip as lb
 # lb.create_txt_file(pert,'Perturbation N117', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 5\Signals')
 
 # Create a single perturbation 30-45
-# pert = lb.single_perturbation_generator(50, 75,1000)
-# plt.plot(pert)
-# plt.ylim(0, 100)
-# plt.show()
-# lb.create_txt_file(pert,'Single Perturbation N1000 bas30 pert45,', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals\Final used')
+pert = lb.single_perturbation_generator(50, 75,800)
+plt.plot(pert)
+plt.ylim(0, 100)
+plt.show()
+lb.create_txt_file(pert,'Single Perturbation N800 bas30 pert45', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals\Final used')
 
 # Create a single perturbation 30-15
 # pert = lb.single_perturbation_generator(50, 25, 1000)
