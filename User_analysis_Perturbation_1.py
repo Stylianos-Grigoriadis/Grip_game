@@ -18,24 +18,28 @@ os.chdir(directory_path)
 # plt.scatter(Perturbation_up['Time'],Perturbation_up['Target'], c='black')
 # plt.show()
 #
-my_txt_perturbation_up_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Signals\Final used\Sine signal N500 freq0.1 Max50.txt'
+my_txt_perturbation_up_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 7\Signals\Sine signal N500 freq0.1 Max50.txt'
 my_txt_perturbation_up = lb.read_my_txt_file(my_txt_perturbation_up_path)
 # print(len(my_txt_perturbation_up))
-kinvent_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Data\Stylianos 10-9-2024\Raw\Sine signal N500 freq0.1 Max50.csv'
+kinvent_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 7\Data\Stylianos 10.11.2024\Sine signal N500 freq0.1 Max50.csv'
 MVC = 50
+
+
+signal_kinvent = pd.read_csv(kinvent_path, skiprows=2)
+print(signal_kinvent)
+signal_kinvent = lb.isolate_Target(signal_kinvent)
+print(signal_kinvent)
+dif_index = []
+for i in range(len(signal_kinvent['Index']) -1):
+    dif_index.append(signal_kinvent['Index'][i+1] - signal_kinvent['Index'][i])
+plt.plot(dif_index)
+plt.show()
+
+
+
 signal = lb.add_generated_signal(kinvent_path, my_txt_perturbation_up_path, MVC)
-print(int(len(signal['Target'])*0.5))
-
-print(rf'Average of Kinvent before Perturbation :{np.mean(signal["Target"][50:100])}')
-print(rf'Average of Generated_Signal before Perturbation :{np.mean(signal["Generated_Signal"][50:100])}')
-print()
-print(rf'Average of Kinvent after Perturbation :{np.mean(signal["Target"][200:250])}')
-print(rf'Average of Generated_Signal after Perturbation :{np.mean(signal["Generated_Signal"][200:250])}')
-print(signal)
-# signal.to_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Data\Stylianos 10-9-2024\Analyse\excel sinewave.xlsx', index=False)
-
 plt.plot(signal['Target'], label='Target')
 plt.plot(signal['Generated_Signal'], label='Generated_Signal')
-plt.plot(signal['Performance'], label='Performance')
+# plt.plot(signal['Performance'], label='Performance')
 plt.legend()
 plt.show()

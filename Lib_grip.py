@@ -251,12 +251,23 @@ def isolate_Target(df):
     time = []
     performance = []
     index = []
+    number = 0
+    number_of_all_target= 0
     for i in range(len(df['Target'])):
         if df['Target'][i] != 0.0:
+            number_of_all_target = number_of_all_target + 1
             index.append(i)
             target.append(df['Target'][i])
             time.append(df['Time'][i])
             performance.append(df['Performance'][i])
+        else:
+            number_of_all_target = number_of_all_target + 1
+            number = number + 1
+
+    print('This is the number_of_all_target')
+    print(number_of_all_target)
+    print('This is the number')
+    print(number)
 
     df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance, 'Index' : index})
     return df_targets
