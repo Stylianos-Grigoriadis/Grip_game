@@ -251,23 +251,14 @@ def isolate_Target(df):
     time = []
     performance = []
     index = []
-    number = 0
-    number_of_all_target= 0
     for i in range(len(df['Target'])):
         if df['Target'][i] != 0.0:
-            number_of_all_target = number_of_all_target + 1
+
             index.append(i)
             target.append(df['Target'][i])
             time.append(df['Time'][i])
             performance.append(df['Performance'][i])
-        else:
-            number_of_all_target = number_of_all_target + 1
-            number = number + 1
 
-    print('This is the number_of_all_target')
-    print(number_of_all_target)
-    print('This is the number')
-    print(number)
 
     df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance, 'Index' : index})
     return df_targets
@@ -468,8 +459,8 @@ def add_generated_signal(kinvent_path, generated_signal_path, max_force):
     length_generated_signal = len(generated_signal)
     length_erase = length_generated_signal - length_kinvent
 
-    length_generated_signal_erase = length_erase//2
-    length_generated_signal_start = length_generated_signal_erase +2
+    length_generated_signal_erase = length_erase//2 +1
+    length_generated_signal_start = length_generated_signal_erase
     print(f'reminder {length_erase % 2}')
     length_generated_signal_end = length_generated_signal - length_generated_signal_erase + length_erase % 2
 
