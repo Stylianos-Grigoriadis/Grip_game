@@ -18,22 +18,22 @@ os.chdir(directory_path)
 # plt.scatter(Perturbation_up['Time'],Perturbation_up['Target'], c='black')
 # plt.show()
 #
-my_txt_perturbation_up_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 7\Signals\Sine signal N400 freq0.1 Max100.txt'
+my_txt_perturbation_up_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 8\Signals\Sine signal N500 freq0.1 Max100.txt'
 my_txt_perturbation_up = lb.read_my_txt_file(my_txt_perturbation_up_path)
 # print(len(my_txt_perturbation_up))
-kinvent_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 7\Data\Stylianos 10.12.2024\Sine signal N400 freq0.1 Max100.csv'
+kinvent_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 8\Data\Stylianos 10-16-2024\Sine signal N500 freq0.1 Max100.csv'
 MVC = 25
 
 
 signal_kinvent = pd.read_csv(kinvent_path, skiprows=2)
-# print(signal_kinvent)
-# signal_kinvent = lb.isolate_Target(signal_kinvent)
-# print(signal_kinvent)
-# dif_index = []
-# for i in range(len(signal_kinvent['Index']) -1):
-#     dif_index.append(signal_kinvent['Index'][i+1] - signal_kinvent['Index'][i])
-# plt.plot(dif_index)
-# plt.show()
+print(signal_kinvent)
+signal_kinvent = lb.isolate_Target(signal_kinvent)
+print(signal_kinvent)
+dif_index = []
+for i in range(len(signal_kinvent['Index']) -1):
+    dif_index.append(signal_kinvent['Index'][i+1] - signal_kinvent['Index'][i])
+plt.plot(dif_index)
+plt.show()
 
 signal = lb.isolate_Target(signal_kinvent)
 plt.plot(signal['Target'])
