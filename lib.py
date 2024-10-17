@@ -135,9 +135,12 @@ def Linear_Interpolation(col, step, plus):
     return newdf
 
 def Butterworth(fs,fc,var):
-
+    """ Parameter:
+            fs:     sampling frequency
+            fc:     cutoff frequency for example 30Hz
+            var:    data series
+    """
     w = fc / (fs / 2)
-
 
     b, a = signal.butter(2, w, 'low')
     return signal.filtfilt(b, a, var)

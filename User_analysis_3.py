@@ -13,6 +13,8 @@ print(len(data_5perc_2["Performance"]))
 print(len(data_5perc_3["Performance"]))
 Perc_list = [5,20,40,60,80]
 
+print(data_40perc_1)
+
 SaEn_list_1 = []
 SaEn_list_1.append(lb.Ent_Samp(data_5perc_1['Performance'], 2, 0.2))
 SaEn_list_1.append(lb.Ent_Samp(data_20perc_1['Performance'], 2, 0.2))

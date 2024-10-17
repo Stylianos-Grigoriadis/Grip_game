@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import numpy as np
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Data\Malvina 7-10-2024\Raw'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 6\Data\Malvina 10-7-2024\Raw'
 os.chdir(directory_path)
 
 Isometric_80_T1 = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
@@ -22,7 +22,7 @@ Isometric_5_T1 = pd.read_csv(r'Isometric_5_T1.csv', skiprows=2)
 Isometric_5_T2 = pd.read_csv(r'Isometric_5_T2.csv', skiprows=2)
 Isometric_5_T3 = pd.read_csv(r'Isometric_5_T3.csv', skiprows=2)
 
-
+print(len(Isometric_80_T2['Performance']))
 
 fig, axs = plt.subplots(1, 3, figsize=(15, 5))
 
@@ -81,12 +81,6 @@ axs[1].set_title('Isometric_5_T2')
 axs[2].plot(Isometric_5_T3['Performance'])
 axs[2].set_title('Isometric_5_T3')
 plt.show()
-
-
-
-
-
-
 
 
 starting_point = 0.2
