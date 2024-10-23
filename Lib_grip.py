@@ -7,7 +7,7 @@ import pandas as pd
 import colorednoise as cn
 import random
 from scipy.optimize import curve_fit
-
+from scipy.signal import decimate
 
 def DFA(variable):
     a = fu.toAggregated(variable)
@@ -480,5 +480,25 @@ def add_generated_signal(kinvent_path, generated_signal_path, max_force):
     df_kinvent_no_zeros['Generated_Signal'] = generated_signal
 
     return df_kinvent_no_zeros
+
+def down_sampling(df, f_out, f_in):
+    """
+    Parameters
+    In
+                df:     the dataframe to be downsampled
+                f_out:  the frequency I want
+                f_in:   the frequency the df has
+    Out
+                df_downsampled:     the df with downsampled the 'Time' and 'Performance' columns
+                                    while 'ClosestSampleTime' and 'Target' were left intact
+
+    """
+    factor = int(f_in/f_out)
+
+    df_downsampled_first_two_cols = df[['Time', 'Performance']].iloc[::factor].reset_index(drop=True)
+    df_remaining_cols = df[['ClosestSampleTime', 'Target']]
+    df_downsampled = pd.concat([df_downsampled_first_two_cols, df_remaining_cols], axis=1)
+
+    return df_downsampled
 
 
