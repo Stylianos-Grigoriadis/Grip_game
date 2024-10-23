@@ -50,15 +50,11 @@ Isometric_05_T2_100Hz = lb.down_sampling(Isometric_05_T2_1000Hz,100,1000)
 Isometric_05_T3_100Hz = lb.down_sampling(Isometric_05_T3_1000Hz,100,1000)
 
 
-def onselect(xmin, xmax):
-    # Calculate the midpoint of the selected range
-    mid = (xmin + xmax) / 2
-    # Recalculate xmin and xmax to lock the span at 500 points
-    xmin_fixed = mid - 250
-    xmax_fixed = mid + 250
-    for ax in axs:
-        ax.axvspan(xmin_fixed, xmax_fixed, color='yellow', alpha=0.3)  # Highlight the selected span
-    plt.draw()
+# THE FOLLOWING PART KEEPS ONLY THE WANTED INDEX FROM EACH ISOMETRIC TRIAL
+# selected_indices = {}
+# def on_select(min_idx, max_idx, label):
+#     selected_indices[label] = [int(min_idx), int(max_idx)]
+#
 #
 # fig, axs = plt.subplots(1, 3, figsize=(15, 5))
 #
@@ -70,6 +66,11 @@ def onselect(xmin, xmax):
 #
 # axs[2].plot(Isometric_80_T3_100Hz['Performance'])
 # axs[2].set_title('Isometric_80_T3')
+#
+# span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_80_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span2 = SpanSelector(axs[1], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T2_iso_80_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span3 = SpanSelector(axs[2], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T3_iso_80_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+#
 # plt.show()
 #
 # fig, axs = plt.subplots(1, 3, figsize=(15, 5))
@@ -82,6 +83,11 @@ def onselect(xmin, xmax):
 #
 # axs[2].plot(Isometric_60_T2_100Hz['Performance'])
 # axs[2].set_title('Isometric_60_T3')
+#
+# span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_60_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span2 = SpanSelector(axs[1], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T2_iso_60_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span3 = SpanSelector(axs[2], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T3_iso_60_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+#
 # plt.show()
 #
 # fig, axs = plt.subplots(1, 3, figsize=(15, 5))
@@ -94,6 +100,11 @@ def onselect(xmin, xmax):
 #
 # axs[2].plot(Isometric_40_T3_100Hz['Performance'])
 # axs[2].set_title('Isometric_40_T3')
+#
+# span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_40_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span2 = SpanSelector(axs[1], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T2_iso_40_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span3 = SpanSelector(axs[2], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T3_iso_40_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+#
 # plt.show()
 #
 # fig, axs = plt.subplots(1, 3, figsize=(15, 5))
@@ -107,20 +118,185 @@ def onselect(xmin, xmax):
 # axs[2].plot(Isometric_20_T3_100Hz['Performance'])
 # axs[2].set_title('Isometric_20_T3')
 #
+# span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_20_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span2 = SpanSelector(axs[1], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T2_iso_20_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span3 = SpanSelector(axs[2], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T3_iso_20_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+#
 # plt.show()
+#
+# fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+#
+# axs[0].plot(Isometric_05_T1_100Hz['Performance'])
+# axs[0].set_title('Isometric_5_T1')
+#
+# axs[1].plot(Isometric_05_T2_100Hz['Performance'])
+# axs[1].set_title('Isometric_5_T2')
+#
+# axs[2].plot(Isometric_05_T3_100Hz['Performance'])
+# axs[2].set_title('Isometric_5_T3')
+#
+# span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_05_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span2 = SpanSelector(axs[1], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T2_iso_05_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+# span3 = SpanSelector(axs[2], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T3_iso_05_100Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
+#
+# plt.show()
+#
+#
+# print(selected_indices)
+# df_index = pd.DataFrame(selected_indices)
+# df_index.to_excel('df_index.xlsx')
 
-fig, axs = plt.subplots(1, 3, figsize=(15, 5))
 
-axs[0].plot(Isometric_05_T1_100Hz['Performance'])
-axs[0].set_title('Isometric_5_T1')
 
-axs[1].plot(Isometric_05_T2_100Hz['Performance'])
-axs[1].set_title('Isometric_5_T2')
+index = pd.read_excel('df_index.xlsx')
+print(index)
 
-axs[2].plot(Isometric_05_T3_100Hz['Performance'])
-axs[2].set_title('Isometric_5_T3')
+iso_80_T1_100Hz = Isometric_80_T1_100Hz['Performance'][index['T1_iso_80_100Hz'][0]:index['T1_iso_80_100Hz'][1]].to_numpy()
+iso_80_T2_100Hz = Isometric_80_T2_100Hz['Performance'][index['T2_iso_80_100Hz'][0]:index['T2_iso_80_100Hz'][1]].to_numpy()
+iso_80_T3_100Hz = Isometric_80_T3_100Hz['Performance'][index['T3_iso_80_100Hz'][0]:index['T3_iso_80_100Hz'][1]].to_numpy()
+
+iso_60_T1_100Hz = Isometric_60_T1_100Hz['Performance'][index['T1_iso_60_100Hz'][0]:index['T1_iso_60_100Hz'][1]].to_numpy()
+iso_60_T2_100Hz = Isometric_60_T2_100Hz['Performance'][index['T2_iso_60_100Hz'][0]:index['T2_iso_60_100Hz'][1]].to_numpy()
+iso_60_T3_100Hz = Isometric_60_T3_100Hz['Performance'][index['T3_iso_60_100Hz'][0]:index['T3_iso_60_100Hz'][1]].to_numpy()
+
+iso_40_T1_100Hz = Isometric_40_T1_100Hz['Performance'][index['T1_iso_40_100Hz'][0]:index['T1_iso_40_100Hz'][1]].to_numpy()
+iso_40_T2_100Hz = Isometric_40_T2_100Hz['Performance'][index['T2_iso_40_100Hz'][0]:index['T2_iso_40_100Hz'][1]].to_numpy()
+iso_40_T3_100Hz = Isometric_40_T3_100Hz['Performance'][index['T3_iso_40_100Hz'][0]:index['T3_iso_40_100Hz'][1]].to_numpy()
+
+iso_20_T1_100Hz = Isometric_20_T1_100Hz['Performance'][index['T1_iso_20_100Hz'][0]:index['T1_iso_20_100Hz'][1]].to_numpy()
+iso_20_T2_100Hz = Isometric_20_T2_100Hz['Performance'][index['T2_iso_20_100Hz'][0]:index['T2_iso_20_100Hz'][1]].to_numpy()
+iso_20_T3_100Hz = Isometric_20_T3_100Hz['Performance'][index['T3_iso_20_100Hz'][0]:index['T3_iso_20_100Hz'][1]].to_numpy()
+
+iso_05_T1_100Hz = Isometric_05_T1_100Hz['Performance'][index['T1_iso_05_100Hz'][0]:index['T1_iso_05_100Hz'][1]].to_numpy()
+iso_05_T2_100Hz = Isometric_05_T2_100Hz['Performance'][index['T2_iso_05_100Hz'][0]:index['T2_iso_05_100Hz'][1]].to_numpy()
+iso_05_T3_100Hz = Isometric_05_T3_100Hz['Performance'][index['T3_iso_05_100Hz'][0]:index['T3_iso_05_100Hz'][1]].to_numpy()
+
+def index_to_500(array):
+    excess_length_array = len(array) - 500
+    remove_each_side = excess_length_array//2
+    array = array[remove_each_side : len(array)-remove_each_side]
+    print(len(array))
+    return array
+
+iso_80_T1_100Hz = index_to_500(iso_80_T1_100Hz)
+iso_80_T2_100Hz = index_to_500(iso_80_T2_100Hz)
+iso_80_T3_100Hz = index_to_500(iso_80_T3_100Hz)
+iso_60_T1_100Hz = index_to_500(iso_60_T1_100Hz)
+iso_60_T2_100Hz = index_to_500(iso_60_T2_100Hz)
+iso_60_T3_100Hz = index_to_500(iso_60_T3_100Hz)
+iso_40_T1_100Hz = index_to_500(iso_40_T1_100Hz)
+iso_40_T2_100Hz = index_to_500(iso_40_T2_100Hz)
+iso_40_T3_100Hz = index_to_500(iso_40_T3_100Hz)
+iso_20_T1_100Hz = index_to_500(iso_20_T1_100Hz)
+iso_20_T2_100Hz = index_to_500(iso_20_T2_100Hz)
+iso_20_T3_100Hz = index_to_500(iso_20_T3_100Hz)
+iso_05_T1_100Hz = index_to_500(iso_05_T1_100Hz)
+iso_05_T2_100Hz = index_to_500(iso_05_T2_100Hz)
+iso_05_T3_100Hz = index_to_500(iso_05_T3_100Hz)
+
+plt.plot(iso_80_T1_100Hz, label='iso_80_T1_100Hz')
+plt.plot(iso_80_T2_100Hz, label='iso_80_T2_100Hz')
+plt.plot(iso_80_T3_100Hz, label='iso_80_T3_100Hz')
+plt.plot(iso_60_T1_100Hz, label='iso_60_T1_100Hz')
+plt.plot(iso_60_T2_100Hz, label='iso_60_T2_100Hz')
+plt.plot(iso_60_T3_100Hz, label='iso_60_T3_100Hz')
+plt.plot(iso_40_T1_100Hz, label='iso_40_T1_100Hz')
+plt.plot(iso_40_T2_100Hz, label='iso_40_T2_100Hz')
+plt.plot(iso_40_T3_100Hz, label='iso_40_T3_100Hz')
+plt.plot(iso_20_T1_100Hz, label='iso_20_T1_100Hz')
+plt.plot(iso_20_T2_100Hz, label='iso_20_T2_100Hz')
+plt.plot(iso_20_T3_100Hz, label='iso_20_T3_100Hz')
+plt.plot(iso_05_T1_100Hz, label='iso_05_T1_100Hz')
+plt.plot(iso_05_T2_100Hz, label='iso_05_T2_100Hz')
+plt.plot(iso_05_T3_100Hz, label='iso_05_T3_100Hz')
+plt.legend()
 plt.show()
 
-span_selector_1 = SpanSelector(axs[0], onselect, 'horizontal', useblit=True, interactive=True, minspan=500)
-span_selector_2 = SpanSelector(axs[1], onselect, 'horizontal', useblit=True, interactive=True, minspan=500)
-span_selector_3 = SpanSelector(axs[2], onselect, 'horizontal', useblit=True, interactive=True, minspan=500)
+
+
+std_iso_80_T1_100Hz = np.std(iso_80_T1_100Hz)
+std_iso_80_T2_100Hz = np.std(iso_80_T2_100Hz)
+std_iso_80_T3_100Hz = np.std(iso_80_T3_100Hz)
+std_iso_60_T1_100Hz = np.std(iso_60_T1_100Hz)
+std_iso_60_T2_100Hz = np.std(iso_60_T2_100Hz)
+std_iso_60_T3_100Hz = np.std(iso_60_T3_100Hz)
+std_iso_40_T1_100Hz = np.std(iso_40_T1_100Hz)
+std_iso_40_T2_100Hz = np.std(iso_40_T2_100Hz)
+std_iso_40_T3_100Hz = np.std(iso_40_T3_100Hz)
+std_iso_20_T1_100Hz = np.std(iso_20_T1_100Hz)
+std_iso_20_T2_100Hz = np.std(iso_20_T2_100Hz)
+std_iso_20_T3_100Hz = np.std(iso_20_T3_100Hz)
+std_iso_05_T1_100Hz = np.std(iso_05_T1_100Hz)
+std_iso_05_T2_100Hz = np.std(iso_05_T2_100Hz)
+std_iso_05_T3_100Hz = np.std(iso_05_T3_100Hz)
+
+SaEn_iso_80_T1_100Hz = lb.Ent_Samp(iso_80_T1_100Hz, 2, 0.2)
+SaEn_iso_80_T2_100Hz = lb.Ent_Samp(iso_80_T2_100Hz, 2, 0.2)
+SaEn_iso_80_T3_100Hz = lb.Ent_Samp(iso_80_T3_100Hz, 2, 0.2)
+SaEn_iso_60_T1_100Hz = lb.Ent_Samp(iso_60_T1_100Hz, 2, 0.2)
+SaEn_iso_60_T2_100Hz = lb.Ent_Samp(iso_60_T2_100Hz, 2, 0.2)
+SaEn_iso_60_T3_100Hz = lb.Ent_Samp(iso_60_T3_100Hz, 2, 0.2)
+SaEn_iso_40_T1_100Hz = lb.Ent_Samp(iso_40_T1_100Hz, 2, 0.2)
+SaEn_iso_40_T2_100Hz = lb.Ent_Samp(iso_40_T2_100Hz, 2, 0.2)
+SaEn_iso_40_T3_100Hz = lb.Ent_Samp(iso_40_T3_100Hz, 2, 0.2)
+SaEn_iso_20_T1_100Hz = lb.Ent_Samp(iso_20_T1_100Hz, 2, 0.2)
+SaEn_iso_20_T2_100Hz = lb.Ent_Samp(iso_20_T2_100Hz, 2, 0.2)
+SaEn_iso_20_T3_100Hz = lb.Ent_Samp(iso_20_T3_100Hz, 2, 0.2)
+SaEn_iso_05_T1_100Hz = lb.Ent_Samp(iso_05_T1_100Hz, 2, 0.2)
+SaEn_iso_05_T2_100Hz = lb.Ent_Samp(iso_05_T2_100Hz, 2, 0.2)
+SaEn_iso_05_T3_100Hz = lb.Ent_Samp(iso_05_T3_100Hz, 2, 0.2)
+
+SaEn_T1 = [SaEn_iso_80_T1_100Hz, SaEn_iso_60_T1_100Hz, SaEn_iso_40_T1_100Hz, SaEn_iso_20_T1_100Hz, SaEn_iso_05_T1_100Hz]
+SaEn_T2 = [SaEn_iso_80_T2_100Hz, SaEn_iso_60_T2_100Hz, SaEn_iso_40_T2_100Hz, SaEn_iso_20_T2_100Hz, SaEn_iso_05_T2_100Hz]
+SaEn_T3 = [SaEn_iso_80_T3_100Hz, SaEn_iso_60_T3_100Hz, SaEn_iso_40_T3_100Hz, SaEn_iso_20_T3_100Hz, SaEn_iso_05_T3_100Hz]
+average_SaEn = [np.mean((SaEn_iso_80_T1_100Hz, SaEn_iso_80_T2_100Hz, SaEn_iso_80_T3_100Hz)),
+                np.mean((SaEn_iso_60_T1_100Hz, SaEn_iso_60_T2_100Hz, SaEn_iso_60_T3_100Hz)),
+                np.mean((SaEn_iso_40_T1_100Hz, SaEn_iso_40_T2_100Hz, SaEn_iso_40_T3_100Hz)),
+                np.mean((SaEn_iso_20_T1_100Hz, SaEn_iso_20_T2_100Hz, SaEn_iso_20_T3_100Hz)),
+                np.mean((SaEn_iso_05_T1_100Hz, SaEn_iso_05_T2_100Hz, SaEn_iso_05_T3_100Hz))]
+
+std_T1 = [std_iso_80_T1_100Hz, std_iso_60_T1_100Hz, std_iso_40_T1_100Hz, std_iso_20_T1_100Hz, std_iso_05_T1_100Hz]
+std_T2 = [std_iso_80_T2_100Hz, std_iso_60_T2_100Hz, std_iso_40_T2_100Hz, std_iso_20_T2_100Hz, std_iso_05_T2_100Hz]
+std_T3 = [std_iso_80_T3_100Hz, std_iso_60_T3_100Hz, std_iso_40_T3_100Hz, std_iso_20_T3_100Hz, std_iso_05_T3_100Hz]
+
+average_std = [np.mean((std_iso_80_T1_100Hz, std_iso_80_T2_100Hz, std_iso_80_T3_100Hz)),
+                np.mean((std_iso_60_T1_100Hz, std_iso_60_T2_100Hz, std_iso_60_T3_100Hz)),
+                np.mean((std_iso_40_T1_100Hz, std_iso_40_T2_100Hz, std_iso_40_T3_100Hz)),
+                np.mean((std_iso_20_T1_100Hz, std_iso_20_T2_100Hz, std_iso_20_T3_100Hz)),
+                np.mean((std_iso_05_T1_100Hz, std_iso_05_T2_100Hz, std_iso_05_T3_100Hz))]
+
+
+
+
+Percentage_iso = [80,60,40,20,5]
+
+
+plt.plot(Percentage_iso, SaEn_T1, label='T1')
+plt.plot(Percentage_iso, SaEn_T2, label='T2')
+plt.plot(Percentage_iso, SaEn_T3, label='T3')
+plt.plot(Percentage_iso, average_SaEn, label='average_SaEn')
+
+plt.legend()
+plt.show()
+
+plt.plot(Percentage_iso, std_T1, label='T1')
+plt.plot(Percentage_iso, std_T2, label='T2')
+plt.plot(Percentage_iso, std_T3, label='T3')
+plt.plot(Percentage_iso, average_std, label='average_std')
+plt.legend()
+plt.show()
+
+
+excel = {'Isometrics': (80, 60, 40, 20, 5),
+            'SaEn_T1': SaEn_T1,
+            'SaEn_T2': SaEn_T2,
+            'SaEn_T3': SaEn_T3,
+            'SaEn_Average': average_SaEn,
+            'std_T1': std_T1,
+            'std_T2': std_T2,
+            'std_T3': std_T3,
+            'std_Average': average_std
+         }
+
+df_excel = pd.DataFrame(excel)
+df_excel.to_excel('Results.xlsx')
