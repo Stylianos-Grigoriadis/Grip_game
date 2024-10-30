@@ -250,17 +250,20 @@ def isolate_Target(df):
     target = []
     time = []
     performance = []
-    index = []
-    for i in range(len(df['Target'])):
-        if df['Target'][i] != 0.0:
+    ClosestSampleTime = []
+    index_list = []
+    for index, value in enumerate(df['ClosestSampleTime']):
+        if pd.notnull(value):
+            for i in range(len(df['Time'])):
+                print(value)
+                if df['Time'][i] == value:
+                    target.append(df['Target'][i])
+                    time.append(df['Time'][i])
+                    performance.append(df['Performance'][i])
+                    ClosestSampleTime.append(df['ClosestSampleTime'][i])
+                    index_list.append(index)
+    df_targets = pd.DataFrame({'Time': time, 'Performance': performance, 'ClosestSampleTime': ClosestSampleTime, 'Target': target, 'Index': index_list})
 
-            index.append(i)
-            target.append(df['Target'][i])
-            time.append(df['Time'][i])
-            performance.append(df['Performance'][i])
-
-
-    df_targets = pd.DataFrame({'Time' : time, 'Target' : target, 'Performance' : performance, 'Index' : index})
     return df_targets
 
 def spatial_error(force, signal):
