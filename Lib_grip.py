@@ -494,8 +494,13 @@ def down_sampling(df, f_out, f_in):
 
     """
     factor = int(f_in/f_out)
-
+    print('factor')
+    print(factor)
+    print('len before downsampling')
+    print(len(df['Performance']))
     df_downsampled_first_two_cols = df[['Time', 'Performance']].iloc[::factor].reset_index(drop=True)
+    print('len(df_downsampled_first_two_cols[''Performance''])')
+    print(len(df_downsampled_first_two_cols['Performance']))
     df_remaining_cols = df[['ClosestSampleTime', 'Target']]
     df_downsampled = pd.concat([df_downsampled_first_two_cols, df_remaining_cols], axis=1)
 
