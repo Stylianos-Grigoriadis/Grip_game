@@ -15,8 +15,21 @@ Pert_up = pd.read_csv(r'Pert_up.csv', skiprows=2)
 # plt.plot(Pert_up['Performance'], label='Pert_up')
 # plt.legend()
 # plt.show()
+
+
 print(Pert_down)
 
-NewPercDown = lb.isolate_Target(Pert_down)
-print(NewPercDown)
+df = lb.isolate_Target(Pert_down)
+fig, ax1 = plt.subplots()
+ax1.plot(df['ClosestSampleTime'], label='ClosestSampleTime')
+plt.legend()
+ax2 = ax1.twiny()
+ax2.plot(df['Time'],label='Time', color='red')
+plt.legend()
+plt.show()
+# for i,j in zip(new_Time,ClosestSampleTime1):
+#     print(i,j)
+
+
+
 

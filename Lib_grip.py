@@ -247,22 +247,74 @@ def total_force(signal):
     return total
 
 def isolate_Target(df):
-    target = []
-    time = []
-    performance = []
-    ClosestSampleTime = []
+
+    new_Time = []
+    ClosestSampleTime = df['ClosestSampleTime'].dropna().to_list()
+    Performance = []
+    Target = []
     index_list = []
-    for index, value in enumerate(df['ClosestSampleTime']):
-        if pd.notnull(value):
-            for i in range(len(df['Time'])):
-                print(value)
-                if df['Time'][i] == value:
-                    target.append(df['Target'][i])
-                    time.append(df['Time'][i])
-                    performance.append(df['Performance'][i])
-                    ClosestSampleTime.append(df['ClosestSampleTime'][i])
-                    index_list.append(index)
-    df_targets = pd.DataFrame({'Time': time, 'Performance': performance, 'ClosestSampleTime': ClosestSampleTime, 'Target': target, 'Index': index_list})
+
+    Time = df['Time'].to_list()
+    # Time = [round(value, 3) for value in Time]
+    df['Time'] = df['Time'].round(3)
+    print(df['Time'])
+
+    for i in ClosestSampleTime:
+        if i in df['Time'].values:
+            index = df.index[df['Time'] == i].tolist()[0]
+            print(index)
+            Performance.append(df['Performance'][index])
+            Target.append(df['Target'][index])
+            index_list.append(index)
+            new_Time.append(i)
+    df_targets = pd.DataFrame({'Time': new_Time, 'Performance': Performance, 'ClosestSampleTime': ClosestSampleTime, 'Target': Target})
+
+    return df_targets
+
+
+    # # Initialize empty lists to store matching values
+    # filtered_col1 = []
+    # filtered_col2 = []
+    # # Iterate over the rows of the dataframe
+    # for value1, value2 in zip(df['Time'], df['ClosestSampleTime']):
+    #     # Check if 'col2' has a non-NaN value and if it matches 'col1'
+    #     if pd.notna(value2) and value1 == value2:
+    #         filtered_col1.append(value1)
+    #         filtered_col2.append(value2)
+    # # Create a new DataFrame with the filtered lists
+    # result_df = pd.DataFrame({'filtered_col1': filtered_col1, 'filtered_col2': filtered_col2})
+    # return result_df
+    #
+    # filtered_col2 = df['ClosestSampleTime'].dropna()
+    # indices = filtered_col2.index
+    #
+    # filtered_col1 = df['Time'].iloc[indices]
+    # # Filter the first column based on the values in filtered_col2
+    # # filtered_col1 = df['Time'][df['Time'].isin(filtered_col2)].tolist()
+    #
+    # # Create a new DataFrame with the filtered lists
+    # df_targets = pd.DataFrame({'Time': filtered_col1, 'ClosestSampleTime': filtered_col2})
+
+
+
+
+    # for i in df['ClosestSampleTime']:
+    #     if pd.notnull(i):
+    #         ClosestSampleTime.append(i)
+    #     else:
+    #         break
+    #
+    # for index, value in enumerate(df['ClosestSampleTime']):
+    #     if pd.notnull(value):
+    #         for i in range(len(df['Time'])):
+    #             print(value)
+    #             if df['Time'][i] == value:
+    #                 target.append(df['Target'][i])
+    #                 time.append(df['Time'][i])
+    #                 performance.append(df['Performance'][i])
+    #                 ClosestSampleTime.append(df['ClosestSampleTime'][i])
+    #                 index_list.append(index)
+    # df_targets = pd.DataFrame({'Time': time, 'Performance': performance, 'ClosestSampleTime': ClosestSampleTime, 'Target': target, 'Index': index_list})
 
     return df_targets
 
