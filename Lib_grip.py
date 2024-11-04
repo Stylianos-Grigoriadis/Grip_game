@@ -246,6 +246,27 @@ def total_force(signal):
     total = np.sum(signal)
     return total
 
+def create_ClosestSampleTime(df):
+    total_time = df['Time'][len(df['Time'])-1]
+    start = df['ClosestSampleTime'][0]
+    Number_of_targets = df['ClosestSampleTime'].count()
+    increament_rate = total_time/Number_of_targets
+    print(increament_rate)
+    new_ClosestSampleTime = []
+    new_time = start
+    new_ClosestSampleTime.append(new_time)
+    for i in range(Number_of_targets - 1):
+        new_time = new_time + increament_rate
+        new_ClosestSampleTime.append(new_time)
+
+    number_of_rest_NaN_values =  len(df['Time']) - Number_of_targets
+    for i in range(number_of_rest_NaN_values):
+        new_ClosestSampleTime.append(None)
+    df['new_ClosestSampleTime'] = new_ClosestSampleTime
+    return df
+
+
+
 def isolate_Target(df):
 
     new_Time = []
