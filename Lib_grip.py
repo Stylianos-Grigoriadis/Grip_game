@@ -247,23 +247,94 @@ def total_force(signal):
     return total
 
 def create_ClosestSampleTime(df):
-    total_time = df['Time'][len(df['Time'])-1]
-    start = df['ClosestSampleTime'][0]
-    Number_of_targets = df['ClosestSampleTime'].count()
-    increament_rate = total_time/Number_of_targets
-    print(increament_rate)
-    new_ClosestSampleTime = []
-    new_time = start
-    new_ClosestSampleTime.append(new_time)
-    for i in range(Number_of_targets - 1):
-        new_time = new_time + increament_rate
-        new_ClosestSampleTime.append(new_time)
+    """ Parameters
+            index: the index of the column Time where the first value of the column ClosestSampleTime is evident
+    """
+    index = df[df['Time'] == df['ClosestSampleTime'][0]].index[0]
 
-    number_of_rest_NaN_values =  len(df['Time']) - Number_of_targets
-    for i in range(number_of_rest_NaN_values):
+
+    initial_value_time = df['Time'][index]
+    last_value_time = df['Time'][len(df['Time'])-1]
+    new_last_value_time = round(last_value_time - initial_value_time, 3)
+
+    # Calculatation of the new time column
+    new_time_series = np.arange(0,new_last_value_time,0.001)
+
+    # Calculatation of the new ClosestSampleTime column
+    new_ClosestSampleTime = [0]
+    for i in range(499):
+        new_ClosestSampleTime.append(round(new_ClosestSampleTime[-1]+0.04,3))
+
+    length_more = len(new_time_series) - len(new_ClosestSampleTime)
+    for i in range(length_more):
         new_ClosestSampleTime.append(None)
-    df['new_ClosestSampleTime'] = new_ClosestSampleTime
-    return df
+
+    # Calculatation of the new Performance column
+    print(initial_value_time)
+    list_ClosestSampleTime = [initial_value_time]
+    for i in range(499):
+        list_ClosestSampleTime.append(round(list_ClosestSampleTime[-1]+0.04,3))
+    # for i in list_ClosestSampleTime:
+    #     print(i)
+    # print(len(list_ClosestSampleTime))
+    # print(df['Time'][len(df['Time'])-1])
+    index_ClosestSampleTime_in_Time = []
+    for i in list_ClosestSampleTime:
+        index_ClosestSampleTime_in_Time.append(df[df['Time'] == i].index)
+    for i in index_ClosestSampleTime_in_Time:
+        print(i)
+    print(len(index_ClosestSampleTime_in_Time))
+
+
+
+    # dist = {'new_time_series': new_time_series, 'new_ClosestSampleTime': new_ClosestSampleTime}
+    # new_df = pd.DataFrame(dist)
+    # new_df.to_excel('new Time and new ClosestSampleTime.xlsx')
+    # print(new_df)
+
+
+
+
+    #
+    # Performance = df.loc[index:, 'Performance'].to_numpy()
+    # step_time = 0.001
+    # time = [0]
+    # for i in range(len(Performance)):
+    #     time.append(round(time[-1]+step_time, 3))
+    # time = np.array(time)
+    # ClosestSampleTime = [0]
+    # target = []
+    # step_ClosestSampleTime = 0.04
+    # Number_of_targets = df['ClosestSampleTime'].count()
+    # for i in range(Number_of_targets):
+    #     ClosestSampleTime.append(round(ClosestSampleTime[-1]+step_ClosestSampleTime, 3))
+    #     target.append(df['Target'][i])
+    # ClosestSampleTime = np.array(ClosestSampleTime)
+
+
+
+
+
+
+
+
+    # total_time = df['Time'][len(df['Time'])-1]
+    # start = df['ClosestSampleTime'][0]
+    # Number_of_targets = df['ClosestSampleTime'].count()
+    # increament_rate = total_time/Number_of_targets
+    # print(increament_rate)
+    # new_ClosestSampleTime = []
+    # new_time = start
+    # new_ClosestSampleTime.append(new_time)
+    # for i in range(Number_of_targets - 1):
+    #     new_time = new_time + increament_rate
+    #     new_ClosestSampleTime.append(new_time)
+    #
+    # number_of_rest_NaN_values =  len(df['Time']) - Number_of_targets
+    # for i in range(number_of_rest_NaN_values):
+    #     new_ClosestSampleTime.append(None)
+    # df['new_ClosestSampleTime'] = new_ClosestSampleTime
+    # return df
 
 
 

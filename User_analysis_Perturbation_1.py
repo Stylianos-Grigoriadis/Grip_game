@@ -10,19 +10,19 @@ os.chdir(directory_path)
 
 Pert_down = pd.read_csv(r'Pert_down.csv', skiprows=2)
 Pert_up = pd.read_csv(r'Pert_up.csv', skiprows=2)
+
+lb.create_ClosestSampleTime(Pert_down)
+
 #
 # plt.plot(Pert_down['Performance'], label='Perc_down')
 # plt.plot(Pert_up['Performance'], label='Pert_up')
 # plt.legend()
 # plt.show()
 
+# pd.set_option('display.max_rows', 600)
+# print(Pert_down.head(600))
 
 
-print(Pert_down)
-
-new_time = lb.create_ClosestSampleTime(Pert_down)
-
-print(new_time)
 # print(new_time)
 #
 # df = lb.isolate_Target(Pert_down)
