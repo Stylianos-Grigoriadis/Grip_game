@@ -246,97 +246,42 @@ def total_force(signal):
     total = np.sum(signal)
     return total
 
-def create_ClosestSampleTime(df):
-    """ Parameters
-            index: the index of the column Time where the first value of the column ClosestSampleTime is evident
+def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
+    """ This function takes a dataframe and converts it so that the Time column and the ClosestSampleTime column
+        are matched. This is a method to synchronize the two time stamps
+    Parameters
+    Input
+            df          :   the Dataframe
+            Target_N    :   the total number of targets
+    Output
+            new_df      :   the new Dataframe
+
     """
+    # Find the index of the first value where the ClosestSampleTime is equal to Time
+    df['Time'] = df['Time'].round(3)
+    df['ClosestSampleTime'] = df['ClosestSampleTime'].round(3)
     index = df[df['Time'] == df['ClosestSampleTime'][0]].index[0]
-
-
     initial_value_time = df['Time'][index]
-    last_value_time = df['Time'][len(df['Time'])-1]
-    new_last_value_time = round(last_value_time - initial_value_time, 3)
 
-    # Calculatation of the new time column
-    new_time_series = np.arange(0,new_last_value_time,0.001)
-
-    # Calculatation of the new ClosestSampleTime column
-    new_ClosestSampleTime = [0]
-    for i in range(499):
-        new_ClosestSampleTime.append(round(new_ClosestSampleTime[-1]+0.04,3))
-
-    length_more = len(new_time_series) - len(new_ClosestSampleTime)
-    for i in range(length_more):
-        new_ClosestSampleTime.append(None)
-
-    # Calculatation of the new Performance column
-    print(initial_value_time)
+    # Create a list of ClosestSampleTime with the initial value being the first value found to be the same
+    # between Time and ClosestSampleTime columns
     list_ClosestSampleTime = [initial_value_time]
-    for i in range(499):
-        list_ClosestSampleTime.append(round(list_ClosestSampleTime[-1]+0.04,3))
-    # for i in list_ClosestSampleTime:
-    #     print(i)
-    # print(len(list_ClosestSampleTime))
-    # print(df['Time'][len(df['Time'])-1])
-    index_ClosestSampleTime_in_Time = []
-    for i in list_ClosestSampleTime:
-        index_ClosestSampleTime_in_Time.append(df[df['Time'] == i].index)
-    for i in index_ClosestSampleTime_in_Time:
-        print(i)
-    print(len(index_ClosestSampleTime_in_Time))
+    for i in range(Targets_N - 1):
+        list_ClosestSampleTime.append(round(list_ClosestSampleTime[-1] + 0.04, 3))
 
+    # Find the indexes where the list_ClosestSampleTime is the same with the df['Time']
+    set_ClosestSampleTime = set(list_ClosestSampleTime) # We convert the list to set to make it faster
+    matching_indexes = [index for index, item in enumerate(df['Time']) if item in set_ClosestSampleTime]
 
+    # Create a new_df with the values at the right indexes of the initial df
+    Performance = [df['Performance'].iloc[i] for i in matching_indexes]
+    Time = [df['Time'].iloc[i] for i in matching_indexes]
+    ClosestSampleTime = list_ClosestSampleTime[:len(matching_indexes)]
+    Target = df['Target'].head(len(matching_indexes)).tolist()
+    dist = {'Time': Time, 'Performance': Performance, 'ClosestSampleTime': ClosestSampleTime, 'Target': Target}
+    new_df = pd.DataFrame(dist)
 
-    # dist = {'new_time_series': new_time_series, 'new_ClosestSampleTime': new_ClosestSampleTime}
-    # new_df = pd.DataFrame(dist)
-    # new_df.to_excel('new Time and new ClosestSampleTime.xlsx')
-    # print(new_df)
-
-
-
-
-    #
-    # Performance = df.loc[index:, 'Performance'].to_numpy()
-    # step_time = 0.001
-    # time = [0]
-    # for i in range(len(Performance)):
-    #     time.append(round(time[-1]+step_time, 3))
-    # time = np.array(time)
-    # ClosestSampleTime = [0]
-    # target = []
-    # step_ClosestSampleTime = 0.04
-    # Number_of_targets = df['ClosestSampleTime'].count()
-    # for i in range(Number_of_targets):
-    #     ClosestSampleTime.append(round(ClosestSampleTime[-1]+step_ClosestSampleTime, 3))
-    #     target.append(df['Target'][i])
-    # ClosestSampleTime = np.array(ClosestSampleTime)
-
-
-
-
-
-
-
-
-    # total_time = df['Time'][len(df['Time'])-1]
-    # start = df['ClosestSampleTime'][0]
-    # Number_of_targets = df['ClosestSampleTime'].count()
-    # increament_rate = total_time/Number_of_targets
-    # print(increament_rate)
-    # new_ClosestSampleTime = []
-    # new_time = start
-    # new_ClosestSampleTime.append(new_time)
-    # for i in range(Number_of_targets - 1):
-    #     new_time = new_time + increament_rate
-    #     new_ClosestSampleTime.append(new_time)
-    #
-    # number_of_rest_NaN_values =  len(df['Time']) - Number_of_targets
-    # for i in range(number_of_rest_NaN_values):
-    #     new_ClosestSampleTime.append(None)
-    # df['new_ClosestSampleTime'] = new_ClosestSampleTime
-    # return df
-
-
+    return new_df
 
 def isolate_Target(df):
 
@@ -363,58 +308,18 @@ def isolate_Target(df):
 
     return df_targets
 
+def spatial_error(df):
+    """ Calculate the spatial error of the Performance and Target
+    Parameters
+    Input
+            df              :   the Dataframe
+    Output
+            spatial_error   :   the spatial_error between the Performance and Target
+    """
 
-    # # Initialize empty lists to store matching values
-    # filtered_col1 = []
-    # filtered_col2 = []
-    # # Iterate over the rows of the dataframe
-    # for value1, value2 in zip(df['Time'], df['ClosestSampleTime']):
-    #     # Check if 'col2' has a non-NaN value and if it matches 'col1'
-    #     if pd.notna(value2) and value1 == value2:
-    #         filtered_col1.append(value1)
-    #         filtered_col2.append(value2)
-    # # Create a new DataFrame with the filtered lists
-    # result_df = pd.DataFrame({'filtered_col1': filtered_col1, 'filtered_col2': filtered_col2})
-    # return result_df
-    #
-    # filtered_col2 = df['ClosestSampleTime'].dropna()
-    # indices = filtered_col2.index
-    #
-    # filtered_col1 = df['Time'].iloc[indices]
-    # # Filter the first column based on the values in filtered_col2
-    # # filtered_col1 = df['Time'][df['Time'].isin(filtered_col2)].tolist()
-    #
-    # # Create a new DataFrame with the filtered lists
-    # df_targets = pd.DataFrame({'Time': filtered_col1, 'ClosestSampleTime': filtered_col2})
-
-
-
-
-    # for i in df['ClosestSampleTime']:
-    #     if pd.notnull(i):
-    #         ClosestSampleTime.append(i)
-    #     else:
-    #         break
-    #
-    # for index, value in enumerate(df['ClosestSampleTime']):
-    #     if pd.notnull(value):
-    #         for i in range(len(df['Time'])):
-    #             print(value)
-    #             if df['Time'][i] == value:
-    #                 target.append(df['Target'][i])
-    #                 time.append(df['Time'][i])
-    #                 performance.append(df['Performance'][i])
-    #                 ClosestSampleTime.append(df['ClosestSampleTime'][i])
-    #                 index_list.append(index)
-    # df_targets = pd.DataFrame({'Time': time, 'Performance': performance, 'ClosestSampleTime': ClosestSampleTime, 'Target': target, 'Index': index_list})
-
-    return df_targets
-
-def spatial_error(force, signal):
     spatial_error = []
-    for i in range(len(signal)):
-        if signal[i] != 0:
-            spatial_error.append(abs(force[i] - signal[i]))
+    for i in range(len(df['Time'])):
+        spatial_error.append((abs(df['Performance'][i]-df['Target'][i])))
     spatial_error = np.array(spatial_error)
     return spatial_error
 
@@ -470,45 +375,62 @@ def asymptotes(df):
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
 
-def adaptation_time_using_sd(time, force, signal, perturbation_index, sd_factor, first_values, consecutive_values):
-    """This function returns the time after the perturbation which was needed to adapt to the perturbation
-        Variables explanation:
-            time:               the whole time from 0 until the end
-            force:              the whole force from 0 until the end
-            signal:             the whole signal of perturbation from 0 until the end
-            perturbation_index: the index at which the perturbation occurred
-            sd_factor:          this will be multiplied with the sd of the error before the perturbation
-                                and if the error after the is less than the mean + sd*sd_factor and more than
-                                the mean - sd*sd_factor, the algorithm will consider that the adaptation of the
-                                perturbation occurred
-            first_values:       at first the error will be too much so to calculate the mean and sd before the perturbation
-                                right, we erase some values from the beginning
-            consecutive_values: this is how many values the algorithm needs to consider so that it decides of the adaptation occurred.
-            """
+def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, total_targets, plot=False):
+    """
+    This function returns the time after the perturbation which was needed to adapt to the perturbation
+    Parameters
+    Input
+            df                  :   The Dataframe
+            perturbation_index  :   The index where the perturbation occurred
+            sd_factor           :   This will be multiplied with the sd of the error before the perturbation
+                                    and if the error after the is less than the mean + sd*sd_factor and more than
+                                    the mean - sd*sd_factor, the algorithm will consider that the adaptation of the
+                                    perturbation occurred
+            first_values        :   At first the error will be too much so to calculate the mean and sd before the perturbation
+                                    right, we erase some values from the beginning
+            consecutive_values  :   This is how many values the algorithm needs to consider so that it decides that the adaptation occurred.
+            total targets       :   The total number of targets
+            Plot                :   Plot the spatial error and the time of adaptation (default value False)
 
-    spatial_er = spatial_error(force, signal)
+    Output
+            time_of_adaptation  :   The time it took the df['Performance'] to steadily reach df['Target']. This
+                                    number corresponds to the first value of time at which for the next X consecutive_values
+                                    the spatial error was lower than the average +- (sd * sd_factor)
+    """
+    # First synchronize the Time and ClosestSampleTime columns and create a new df with
+    # only the synchronized values
+    df = synchronization_of_Time_and_ClosestSampleTime(df, total_targets)
+
+    # Calculate the spatial error and the average and sd of the spatial error
+    # after the first_values
+    spatial_er = spatial_error(df)
     mean = np.mean(spatial_er[first_values:perturbation_index])
     sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
 
-    plt.plot(spatial_er)
-    plt.axhline(y=mean, color='k')
-    plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='red', ls=":")
-    plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='red', ls=":")
-    plt.show()
-
-
+    # Create an array with consecutive_values equal number
     consecutive_values_list = np.arange(0,consecutive_values,1)
 
+    # Iterate the spatial error after the perturbation_index to calculate the time of adaptation
     for i in range(len(spatial_er) - consecutive_values+1):
         if i >= perturbation_index:
-            print(i)
+
             if (all(spatial_er[i + j] < mean + sd_before_perturbation * sd_factor for j in consecutive_values_list) and
                 all(spatial_er[i + j] > mean - sd_before_perturbation * sd_factor for j in consecutive_values_list)
             ):
-                time_of_adaptation = time[i] - time[perturbation_index]
-                index_after_pert = i - perturbation_index
+                time_of_adaptation = df['Time'][i] - df['Time'][perturbation_index]
                 break
-    return time_of_adaptation, index_after_pert
+
+    if plot == True:
+        plt.plot(df['Time'], spatial_er, label='Spatial Error')
+        plt.axhline(y=mean, c='k')
+        plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":")
+        plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='k', ls=":")
+        plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
+        plt.legend()
+        plt.show()
+
+
+    return time_of_adaptation
 
 def single_perturbation_generator(baseline, perturbation, data_num):
     baseline_array = np.full(int(data_num/2), baseline)
