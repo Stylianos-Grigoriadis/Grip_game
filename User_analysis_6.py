@@ -29,7 +29,7 @@ Pert_down = pd.read_csv(r'Pert_down.csv', skiprows=2)
 Pert_up = pd.read_csv(r'Pert_up.csv', skiprows=2)
 
 index = pd.read_excel('index.xlsx')
-print(index)
+
 
 
 Isometric_80_T1_100Hz = lb.down_sampling(Isometric_80_T1_1000Hz,100,1000)
@@ -69,19 +69,19 @@ iso_05_T1_100Hz = Isometric_05_T1_100Hz['Performance'][index['T1_iso_05_100Hz'][
 iso_05_T2_100Hz = Isometric_05_T2_100Hz['Performance'][index['T2_iso_05_100Hz'][0]:index['T2_iso_05_100Hz'][1]].to_numpy()
 iso_05_T3_100Hz = Isometric_05_T3_100Hz['Performance'][index['T3_iso_05_100Hz'][0]:index['T3_iso_05_100Hz'][1]].to_numpy()
 
+
+
 def index_to_500(array):
 
-    excess_length_array = len(array) - 500
+    excess_length_array = len(array) - 250
     if excess_length_array > 0:
         remove_each_side = excess_length_array//2
         array = array[remove_each_side : len(array)-remove_each_side]
-        print("correct length")
+
     elif excess_length_array == 0:
-        print("500 length")
+        pass
     else:
         raise ValueError("Length is less than 500 points")
-
-    print(len(array))
     return array
 
 iso_80_T1_100Hz = index_to_500(iso_80_T1_100Hz)
@@ -204,5 +204,5 @@ excel = {'Isometrics': (80, 60, 40, 20, 5),
             'std_Average': average_std
          }
 
-df_excel = pd.DataFrame(excel)
-df_excel.to_excel('Results Isometric.xlsx')
+# df_excel = pd.DataFrame(excel)
+# df_excel.to_excel('Results Isometric.xlsx')

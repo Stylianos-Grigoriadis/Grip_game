@@ -31,7 +31,7 @@ for i in directory_path:
     Pert_down = pd.read_csv(r'Pert_down.csv', skiprows=2)
     Pert_up = pd.read_csv(r'Pert_up.csv', skiprows=2)
 
-    time_of_adaptation_up = lb.adaptation_time_using_sd(Pert_up, 250, 2, 100, 10, 500)
+    time_of_adaptation_up = lb.adaptation_time_using_sd(Pert_up, 250, 2, 100, 10, 500, plot=True)
     time_of_adaptation_down = lb.adaptation_time_using_sd(Pert_down, 250, 2, 100, 10, 500)
 
     time_of_adaptation_up_list.append(time_of_adaptation_up)

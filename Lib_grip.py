@@ -422,11 +422,14 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
 
     if plot == True:
         plt.plot(df['Time'], spatial_er, label='Spatial Error')
-        plt.axhline(y=mean, c='k')
-        plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":")
+        plt.axhline(y=mean, c='k', label = 'Average')
+        plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":", label='std')
         plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='k', ls=":")
         plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
         plt.legend()
+        plt.ylabel('Force difference (kg)')
+        plt.xlabel('Time (sec)')
+        plt.title('Spatial Error')
         plt.show()
 
 
@@ -563,13 +566,8 @@ def down_sampling(df, f_out, f_in):
 
     """
     factor = int(f_in/f_out)
-    print('factor')
-    print(factor)
-    print('len before downsampling')
-    print(len(df['Performance']))
+
     df_downsampled_first_two_cols = df[['Time', 'Performance']].iloc[::factor].reset_index(drop=True)
-    print('len(df_downsampled_first_two_cols[''Performance''])')
-    print(len(df_downsampled_first_two_cols['Performance']))
     df_remaining_cols = df[['ClosestSampleTime', 'Target']]
     df_downsampled = pd.concat([df_downsampled_first_two_cols, df_remaining_cols], axis=1)
 
