@@ -6,7 +6,7 @@ import glob
 
 
 # Define the directory path
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 8\Data\7. Nick Stergiou'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\1.Young'
 # Warm_up_1
 # Warm_up_2
 # Warm_up_3
