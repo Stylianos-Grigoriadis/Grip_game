@@ -7,7 +7,7 @@ import numpy as np
 
 
 # Define the directory path
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\1.Young'
+directory_path = r'C:\Users\user\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\3.Young'
 # Warm_up_1
 # Warm_up_2
 # Warm_up_3
@@ -33,7 +33,7 @@ directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Παν
 # Pert_up_T1
 # Pert_up_T2
 
-max = 43.2
+max = 30
 print(f'5% : {0.05*max}')
 print(f'20% : {0.2*max}')
 print(f'40% : {0.4*max}')
@@ -50,7 +50,7 @@ for file in files:
     print(np.mean(signal['Performance'][200:300]))
     plt.plot(signal['Performance'])
     plt.title(file_name)
-    plt.show()
+    # plt.show()
 
 
 
