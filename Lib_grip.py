@@ -259,7 +259,7 @@ def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
     """
     # Find the index of the first value where the ClosestSampleTime is equal to Time
     df['Time'] = df['Time'].round(3)
-    df['ClosestSampleTime'] = df['ClosestSampleTime'].round(3)
+    df['ClosestSampleTime'] = df['ClosestSampleTime'].round(2)
     index = df[df['Time'] == df['ClosestSampleTime'][0]].index[0]
     initial_value_time = df['Time'][index]
 
