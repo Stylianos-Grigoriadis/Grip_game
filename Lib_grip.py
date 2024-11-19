@@ -259,29 +259,40 @@ def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
     """
     # Find the index of the first value where the ClosestSampleTime is equal to Time
     df['Time'] = df['Time'].round(3)
-    df['ClosestSampleTime'] = df['ClosestSampleTime'].round(2)
-    index = df[df['Time'] == df['ClosestSampleTime'][0]].index[0]
-    initial_value_time = df['Time'][index]
+    df['ClosestSampleTime'] = df['ClosestSampleTime'].round(3)
 
-    # Create a list of ClosestSampleTime with the initial value being the first value found to be the same
-    # between Time and ClosestSampleTime columns
+    # Find the value of the column Time with the smallest absolute difference with the first value of ClosestSampleTime
+    closest_value = df['Time'].iloc[(df['Time'] - df['ClosestSampleTime'][0]).abs().idxmin()]
+
+    # Find the index of the column Time with the smallest absolute difference with the first value of ClosestSampleTime
+    index = df.loc[df['Time'] == closest_value].index[0]
+
+    # Create a list of ClosestSampleTime with the initial value being the value of Time with the smallest difference
+    # with the first value of ClosestSampleTime
+    initial_value_time = df['Time'][index]
     list_ClosestSampleTime = [initial_value_time]
     for i in range(Targets_N - 1):
         list_ClosestSampleTime.append(round(list_ClosestSampleTime[-1] + 0.04, 3))
 
-    # Find the indexes where the list_ClosestSampleTime is the same with the df['Time']
-    set_ClosestSampleTime = set(list_ClosestSampleTime) # We convert the list to set to make it faster
-    matching_indexes = [index for index, item in enumerate(df['Time']) if item in set_ClosestSampleTime]
+    # Create a list of indices of column Time, where the values of list_ClosestSampleTime are equal with the values of
+    # column Time
+    matching_indices = df.index[df['Time'].isin(list_ClosestSampleTime)].tolist()
 
-    # Create a new_df with the values at the right indexes of the initial df
-    Performance = [df['Performance'].iloc[i] for i in matching_indexes]
-    Time = [df['Time'].iloc[i] for i in matching_indexes]
-    ClosestSampleTime = list_ClosestSampleTime[:len(matching_indexes)]
-    Target = df['Target'].head(len(matching_indexes)).tolist()
-    dist = {'Time': Time, 'Performance': Performance, 'ClosestSampleTime': ClosestSampleTime, 'Target': Target}
+    # Create the Performance, Time, and Target lists with the values at the right indices of the initial df
+    Performance = [df['Performance'].iloc[i] for i in matching_indices]
+    Time = [df['Time'].iloc[i] for i in matching_indices]
+    Target = df['Target'].head(len(matching_indices)).tolist()
+
+    # Delete any values from the end of the list_ClosestSampleTime so that all lists Performance, Time, Target and list_ClosestSampleTime
+    # have the same length
+    list_ClosestSampleTime = list_ClosestSampleTime[:len(Time)]
+
+    # create the new_df
+    dist = {'Time': Time, 'Performance': Performance, 'ClosestSampleTime': list_ClosestSampleTime, 'Target': Target}
     new_df = pd.DataFrame(dist)
 
     return new_df
+
 
 def isolate_Target(df):
 

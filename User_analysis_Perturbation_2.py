@@ -4,18 +4,31 @@ import pandas as pd
 import os
 import numpy as np
 
-
 directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\3.Young'
 os.chdir(directory_path)
 
-Pert_up_T1 = pd.read_csv(r'Pert_up_T1.csv', skiprows=2)
-Pert_up_T2 = pd.read_csv(r'Pert_up_T2.csv', skiprows=2)
 Pert_down_T1 = pd.read_csv(r'Pert_down_T1.csv', skiprows=2)
 Pert_down_T2 = pd.read_csv(r'Pert_down_T2.csv', skiprows=2)
+Pert_up_T1 = pd.read_csv(r'Pert_up_T1.csv', skiprows=2)
+Pert_up_T2 = pd.read_csv(r'Pert_up_T2.csv', skiprows=2)
 
+time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, 2, 100, 25, 500, plot=False)
+time_of_adaptation_down_T2 = lb.adaptation_time_using_sd(Pert_down_T2, 250, 2, 100, 25, 500, plot=False)
+time_of_adaptation_up_T1 = lb.adaptation_time_using_sd(Pert_up_T1, 250, 2, 100, 25, 500, plot=False)
+time_of_adaptation_up_T2 = lb.adaptation_time_using_sd(Pert_up_T2, 250, 2, 100, 25, 500, plot=False)
 
+time_of_adaptation_down_T1 = round(time_of_adaptation_down_T1,3)
+time_of_adaptation_down_T2 = round(time_of_adaptation_down_T2,3)
+time_of_adaptation_up_T1 = round(time_of_adaptation_up_T1,3)
+time_of_adaptation_up_T2 = round(time_of_adaptation_up_T2,3)
 
-time_of_adaptation_up_T1 = lb.adaptation_time_using_sd(Pert_up_T1, 250, 2, 100, 10, 500, plot=True)
-time_of_adaptation_up_T2 = lb.adaptation_time_using_sd(Pert_up_T2, 250, 2, 100, 10, 500, plot=True)
-time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, 2, 100, 10, 500, plot=True)
-time_of_adaptation_down_T2 = lb.adaptation_time_using_sd(Pert_down_T2, 250, 2, 100, 10, 500, plot=True)
+print('for 25 concecutive values')
+print(f'time_of_adaptation_down_T1 = {time_of_adaptation_down_T1}')
+print(f'time_of_adaptation_down_T2 = {time_of_adaptation_down_T2}')
+print(f'time_of_adaptation_up_T1 = {time_of_adaptation_up_T1}')
+print(f'time_of_adaptation_up_T2 = {time_of_adaptation_up_T2}')
+
+dist = {'Trials': ['T1_down','T2_down','T1_up','T2_up'],
+        'Time': [time_of_adaptation_down_T1,time_of_adaptation_down_T2, time_of_adaptation_up_T1, time_of_adaptation_up_T2]}
+df_excel = pd.DataFrame(dist)
+df_excel.to_excel('Results Perturbation.xlsx')
