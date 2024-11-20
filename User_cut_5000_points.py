@@ -7,7 +7,7 @@ from scipy.signal import decimate
 import lib
 from matplotlib.widgets import SpanSelector
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\4.Young'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\8.Young'
 os.chdir(directory_path)
 
 Isometric_80_T1_75Hz = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
@@ -29,7 +29,7 @@ def on_select(min_idx, max_idx, label):
     print(selected_indices[label][1]-selected_indices[label][0])
 
 
-fig, axs = plt.subplots(1, 2, figsize=(15, 5))
+fig, axs = plt.subplots(1, 2, figsize=(15, 4))
 
 axs[0].plot(Isometric_80_T1_75Hz['Performance'])
 axs[0].set_title('Isometric_80_T1')

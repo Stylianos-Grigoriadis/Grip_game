@@ -386,7 +386,7 @@ def asymptotes(df):
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
 
-def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, total_targets, plot=False):
+def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, total_targets, name, plot=False):
     """
     This function returns the time after the perturbation which was needed to adapt to the perturbation
     Parameters
@@ -415,6 +415,8 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     # Calculate the spatial error and the average and sd of the spatial error
     # after the first_values
     spatial_er = spatial_error(df)
+    plt.plot(spatial_er)
+    plt.show()
     mean = np.mean(spatial_er[first_values:perturbation_index])
     sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
 
@@ -437,10 +439,12 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
         plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":", label='std')
         plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='k', ls=":")
         plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
+        plt.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
+
         plt.legend()
         plt.ylabel('Force difference (kg)')
         plt.xlabel('Time (sec)')
-        plt.title('Spatial Error')
+        plt.title(f'{name} Spatial Error\ntime to adapt: {round(time_of_adaptation,3)} sec')
         plt.show()
 
 
