@@ -23,7 +23,7 @@ import numpy as np
 # Pert_up_T2
 
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\8.Young'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\9.Young'
 
 ID = os.path.basename(directory_path)
 excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Participants.xlsx')
@@ -91,5 +91,5 @@ def showing_plots(max_MVC,directory_path):
         plt.title(f'{file_name}, target = {list_percentages[i]}\naverage(200:600) = {round(np.mean(signal["Performance"][200:600]),3)}')
         plt.show()
 
-# renaming_process(index, directory_path)
-# showing_plots(max_MVC,directory_path)
+renaming_process(index, directory_path)
+showing_plots(max_MVC,directory_path)
