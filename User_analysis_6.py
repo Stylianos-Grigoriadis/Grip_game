@@ -136,7 +136,6 @@ Percentage_iso = [80,60,40,20,5]
 plt.plot(Percentage_iso, SaEn_T1, label='T1')
 plt.plot(Percentage_iso, SaEn_T2, label='T2')
 plt.plot(Percentage_iso, average_SaEn, label='average_SaEn', lw=4)
-
 plt.legend()
 plt.show()
 
