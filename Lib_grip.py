@@ -434,21 +434,28 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
                 break
 
     if plot == True:
-        plt.plot(df['Time'], spatial_er, label='Spatial Error')
-        plt.axhline(y=mean, c='k', label = 'Average')
-        plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":", label='std')
-        plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='k', ls=":")
-        plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
-        plt.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
+        try:
+            time_of_adaptation
+            plt.plot(df['Time'], spatial_er, label='Spatial Error')
+            plt.axhline(y=mean, c='k', label = 'Average')
+            plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":", label='std')
+            plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='k', ls=":")
+            plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
+            plt.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
 
-        plt.legend()
-        plt.ylabel('Force difference (kg)')
-        plt.xlabel('Time (sec)')
-        plt.title(f'{name} Spatial Error\ntime to adapt: {round(time_of_adaptation,3)} sec')
-        plt.show()
+            plt.legend()
+            plt.ylabel('Force difference (kg)')
+            plt.xlabel('Time (sec)')
+            plt.title(f'{name} Spatial Error\ntime to adapt: {round(time_of_adaptation,3)} sec')
+            plt.show()
+        except NameError:
+            print(f"No adaptation was evident for {name}")
 
+    try:
+        return time_of_adaptation
+    except NameError:
+        print(f"No adaptation was evident for {name}")
 
-    return time_of_adaptation
 
 def single_perturbation_generator(baseline, perturbation, data_num):
     baseline_array = np.full(int(data_num/2), baseline)
