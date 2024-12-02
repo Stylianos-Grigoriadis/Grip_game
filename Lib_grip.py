@@ -151,17 +151,28 @@ def read_kinvent(path):
     for i, string in enumerate(df[0]):
         if 'Repetition: ' in string:
             index.append(i)
-    df_set_1 = pd.read_csv(path, skiprows=2, nrows=index[1]-index[0] - 3)
-    df_set_2 = pd.read_csv(path, skiprows=index[1]+2, nrows=index[2]-index[1] -3)
-    df_set_3 = pd.read_csv(path, skiprows=index[2]+2)
-    # df_set_4 = pd.read_csv(path, skiprows=index[3]+2, nrows=index[4]-index[3] -3)
-    # df_set_5 = pd.read_csv(path, skiprows=index[4]+2)
+    print(index)
+    df_set_1 = pd.read_csv(path, skiprows=2, nrows=index[1] - 3)
+    df_set_2 = pd.read_csv(path, skiprows=index[1] + 2, nrows=index[2] - index[1] - 3)
+    df_set_3 = pd.read_csv(path, skiprows=index[2] + 2, nrows=index[3] - index[2] - 3)
+    df_set_4 = pd.read_csv(path, skiprows=index[3] + 2, nrows=index[4] - index[3] - 3)
+    df_set_5 = pd.read_csv(path, skiprows=index[4] + 2, nrows=index[5] - index[4] - 3)
+    df_set_6 = pd.read_csv(path, skiprows=index[5] + 2, nrows=index[6] - index[5] - 3)
+    df_set_7 = pd.read_csv(path, skiprows=index[6] + 2, nrows=index[7] - index[6] - 3)
+    df_set_8 = pd.read_csv(path, skiprows=index[7] + 2, nrows=index[8] - index[7] - 3)
+    df_set_9 = pd.read_csv(path, skiprows=index[8] + 2, nrows=index[9] - index[8] - 3)
+    df_set_10 = pd.read_csv(path, skiprows=index[9] + 2)
 
     return (df_set_1,
             df_set_2,
-            df_set_3)
-            # df_set_4,
-            # df_set_5)
+            df_set_3,
+            df_set_4,
+            df_set_5,
+            df_set_6,
+            df_set_7,
+            df_set_8,
+            df_set_9,
+            df_set_10)
 
 def pink_signal_generator(Number_of_data_points, upper_lim, lower_lim):
     """This function creates a pink noise signal as a np.array with N Number_of_data_points between upper_lim and lower_lim"""
@@ -292,7 +303,6 @@ def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
     new_df = pd.DataFrame(dist)
 
     return new_df
-
 
 def isolate_Target(df):
 
@@ -438,7 +448,7 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
             time_of_adaptation
             plt.plot(df['Time'], spatial_er, label='Spatial Error')
             plt.axhline(y=mean, c='k', label = 'Average')
-            plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":", label='std')
+            plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
             plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='k', ls=":")
             plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
             plt.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')

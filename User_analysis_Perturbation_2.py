@@ -7,7 +7,7 @@ import numpy as np
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\Strength data\Young.14'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\Strength data\Young.11'
 os.chdir(directory_path)
 
 Pert_down_T1 = pd.read_csv(r'Pert_down_T1.csv', skiprows=2)
@@ -15,10 +15,10 @@ Pert_down_T2 = pd.read_csv(r'Pert_down_T2.csv', skiprows=2)
 Pert_up_T1 = pd.read_csv(r'Pert_up_T1.csv', skiprows=2)
 Pert_up_T2 = pd.read_csv(r'Pert_up_T2.csv', skiprows=2)
 
-time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, 2, 100, 25, 500, 'Pert_down_T1',  plot=True)
-time_of_adaptation_down_T2 = lb.adaptation_time_using_sd(Pert_down_T2, 250, 2, 100, 25, 500, 'Pert_down_T2', plot=True)
-time_of_adaptation_up_T1 = lb.adaptation_time_using_sd(Pert_up_T1, 250, 2, 100, 25, 500, 'Pert_up_T1', plot=True)
-time_of_adaptation_up_T2 = lb.adaptation_time_using_sd(Pert_up_T2, 250, 2, 100, 25, 500, 'Pert_up_T2', plot=True)
+time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, 3, 100, 25, 500, 'Pert_down_T1',  plot=True)
+time_of_adaptation_down_T2 = lb.adaptation_time_using_sd(Pert_down_T2, 250, 3, 100, 25, 500, 'Pert_down_T2', plot=True)
+time_of_adaptation_up_T1 = lb.adaptation_time_using_sd(Pert_up_T1, 250, 3, 100, 25, 500, 'Pert_up_T1', plot=True)
+time_of_adaptation_up_T2 = lb.adaptation_time_using_sd(Pert_up_T2, 250, 3, 100, 25, 500, 'Pert_up_T2', plot=True)
 
 time_of_adaptation_down_T1 = round(time_of_adaptation_down_T1,3)
 time_of_adaptation_down_T2 = round(time_of_adaptation_down_T2,3)
