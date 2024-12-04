@@ -7,27 +7,48 @@ import os
 import Lib_grip as lb
 
 
-directory = r'C:\Users\Stylianos\Desktop\pilot grip training'
+directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data to test the new tablets'
 os.chdir(directory)
 
+big_tablet = pd.read_csv(r'Big tablet sine wave.csv', skiprows=2)
+small_tablet = pd.read_csv(r'Small tablet sine wave.csv', skiprows=2)
 
-set_1, set_2, set_3, set_4, set_5, set_6, set_7, set_8, set_9, set_10 = lb.read_kinvent(r'grip_Damianou__Anestis___28Νοε24_13_29_45.csv')
+print(big_tablet)
+print(small_tablet)
+print()
+print(len(big_tablet['Performance']))
+print(len(small_tablet['Performance']))
 
-print(set_1)
+for index,i in enumerate(big_tablet['Target']):
+    print(index)
+    print(i)
+print()
+print()
+print()
+print()
+print()
+print()
+print()
 
-sync_set_1 = lb.synchronization_of_Time_and_ClosestSampleTime(set_1, 65)
-sync_set_2 = lb.synchronization_of_Time_and_ClosestSampleTime(set_2, 65)
-sync_set_3 = lb.synchronization_of_Time_and_ClosestSampleTime(set_3, 65)
-sync_set_4 = lb.synchronization_of_Time_and_ClosestSampleTime(set_4, 65)
-sync_set_5 = lb.synchronization_of_Time_and_ClosestSampleTime(set_5, 65)
-sync_set_6 = lb.synchronization_of_Time_and_ClosestSampleTime(set_6, 65)
-sync_set_7 = lb.synchronization_of_Time_and_ClosestSampleTime(set_7, 65)
-sync_set_8 = lb.synchronization_of_Time_and_ClosestSampleTime(set_8, 65)
-sync_set_9 = lb.synchronization_of_Time_and_ClosestSampleTime(set_9, 65)
-print(sync_set_1)
-list_sets = [sync_set_1, sync_set_2, sync_set_3, sync_set_4, sync_set_5, sync_set_6, sync_set_7, sync_set_8, sync_set_9]
-for list in list_sets:
-    plt.plot(list['Performance'], label='Performance')
-    plt.plot(list['Target'], label='Target')
-    plt.legend()
-    plt.show()
+big_tablet_target = big_tablet['Target'].dropna().loc[big_tablet['Target'] != ''].tolist()
+small_tablet_target = small_tablet['Target'].dropna().loc[small_tablet['Target'] != ''].tolist()
+
+
+
+for index,i in enumerate(small_tablet['Target']):
+    print(index)
+    print(i)
+
+
+
+fig, ax1 = plt.subplots()
+
+ax1.plot(big_tablet['Performance'], label='big_tablet', c='orange')
+ax1.plot(small_tablet['Performance'], label='small_tablet', c='lightblue')
+
+ax2 = ax1.twiny()
+
+ax2.plot(big_tablet_target, label='big_tablet_target', c='red')
+ax2.plot(small_tablet_target, label='big_tablet_target', c='blue')
+
+plt.show()
