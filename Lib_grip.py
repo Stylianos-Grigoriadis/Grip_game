@@ -275,6 +275,7 @@ def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
     # Find the value of the column Time with the smallest absolute difference with the first value of ClosestSampleTime
     closest_value = df['Time'].iloc[(df['Time'] - df['ClosestSampleTime'][0]).abs().idxmin()]
 
+
     # Find the index of the column Time with the smallest absolute difference with the first value of ClosestSampleTime
     index = df.loc[df['Time'] == closest_value].index[0]
 
@@ -287,7 +288,11 @@ def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
 
     # Create a list of indices of column Time, where the values of list_ClosestSampleTime are equal with the values of
     # column Time
-    matching_indices = df.index[df['Time'].isin(list_ClosestSampleTime)].tolist()
+    # UPDATE: this may not work sometime if it does not use the below methodology
+    # matching_indices = df.index[df['Time'].isin(list_ClosestSampleTime)].tolist()
+
+    # If the above does not work use this
+    matching_indices = [(df['Time'] - value).abs().idxmin() for value in list_ClosestSampleTime]
 
     # Create the Performance, Time, and Target lists with the values at the right indices of the initial df
     Performance = [df['Performance'].iloc[i] for i in matching_indices]

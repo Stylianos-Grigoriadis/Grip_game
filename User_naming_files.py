@@ -23,10 +23,10 @@ import numpy as np
 # Pert_up_T2
 
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\Strength data\Old.1'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game Paper 1\Pilot Study 10\Data\Strength data\Old.17'
 
 ID = os.path.basename(directory_path)
-excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Participants.xlsx')
+excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game Paper 1\Pilot Study 10\Participants.xlsx')
 index = excel_for_names[excel_for_names['ID'] == ID].index[0]
 max_MVC = excel_for_names['MVC'][index]
 
@@ -86,9 +86,13 @@ def showing_plots(max_MVC,directory_path):
     for i, file in enumerate(files):
         file_name = os.path.basename(file)
         signal = pd.read_csv(file, skiprows=2)
-        plt.plot(signal['Performance'])
-        plt.axhline(y=list_percentages[i], color='red')
-        plt.title(f'{file_name}, target = {list_percentages[i]}\naverage(200:600) = {round(np.mean(signal["Performance"][200:600]),3)}')
+
+        signal_target = signal['Target'].dropna().loc[signal['Target'] != ''].tolist()
+        fig, ax1 = plt.subplots(figsize=(8, 6.4))
+        plt.title(f'{file_name}, target(100:200) = {round(np.average(signal_target[100:200]),3)}\naverage(200:600) = {round(np.mean(signal["Performance"][200:600]),3)}')
+        ax1.plot(signal['Performance'], label='Performance', c='orange')
+        ax2 = ax1.twiny()
+        ax2.plot(signal_target, label='Target', c='k')
         plt.show()
 
 renaming_process(index, directory_path)

@@ -7,7 +7,7 @@ import numpy as np
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\Strength data\Young.11'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game Paper 1\Pilot Study 10\Data\Strength data\Old.17'
 os.chdir(directory_path)
 
 Pert_down_T1 = pd.read_csv(r'Pert_down_T1.csv', skiprows=2)
@@ -35,4 +35,4 @@ dist = {'Trials': ['T1_down','T2_down','T1_up','T2_up'],
         'Time': [time_of_adaptation_down_T1,time_of_adaptation_down_T2, time_of_adaptation_up_T1, time_of_adaptation_up_T2]}
 df_excel = pd.DataFrame(dist)
 print(df_excel)
-# df_excel.to_excel('Results Perturbation.xlsx')
+df_excel.to_excel('Results Perturbation.xlsx')
