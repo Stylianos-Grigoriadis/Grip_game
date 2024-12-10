@@ -430,8 +430,8 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     # Calculate the spatial error and the average and sd of the spatial error
     # after the first_values
     spatial_er = spatial_error(df)
-    plt.plot(spatial_er)
-    plt.show()
+    # plt.plot(spatial_er)
+    # plt.show()
     mean = np.mean(spatial_er[first_values:perturbation_index])
     sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
 
@@ -467,11 +467,11 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
             print(f"No adaptation was evident for {name}")
 
     try:
+        time_of_adaptation
         return time_of_adaptation
-    except NameError:
-        print(f"No adaptation was evident for {name}")
-
-
+    except:
+        time_of_adaptation = None
+        return time_of_adaptation
 def single_perturbation_generator(baseline, perturbation, data_num):
     baseline_array = np.full(int(data_num/2), baseline)
     perturbation_array = np.full(int(data_num/2), perturbation)
