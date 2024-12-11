@@ -401,7 +401,7 @@ def asymptotes(df):
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
 
-def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, total_targets, name, plot=False):
+def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, total_targets, name, plot=False):
     """
     This function returns the time after the perturbation which was needed to adapt to the perturbation
     Parameters
@@ -430,10 +430,29 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     # Calculate the spatial error and the average and sd of the spatial error
     # after the first_values
     spatial_er = spatial_error(df)
-    # plt.plot(spatial_er)
-    # plt.show()
+
+    # The following 2 lines calculate the mean and sd of the 'first_values' before the perturbation
+    # to use for calculating the adaptation time
     mean = np.mean(spatial_er[first_values:perturbation_index])
     sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
+
+    # The following line calculate the lowest sd for 'values_for_sd' in overlapping window and
+    # the lowest sd is the sd used for further analysis
+    list_for_mean_and_sd = spatial_er[perturbation_index:]
+    list_of_sd = []
+    list_of_means = []
+    for i in range(len(list_for_mean_and_sd) - values_for_sd):
+        average = np.mean(list_for_mean_and_sd[i:i+values_for_sd])
+        sd = np.std(list_for_mean_and_sd[i:i+values_for_sd])
+        list_of_means.append(average)
+        list_of_sd.append(sd)
+    min_sd = min(list_of_sd)
+    min_sd_index = list_of_sd.index(min_sd)
+    average_at_min_sd = list_of_means[min_sd_index]
+    print('Sd')
+    print(min_sd)
+    # plt.plot(list_of_sd)
+    # plt.show()
 
     # Create an array with consecutive_values equal number
     consecutive_values_list = np.arange(0,consecutive_values,1)
@@ -442,8 +461,8 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     for i in range(len(spatial_er) - consecutive_values+1):
         if i >= perturbation_index:
 
-            if (all(spatial_er[i + j] < mean + sd_before_perturbation * sd_factor for j in consecutive_values_list) and
-                all(spatial_er[i + j] > mean - sd_before_perturbation * sd_factor for j in consecutive_values_list)
+            if (all(spatial_er[i + j] < average_at_min_sd + min_sd * sd_factor for j in consecutive_values_list) and
+                all(spatial_er[i + j] > average_at_min_sd - min_sd * sd_factor for j in consecutive_values_list)
             ):
                 time_of_adaptation = df['Time'][i] - df['Time'][perturbation_index]
                 break
@@ -452,9 +471,9 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
         try:
             time_of_adaptation
             plt.plot(df['Time'], spatial_er, label='Spatial Error')
-            plt.axhline(y=mean, c='k', label = 'Average')
-            plt.axhline(y=mean + sd_before_perturbation*sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
-            plt.axhline(y=mean - sd_before_perturbation*sd_factor, c='k', ls=":")
+            plt.axhline(y=average_at_min_sd, c='k', label = 'Average')
+            plt.axhline(y=average_at_min_sd + min_sd*sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
+            plt.axhline(y=average_at_min_sd - min_sd*sd_factor, c='k', ls=":")
             plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
             plt.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
 
