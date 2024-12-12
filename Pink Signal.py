@@ -37,7 +37,9 @@ def change_sd_and_average(signal, desired_sd, desired_average):
     average_signal = np.mean(signal)
 
     signal = signal + desired_average - average_signal
-    signal = lb.Perc(signal, 100, 0)
+
+    # signal = lb.Perc(signal, 100, 0)
+
     return signal
 
 
