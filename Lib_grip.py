@@ -257,13 +257,14 @@ def total_force(signal):
     total = np.sum(signal)
     return total
 
-def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
+def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N, trial_time):
     """ This function takes a dataframe and converts it so that the Time column and the ClosestSampleTime column
         are matched. This is a method to synchronize the two time stamps
     Parameters
     Input
             df          :   the Dataframe
             Target_N    :   the total number of targets
+            trial_time  :   the time of the trial in seconds
     Output
             new_df      :   the new Dataframe
 
@@ -275,16 +276,17 @@ def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N):
     # Find the value of the column Time with the smallest absolute difference with the first value of ClosestSampleTime
     closest_value = df['Time'].iloc[(df['Time'] - df['ClosestSampleTime'][0]).abs().idxmin()]
 
-
     # Find the index of the column Time with the smallest absolute difference with the first value of ClosestSampleTime
     index = df.loc[df['Time'] == closest_value].index[0]
 
     # Create a list of ClosestSampleTime with the initial value being the value of Time with the smallest difference
-    # with the first value of ClosestSampleTime
+    # with the first value of ClosestSampleTime. To do so you need the step with which you will have values. To
+    # calculate this you need the result of trial_time/Targets_N
+    step = trial_time/Targets_N
     initial_value_time = df['Time'][index]
     list_ClosestSampleTime = [initial_value_time]
     for i in range(Targets_N - 1):
-        list_ClosestSampleTime.append(round(list_ClosestSampleTime[-1] + 0.04, 3))
+        list_ClosestSampleTime.append(round(list_ClosestSampleTime[-1] + step, 3))
 
     # Create a list of indices of column Time, where the values of list_ClosestSampleTime are equal with the values of
     # column Time
