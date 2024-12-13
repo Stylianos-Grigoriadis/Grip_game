@@ -30,7 +30,7 @@ def outputs(white, pink, sine):
     print(df)
 
 def change_sd_and_average(signal, desired_sd, desired_average):
-    signal = lb.Perc(signal,100,0)
+    # signal = lb.Perc(signal, 50, 0)
     sd_signal = np.std(signal)
 
     signal = signal * desired_sd / sd_signal
@@ -38,7 +38,6 @@ def change_sd_and_average(signal, desired_sd, desired_average):
 
     signal = signal + desired_average - average_signal
 
-    # signal = lb.Perc(signal, 100, 0)
 
     return signal
 
@@ -50,9 +49,12 @@ t = np.linspace(0, num_points / sampling_rate, num_points)  # time vector
 
 
 white_noise = np.random.normal(0, 1, num_points)
-pink_noise  = cn.powerlaw_psd_gaussian(1, num_points)
+pink_noise = cn.powerlaw_psd_gaussian(1, num_points)
 sine_wave = np.sin(2 * np.pi * frequency * t)
-
+# plt.plot(white_noise, label='white_noise')
+# plt.plot(pink_noise, label='pink_noise')
+# plt.legend()
+# plt.show()
 # white_noise_0_1 = lb.Perc(white_noise,1,0)
 # pink_noise_0_1 = lb.Perc(pink_noise,1,0)
 # sine_wave_0_1 = lb.Perc(sine_wave,1,0)
@@ -79,11 +81,12 @@ sine_wave = np.sin(2 * np.pi * frequency * t)
 # pink_noise_final = lb.Perc(pink_noise_0_1_std2,100,0)
 # sine_wave_final = lb.Perc(sine_wave_0_1_std2,100,0)
 
-desired_sd = 13
+desired_sd = 18
 desired_average = 50
-white_noise_final = change_sd_and_average(white_noise, desired_sd,desired_average)
-pink_noise_final = change_sd_and_average(pink_noise, desired_sd,desired_average)
-sine_wave_final = change_sd_and_average(sine_wave, desired_sd,desired_average)
+
+white_noise_final = change_sd_and_average(white_noise, desired_sd, desired_average)
+pink_noise_final = change_sd_and_average(pink_noise, desired_sd, desired_average)
+sine_wave_final = change_sd_and_average(sine_wave, desired_sd, desired_average)
 
 
 print('***Before conversion')
