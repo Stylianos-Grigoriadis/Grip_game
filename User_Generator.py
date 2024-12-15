@@ -14,10 +14,10 @@ import Lib_grip as lb
 
 
 # Create a sine signal
-sine_signal = lb.sine_signal_generator(400,0.1,100,0)
+sine_signal = lb.sine_signal_generator(650,0.2,100,0)
 plt.plot(sine_signal)
 plt.show()
-lb.create_txt_file(sine_signal,'Sine signal N400 freq0.1 Max100', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 7\Signals')
+lb.create_txt_file(sine_signal,'Sine signal N650 freq0.2 Max100', r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip training\Pilot study 1\Signals')
 
 
 # Create an isometric signal

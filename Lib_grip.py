@@ -22,14 +22,14 @@ def DFA(variable):
     n, F = pydfa.computeFlucVec(winSizes, revSeg=revSeg, polOrd=polOrd)
 
     H, H_intercept = pydfa.fitFlucVec()
-    # plt.plot(np.log(n), np.log(F), 'ro')
-    # plt.plot(np.log(n), H_intercept + H * np.log(n), 'k-', label='H = {:.2f}'.format(H))
-    # plt.xlabel('ln(n)', fontsize=14)
-    # plt.ylabel('ln(F(n))', fontsize=14)
-    # plt.title('DFA', fontsize=14)
-    # plt.legend(loc=0, fontsize=14)
-    # #plt.clf()
-    # plt.show()
+    plt.plot(np.log(n), np.log(F), 'ro')
+    plt.plot(np.log(n), H_intercept + H * np.log(n), 'k-', label='H = {:.2f}'.format(H))
+    plt.xlabel('ln(n)', fontsize=14)
+    plt.ylabel('ln(F(n))', fontsize=14)
+    plt.title('DFA', fontsize=14)
+    plt.legend(loc=0, fontsize=14)
+    #plt.clf()
+    plt.show()
     return H
 
 def Ent_Ap(data, dim, r):
@@ -403,7 +403,7 @@ def asymptotes(df):
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
 
-def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, total_targets, name, plot=False):
+def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, total_targets, name, trial_time, plot=False):
     """
     This function returns the time after the perturbation which was needed to adapt to the perturbation
     Parameters
@@ -427,7 +427,7 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     """
     # First synchronize the Time and ClosestSampleTime columns and create a new df with
     # only the synchronized values
-    df = synchronization_of_Time_and_ClosestSampleTime(df, total_targets)
+    df = synchronization_of_Time_and_ClosestSampleTime(df, total_targets, trial_time)
 
     # Calculate the spatial error and the average and sd of the spatial error
     # after the first_values
@@ -482,7 +482,7 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
             plt.legend()
             plt.ylabel('Force difference (kg)')
             plt.xlabel('Time (sec)')
-            plt.title(f'{name} Spatial Error\ntime to adapt: {round(time_of_adaptation,3)} sec')
+            plt.title(f'{name}\ntime for adaptation: {round(time_of_adaptation,3)} sec')
             plt.show()
         except NameError:
             print(f"No adaptation was evident for {name}")

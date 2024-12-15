@@ -4,7 +4,8 @@ import pandas as pd
 import colorednoise as cn
 import Lib_grip as lb
 
-
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.size'] = 16
 
 def outputs(white, pink, sine):
     white_average = np.mean(white)
@@ -42,8 +43,8 @@ def change_sd_and_average(signal, desired_sd, desired_average):
     return signal
 
 
-num_points = 1000
-frequency = 0.5  # frequency of sine wave in Hz
+num_points = 650
+frequency = 0.9  # frequency of sine wave in Hz
 sampling_rate = 100  # sampling rate in Hz
 t = np.linspace(0, num_points / sampling_rate, num_points)  # time vector
 
@@ -81,12 +82,12 @@ sine_wave = np.sin(2 * np.pi * frequency * t)
 # pink_noise_final = lb.Perc(pink_noise_0_1_std2,100,0)
 # sine_wave_final = lb.Perc(sine_wave_0_1_std2,100,0)
 
-desired_sd = 18
+desired_sd = 15
 desired_average = 50
 
 white_noise_final = change_sd_and_average(white_noise, desired_sd, desired_average)
 pink_noise_final = change_sd_and_average(pink_noise, desired_sd, desired_average)
-sine_wave_final = change_sd_and_average(sine_wave, desired_sd, desired_average)
+sine_wave_final = change_sd_and_average(sine_wave, 2*desired_sd, desired_average)
 
 
 print('***Before conversion')
@@ -97,8 +98,27 @@ outputs(white_noise_final, pink_noise_final, sine_wave_final)
 plt.plot(white_noise_final, label='white_noise', c='grey')
 plt.plot(pink_noise_final, label='pink_noise', c='pink')
 plt.plot(sine_wave_final, label='sine_wave', c='red')
+plt.ylim(0,100)
 plt.legend()
 plt.show()
+
+# lb.create_txt_file(sine_wave_final, 'sine_wave_final_650',r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip training\Pilot study 1\Signals')
+# lb.create_txt_file(pink_noise_final, 'pink_noise_final_650',r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip training\Pilot study 1\Signals')
+#
+# start_values = np.full(50, 100)
+# declining_values = np.linspace(100, 0, 500)
+# declining_signal = np.concatenate([start_values, declining_values])
+#
+# start_values = np.full(50, 0)
+# declining_values = np.linspace(0, 100, 500)
+# inclining_signal = np.concatenate([start_values, declining_values])
+#
+# plt.plot(inclining_signal)
+# plt.plot(declining_signal)
+# plt.show()
+
+# lb.create_txt_file(declining_signal, 'declining_signal',r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip training\Pilot study 1\Signals')
+# lb.create_txt_file(inclining_signal, 'inclining_signal',r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip training\Pilot study 1\Signals')
 
 
 
