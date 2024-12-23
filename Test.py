@@ -7,35 +7,54 @@ import os
 import glob
 import Lib_grip as lb
 
+for i in range(1,19):
+    try:
+        directory = rf'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Old.{i}'
+        os.chdir(directory)
 
-# Warm_up_1
-# Warm_up_2
-# Warm_up_3
-# Isometric_05_T1
-# Isometric_05_T2
-# Isometric_20_T1
-# Isometric_20_T2
-# Isometric_40_T1
-# Isometric_40_T2
-# Isometric_60_T1
-# Isometric_60_T2
-# Isometric_80_T1
-# Isometric_80_T2
-# Pert_down_T1
-# Pert_down_T2
-# Pert_up_T1
-# Pert_up_T2
-directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game Paper 1\Pilot Study 10\Data\Strength data\Old.8'
-signal = pd.read_csv(directory+r'\grip_strength_Mpoura_Vasiliki__05Dec24_10_31_34.csv', skiprows=2)
-print(signal)
-signal_target = signal['Target'].dropna().loc[signal['Target'] != ''].tolist()
-print(signal_target)
-fig, ax1 = plt.subplots()
+        Isometric_80_T1 = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
+        Isometric_80_T2 = pd.read_csv(r'Isometric_80_T2.csv', skiprows=2)
+        Isometric_60_T1 = pd.read_csv(r'Isometric_60_T1.csv', skiprows=2)
+        Isometric_60_T2 = pd.read_csv(r'Isometric_60_T2.csv', skiprows=2)
+        Isometric_40_T1 = pd.read_csv(r'Isometric_40_T1.csv', skiprows=2)
+        Isometric_40_T2 = pd.read_csv(r'Isometric_40_T2.csv', skiprows=2)
+        Isometric_20_T1 = pd.read_csv(r'Isometric_20_T1.csv', skiprows=2)
+        Isometric_20_T2 = pd.read_csv(r'Isometric_20_T2.csv', skiprows=2)
+        Isometric_5_T1 = pd.read_csv(r'Isometric_05_T1.csv', skiprows=2)
+        Isometric_5_T2 = pd.read_csv(r'Isometric_05_T2.csv', skiprows=2)
+        Pert_down_T1 = pd.read_csv(r'Pert_down_T1.csv', skiprows=2)
+        Pert_down_T2 = pd.read_csv(r'Pert_down_T2.csv', skiprows=2)
+        Pert_up_T1 = pd.read_csv(r'Pert_up_T1.csv', skiprows=2)
+        Pert_up_T2 = pd.read_csv(r'Pert_up_T2.csv', skiprows=2)
+        print(rf'Old {i}')
+        print(rf"Isometric_80_T1: {len(Isometric_80_T1['Performance'])}")
+        print(rf"Isometric_80_T2: {len(Isometric_80_T2['Performance'])}")
+        print(rf"Isometric_60_T1: {len(Isometric_60_T1['Performance'])}")
+        print(rf"Isometric_60_T2: {len(Isometric_60_T2['Performance'])}")
+        print(rf"Isometric_40_T1: {len(Isometric_40_T1['Performance'])}")
+        print(rf"Isometric_40_T2: {len(Isometric_40_T2['Performance'])}")
+        print(rf"Isometric_20_T1: {len(Isometric_20_T1['Performance'])}")
+        print(rf"Isometric_20_T2: {len(Isometric_20_T2['Performance'])}")
+        print(rf"Isometric_5_T1: {len(Isometric_5_T1['Performance'])}")
+        print(rf"Isometric_5_T2: {len(Isometric_5_T2['Performance'])}")
+        print(rf"Pert_down_T1: {len(Pert_down_T1['Performance'])}")
+        print(rf"Pert_down_T2: {len(Pert_down_T2['Performance'])}")
+        print(rf"Pert_up_T1: {len(Pert_up_T1['Performance'])}")
+        print(rf"Pert_up_T2: {len(Pert_up_T2['Performance'])}")
 
-ax1.plot(signal['Performance'], label='big_tablet', c='orange')
-ax2 = ax1.twiny()
-ax2.plot(signal_target, label='big_tablet_target', c='red')
-plt.show()
+    except:
+        pass
+    # directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game Paper 1\Pilot Study 10\Data\Strength data\Old.8'
+# signal = pd.read_csv(directory+r'\grip_strength_Mpoura_Vasiliki__05Dec24_10_31_34.csv', skiprows=2)
+# print(signal)
+# signal_target = signal['Target'].dropna().loc[signal['Target'] != ''].tolist()
+# print(signal_target)
+# fig, ax1 = plt.subplots()
+#
+# ax1.plot(signal['Performance'], label='big_tablet', c='orange')
+# ax2 = ax1.twiny()
+# ax2.plot(signal_target, label='big_tablet_target', c='red')
+# plt.show()
 
 # directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip  game Paper 1\Pilot Study 10\Data\Strength data\Old.3'
 # # os.chdir(directory)

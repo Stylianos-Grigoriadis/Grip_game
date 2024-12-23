@@ -3,105 +3,74 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import numpy as np
+import glob
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 8\Data\Stylianos 10-16-2024'
-os.chdir(directory_path)
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.size'] = 16
 
-Isometric_80_T1 = pd.read_csv(r'Iso_80_1.csv', skiprows=2)
-Isometric_80_T2 = pd.read_csv(r'Iso_80_2.csv', skiprows=2)
-Isometric_80_T3 = pd.read_csv(r'Iso_80_3.csv', skiprows=2)
-Isometric_60_T1 = pd.read_csv(r'Iso_60_1.csv', skiprows=2)
-Isometric_60_T2 = pd.read_csv(r'Iso_60_2.csv', skiprows=2)
-Isometric_60_T3 = pd.read_csv(r'Iso_60_3.csv', skiprows=2)
-Isometric_40_T1 = pd.read_csv(r'Iso_40_1.csv', skiprows=2)
-Isometric_40_T2 = pd.read_csv(r'Iso_40_2.csv', skiprows=2)
-Isometric_40_T3 = pd.read_csv(r'Iso_40_3.csv', skiprows=2)
-Isometric_20_T1 = pd.read_csv(r'Iso_20_1.csv', skiprows=2)
-Isometric_20_T2 = pd.read_csv(r'Iso_20_2.csv', skiprows=2)
-Isometric_20_T3 = pd.read_csv(r'Iso_20_3.csv', skiprows=2)
-Isometric_5_T1 = pd.read_csv(r'Iso_5_1.csv', skiprows=2)
-Isometric_5_T2 = pd.read_csv(r'Iso_5_2.csv', skiprows=2)
-Isometric_5_T3 = pd.read_csv(r'Iso_5_3.csv', skiprows=2)
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data'
+files = glob.glob(os.path.join(directory_path, "*"))
+ID_list = []
+Sd_Isometric_80_T1_list = []
+Sd_Isometric_80_T2_list = []
+Sd_Isometric_60_T1_list = []
+Sd_Isometric_60_T2_list = []
+Sd_Isometric_40_T1_list = []
+Sd_Isometric_40_T2_list = []
+Sd_Isometric_20_T1_list = []
+Sd_Isometric_20_T2_list = []
+Sd_Isometric_5_T1_list = []
+Sd_Isometric_5_T2_list = []
 
+CoV_Isometric_80_T1_list = []
+CoV_Isometric_80_T2_list = []
+CoV_Isometric_60_T1_list = []
+CoV_Isometric_60_T2_list = []
+CoV_Isometric_40_T1_list = []
+CoV_Isometric_40_T2_list = []
+CoV_Isometric_20_T1_list = []
+CoV_Isometric_20_T2_list = []
+CoV_Isometric_5_T1_list = []
+CoV_Isometric_5_T2_list = []
 
+SaEn_Isometric_80_T1_list = []
+SaEn_Isometric_80_T2_list = []
+SaEn_Isometric_60_T1_list = []
+SaEn_Isometric_60_T2_list = []
+SaEn_Isometric_40_T1_list = []
+SaEn_Isometric_40_T2_list = []
+SaEn_Isometric_20_T1_list = []
+SaEn_Isometric_20_T2_list = []
+SaEn_Isometric_5_T1_list = []
+SaEn_Isometric_5_T2_list = []
+for file in files:
+    os.chdir(file)
+    ID = os.path.basename(file)
+    ID_list.append(ID)
+    print(ID)
 
-fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+    if ID ==
+    Isometric_80_T1 = pd.read_csv(r'Iso_80_1.csv', skiprows=2)
+    Isometric_80_T2 = pd.read_csv(r'Iso_80_2.csv', skiprows=2)
+    Isometric_60_T1 = pd.read_csv(r'Iso_60_1.csv', skiprows=2)
+    Isometric_60_T2 = pd.read_csv(r'Iso_60_2.csv', skiprows=2)
+    Isometric_40_T1 = pd.read_csv(r'Iso_40_1.csv', skiprows=2)
+    Isometric_40_T2 = pd.read_csv(r'Iso_40_2.csv', skiprows=2)
+    Isometric_20_T1 = pd.read_csv(r'Iso_20_1.csv', skiprows=2)
+    Isometric_20_T2 = pd.read_csv(r'Iso_20_2.csv', skiprows=2)
+    Isometric_5_T1 = pd.read_csv(r'Iso_5_1.csv', skiprows=2)
+    Isometric_5_T2 = pd.read_csv(r'Iso_5_2.csv', skiprows=2)
 
-axs[0].plot(Isometric_80_T1['Performance'])
-axs[0].set_title('Isometric_80_T1')
-
-axs[1].plot(Isometric_80_T2['Performance'])
-axs[1].set_title('Isometric_80_T2')
-
-axs[2].plot(Isometric_80_T3['Performance'])
-axs[2].set_title('Isometric_80_T3')
-plt.show()
-
-fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-
-axs[0].plot(Isometric_60_T1['Performance'])
-axs[0].set_title('Isometric_60_T1')
-
-axs[1].plot(Isometric_60_T2['Performance'])
-axs[1].set_title('Isometric_60_T2')
-
-axs[2].plot(Isometric_60_T3['Performance'])
-axs[2].set_title('Isometric_60_T3')
-plt.show()
-
-fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-
-axs[0].plot(Isometric_40_T1['Performance'])
-axs[0].set_title('Isometric_40_T1')
-
-axs[1].plot(Isometric_40_T2['Performance'])
-axs[1].set_title('Isometric_40_T2')
-
-axs[2].plot(Isometric_40_T3['Performance'])
-axs[2].set_title('Isometric_40_T3')
-plt.show()
-
-fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-
-axs[0].plot(Isometric_20_T1['Performance'])
-axs[0].set_title('Isometric_20_T1')
-
-axs[1].plot(Isometric_20_T2['Performance'])
-axs[1].set_title('Isometric_20_T2')
-
-axs[2].plot(Isometric_20_T3['Performance'])
-axs[2].set_title('Isometric_20_T3')
-
-plt.show()
-
-fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-
-axs[0].plot(Isometric_5_T1['Performance'])
-axs[0].set_title('Isometric_5_T1')
-
-axs[1].plot(Isometric_5_T2['Performance'])
-axs[1].set_title('Isometric_5_T2')
-
-axs[2].plot(Isometric_5_T3['Performance'])
-axs[2].set_title('Isometric_5_T3')
-plt.show()
-
-
-SaEn_Isometric_80_T1 = lb.Ent_Samp(Isometric_80_T1['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_80_T2 = lb.Ent_Samp(Isometric_80_T2['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_80_T3 = lb.Ent_Samp(Isometric_80_T3['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_60_T1 = lb.Ent_Samp(Isometric_60_T1['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_60_T2 = lb.Ent_Samp(Isometric_60_T2['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_60_T3 = lb.Ent_Samp(Isometric_60_T3['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_40_T1 = lb.Ent_Samp(Isometric_40_T1['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_40_T2 = lb.Ent_Samp(Isometric_40_T2['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_40_T3 = lb.Ent_Samp(Isometric_40_T3['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_20_T1 = lb.Ent_Samp(Isometric_20_T1['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_20_T2 = lb.Ent_Samp(Isometric_20_T2['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_20_T3 = lb.Ent_Samp(Isometric_20_T3['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_5_T1 = lb.Ent_Samp(Isometric_5_T1['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_5_T2 = lb.Ent_Samp(Isometric_5_T2['Performance'][2000:7000], 2,0.2)
-SaEn_Isometric_5_T3 = lb.Ent_Samp(Isometric_5_T3['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_80_T1 = lb.Ent_Samp(Isometric_80_T1['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_80_T2 = lb.Ent_Samp(Isometric_80_T2['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_60_T1 = lb.Ent_Samp(Isometric_60_T1['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_60_T2 = lb.Ent_Samp(Isometric_60_T2['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_40_T1 = lb.Ent_Samp(Isometric_40_T1['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_40_T2 = lb.Ent_Samp(Isometric_40_T2['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_20_T1 = lb.Ent_Samp(Isometric_20_T1['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_20_T2 = lb.Ent_Samp(Isometric_20_T2['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_5_T1 = lb.Ent_Samp(Isometric_5_T1['Performance'][2000:7000], 2,0.2)
+    SaEn_Isometric_5_T2 = lb.Ent_Samp(Isometric_5_T2['Performance'][2000:7000], 2,0.2)
 
 Sd_Isometric_80_T1 = np.std(Isometric_80_T1['Performance'][2000:7000])
 Sd_Isometric_80_T2 = np.std(Isometric_80_T2['Performance'][2000:7000])
