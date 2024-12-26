@@ -5,10 +5,13 @@ import os
 import numpy as np
 from scipy.signal import decimate
 import lib
+import glob
 
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\Strength data\Old.1'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Old.1'
 os.chdir(directory_path)
+ID = os.path.basename(directory_path)
+print(ID)
 
 Isometric_80_T1_75Hz = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
 Isometric_80_T2_75Hz = pd.read_csv(r'Isometric_80_T2.csv', skiprows=2)
@@ -101,6 +104,17 @@ std_iso_20_T2_75Hz = np.std(iso_20_T2_75Hz)
 std_iso_05_T1_75Hz = np.std(iso_05_T1_75Hz)
 std_iso_05_T2_75Hz = np.std(iso_05_T2_75Hz)
 
+CoV_iso_80_T1_75Hz = (np.std(iso_80_T1_75Hz)/np.mean(iso_80_T1_75Hz))*100
+CoV_iso_80_T2_75Hz = (np.std(iso_80_T2_75Hz)/np.mean(iso_80_T2_75Hz))*100
+CoV_iso_60_T1_75Hz = (np.std(iso_60_T1_75Hz)/np.mean(iso_60_T1_75Hz))*100
+CoV_iso_60_T2_75Hz = (np.std(iso_60_T2_75Hz)/np.mean(iso_60_T2_75Hz))*100
+CoV_iso_40_T1_75Hz = (np.std(iso_40_T1_75Hz)/np.mean(iso_40_T1_75Hz))*100
+CoV_iso_40_T2_75Hz = (np.std(iso_40_T2_75Hz)/np.mean(iso_40_T2_75Hz))*100
+CoV_iso_20_T1_75Hz = (np.std(iso_20_T1_75Hz)/np.mean(iso_20_T1_75Hz))*100
+CoV_iso_20_T2_75Hz = (np.std(iso_20_T2_75Hz)/np.mean(iso_20_T2_75Hz))*100
+CoV_iso_05_T1_75Hz = (np.std(iso_05_T1_75Hz)/np.mean(iso_05_T1_75Hz))*100
+CoV_iso_05_T2_75Hz = (np.std(iso_05_T2_75Hz)/np.mean(iso_05_T2_75Hz))*100
+
 SaEn_iso_80_T1_75Hz = lb.Ent_Samp(iso_80_T1_75Hz, 2, 0.2)
 SaEn_iso_80_T2_75Hz = lb.Ent_Samp(iso_80_T2_75Hz, 2, 0.2)
 SaEn_iso_60_T1_75Hz = lb.Ent_Samp(iso_60_T1_75Hz, 2, 0.2)
@@ -111,6 +125,17 @@ SaEn_iso_20_T1_75Hz = lb.Ent_Samp(iso_20_T1_75Hz, 2, 0.2)
 SaEn_iso_20_T2_75Hz = lb.Ent_Samp(iso_20_T2_75Hz, 2, 0.2)
 SaEn_iso_05_T1_75Hz = lb.Ent_Samp(iso_05_T1_75Hz, 2, 0.2)
 SaEn_iso_05_T2_75Hz = lb.Ent_Samp(iso_05_T2_75Hz, 2, 0.2)
+
+DFA_iso_80_T1_75Hz = lb.DFA(iso_80_T1_75Hz)
+DFA_iso_80_T2_75Hz = lb.DFA(iso_80_T2_75Hz)
+DFA_iso_60_T1_75Hz = lb.DFA(iso_60_T1_75Hz)
+DFA_iso_60_T2_75Hz = lb.DFA(iso_60_T2_75Hz)
+DFA_iso_40_T1_75Hz = lb.DFA(iso_40_T1_75Hz)
+DFA_iso_40_T2_75Hz = lb.DFA(iso_40_T2_75Hz)
+DFA_iso_20_T1_75Hz = lb.DFA(iso_20_T1_75Hz)
+DFA_iso_20_T2_75Hz = lb.DFA(iso_20_T2_75Hz)
+DFA_iso_05_T1_75Hz = lb.DFA(iso_05_T1_75Hz)
+DFA_iso_05_T2_75Hz = lb.DFA(iso_05_T2_75Hz)
 
 SaEn_T1 = [SaEn_iso_80_T1_75Hz, SaEn_iso_60_T1_75Hz, SaEn_iso_40_T1_75Hz, SaEn_iso_20_T1_75Hz, SaEn_iso_05_T1_75Hz]
 SaEn_T2 = [SaEn_iso_80_T2_75Hz, SaEn_iso_60_T2_75Hz, SaEn_iso_40_T2_75Hz, SaEn_iso_20_T2_75Hz, SaEn_iso_05_T2_75Hz]
@@ -129,6 +154,24 @@ average_std = [np.mean((std_iso_80_T1_75Hz, std_iso_80_T2_75Hz)),
                 np.mean((std_iso_20_T1_75Hz, std_iso_20_T2_75Hz)),
                 np.mean((std_iso_05_T1_75Hz, std_iso_05_T2_75Hz))]
 
+CoV_T1 = [CoV_iso_80_T1_75Hz, CoV_iso_60_T1_75Hz, CoV_iso_40_T1_75Hz, CoV_iso_20_T1_75Hz, CoV_iso_05_T1_75Hz]
+CoV_T2 = [CoV_iso_80_T2_75Hz, CoV_iso_60_T2_75Hz, CoV_iso_40_T2_75Hz, CoV_iso_20_T2_75Hz, CoV_iso_05_T2_75Hz]
+
+average_CoV = [np.mean((CoV_iso_80_T1_75Hz, CoV_iso_80_T2_75Hz)),
+                np.mean((CoV_iso_60_T1_75Hz, CoV_iso_60_T2_75Hz)),
+                np.mean((CoV_iso_40_T1_75Hz, CoV_iso_40_T2_75Hz)),
+                np.mean((CoV_iso_20_T1_75Hz, CoV_iso_20_T2_75Hz)),
+                np.mean((CoV_iso_05_T1_75Hz, CoV_iso_05_T2_75Hz))]
+
+DFA_T1 = [DFA_iso_80_T1_75Hz, DFA_iso_60_T1_75Hz, DFA_iso_40_T1_75Hz, DFA_iso_20_T1_75Hz, DFA_iso_05_T1_75Hz]
+DFA_T2 = [DFA_iso_80_T2_75Hz, DFA_iso_60_T2_75Hz, DFA_iso_40_T2_75Hz, DFA_iso_20_T2_75Hz, DFA_iso_05_T2_75Hz]
+
+average_DFA = [np.mean((DFA_iso_80_T1_75Hz, DFA_iso_80_T2_75Hz)),
+                np.mean((DFA_iso_60_T1_75Hz, DFA_iso_60_T2_75Hz)),
+                np.mean((DFA_iso_40_T1_75Hz, DFA_iso_40_T2_75Hz)),
+                np.mean((DFA_iso_20_T1_75Hz, DFA_iso_20_T2_75Hz)),
+                np.mean((DFA_iso_05_T1_75Hz, DFA_iso_05_T2_75Hz))]
+
 
 Percentage_iso = [80,60,40,20,5]
 
@@ -145,6 +188,18 @@ plt.plot(Percentage_iso, average_std, label='average_std', lw=4)
 plt.legend()
 plt.show()
 
+plt.plot(Percentage_iso, CoV_T1, label='T1')
+plt.plot(Percentage_iso, CoV_T2, label='T2')
+plt.plot(Percentage_iso, average_CoV, label='average_CoV', lw=4)
+plt.legend()
+plt.show()
+
+plt.plot(Percentage_iso, DFA_T1, label='T1')
+plt.plot(Percentage_iso, DFA_T2, label='T2')
+plt.plot(Percentage_iso, average_DFA, label='average_DFA', lw=4)
+plt.legend()
+plt.show()
+
 
 excel = {'Isometrics': (80, 60, 40, 20, 5),
             'SaEn_T1': SaEn_T1,
@@ -152,9 +207,15 @@ excel = {'Isometrics': (80, 60, 40, 20, 5),
             'SaEn_Average': average_SaEn,
             'std_T1': std_T1,
             'std_T2': std_T2,
-            'std_Average': average_std
+            'std_Average': average_std,
+            'CoV_T1': CoV_T1,
+            'CoV_T2': CoV_T2,
+            'CoV_Average': average_CoV,
+            'DFA_T1': DFA_T1,
+            'DFA_T2': DFA_T2,
+            'DFA_Average': average_DFA
          }
 
 df_excel = pd.DataFrame(excel)
 print(df_excel)
-df_excel.to_excel('Results Isometric.xlsx')
+df_excel.to_excel(rf'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric\{ID}.xlsx')

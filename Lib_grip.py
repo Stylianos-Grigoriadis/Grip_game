@@ -15,12 +15,14 @@ def DFA(variable):
 
     pydfa = fathon.DFA(a)
 
-    winSizes = fu.linRangeByStep(start=4, end=int(len(variable)/4))
+    winSizes = fu.linRangeByStep(start=4, end=int(len(variable)/1))
+    print(winSizes)
     revSeg = True
     polOrd = 1
 
     n, F = pydfa.computeFlucVec(winSizes, revSeg=revSeg, polOrd=polOrd)
-
+    print(n)
+    print(np.log(n))
     H, H_intercept = pydfa.fitFlucVec()
     plt.plot(np.log(n), np.log(F), 'ro')
     plt.plot(np.log(n), H_intercept + H * np.log(n), 'k-', label='H = {:.2f}'.format(H))

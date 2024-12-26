@@ -7,11 +7,11 @@ from scipy.signal import decimate
 import lib
 from matplotlib.widgets import SpanSelector
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Data\Strength data\Old.1'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Old.6'
 os.chdir(directory_path)
 # Determine the MVC and the different percentages
 ID = os.path.basename(directory_path)
-excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game\Pilot Study 10\Participants.xlsx')
+excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Participants.xlsx')
 index = excel_for_names[excel_for_names['ID'] == ID].index[0]
 max_MVC = excel_for_names['MVC'][index]
 perc_05 = 0.05*max_MVC
