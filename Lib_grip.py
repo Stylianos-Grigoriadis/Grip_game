@@ -8,14 +8,16 @@ import colorednoise as cn
 import random
 from scipy.optimize import curve_fit
 from scipy.signal import decimate
+from scipy.stats import t
+import math
+
 
 def DFA(variable):
     a = fu.toAggregated(variable)
-        #b = fu.toAggregated(b)
 
     pydfa = fathon.DFA(a)
 
-    winSizes = fu.linRangeByStep(start=4, end=int(len(variable)/1))
+    winSizes = fu.linRangeByStep(start=16, end=int(len(variable)/9))
     print(winSizes)
     revSeg = True
     polOrd = 1
@@ -133,6 +135,20 @@ def Ent_Samp(data, m, r):
     Amr = np.sum(Am) / (N - m)
 
     return -np.log(Amr / Bmr)
+
+def index_to_500(array):
+
+    excess_length_array = len(array) - 500
+    if excess_length_array > 0:
+        remove_each_side = excess_length_array//2
+        array = array[remove_each_side : len(array)-remove_each_side]
+
+    elif excess_length_array == 0:
+        pass
+    else:
+        raise ValueError("Length is less than 500 points")
+
+    return array
 
 def Perc(signal , upper_lim, lower_lim):
     """This function takes a signal as a np.array and turns it as values from upper_lim to lower_lim"""

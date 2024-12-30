@@ -26,7 +26,6 @@ Isometric_05_T2_75Hz = pd.read_csv(r'Isometric_05_T2.csv', skiprows=2)
 
 index = pd.read_excel('index.xlsx')
 
-
 iso_80_T1_75Hz = Isometric_80_T1_75Hz['Performance'][index['T1_iso_80_75Hz'][0]:index['T1_iso_80_75Hz'][1]].to_numpy()
 iso_80_T2_75Hz = Isometric_80_T2_75Hz['Performance'][index['T2_iso_80_75Hz'][0]:index['T2_iso_80_75Hz'][1]].to_numpy()
 iso_60_T1_75Hz = Isometric_60_T1_75Hz['Performance'][index['T1_iso_60_75Hz'][0]:index['T1_iso_60_75Hz'][1]].to_numpy()
@@ -39,31 +38,16 @@ iso_05_T1_75Hz = Isometric_05_T1_75Hz['Performance'][index['T1_iso_05_75Hz'][0]:
 iso_05_T2_75Hz = Isometric_05_T2_75Hz['Performance'][index['T2_iso_05_75Hz'][0]:index['T2_iso_05_75Hz'][1]].to_numpy()
 
 
-
-def index_to_500(array):
-
-    excess_length_array = len(array) - 500
-    if excess_length_array > 0:
-        remove_each_side = excess_length_array//2
-        array = array[remove_each_side : len(array)-remove_each_side]
-
-    elif excess_length_array == 0:
-        pass
-    else:
-        raise ValueError("Length is less than 500 points")
-
-    return array
-
-iso_80_T1_75Hz = index_to_500(iso_80_T1_75Hz)
-iso_80_T2_75Hz = index_to_500(iso_80_T2_75Hz)
-iso_60_T1_75Hz = index_to_500(iso_60_T1_75Hz)
-iso_60_T2_75Hz = index_to_500(iso_60_T2_75Hz)
-iso_40_T1_75Hz = index_to_500(iso_40_T1_75Hz)
-iso_40_T2_75Hz = index_to_500(iso_40_T2_75Hz)
-iso_20_T1_75Hz = index_to_500(iso_20_T1_75Hz)
-iso_20_T2_75Hz = index_to_500(iso_20_T2_75Hz)
-iso_05_T1_75Hz = index_to_500(iso_05_T1_75Hz)
-iso_05_T2_75Hz = index_to_500(iso_05_T2_75Hz)
+iso_80_T1_75Hz = lb.index_to_500(iso_80_T1_75Hz)
+iso_80_T2_75Hz = lb.index_to_500(iso_80_T2_75Hz)
+iso_60_T1_75Hz = lb.index_to_500(iso_60_T1_75Hz)
+iso_60_T2_75Hz = lb.index_to_500(iso_60_T2_75Hz)
+iso_40_T1_75Hz = lb.index_to_500(iso_40_T1_75Hz)
+iso_40_T2_75Hz = lb.index_to_500(iso_40_T2_75Hz)
+iso_20_T1_75Hz = lb.index_to_500(iso_20_T1_75Hz)
+iso_20_T2_75Hz = lb.index_to_500(iso_20_T2_75Hz)
+iso_05_T1_75Hz = lb.index_to_500(iso_05_T1_75Hz)
+iso_05_T2_75Hz = lb.index_to_500(iso_05_T2_75Hz)
 
 print(f'iso_80_T1_75Hz: {len(iso_80_T1_75Hz)}')
 print(f'iso_80_T1_75Hz: {len(iso_80_T1_75Hz)}')
@@ -75,8 +59,6 @@ print(f'iso_20_T1_75Hz: {len(iso_20_T1_75Hz)}')
 print(f'iso_20_T1_75Hz: {len(iso_20_T1_75Hz)}')
 print(f'iso_05_T1_75Hz: {len(iso_05_T1_75Hz)}')
 print(f'iso_05_T1_75Hz: {len(iso_05_T1_75Hz)}')
-
-
 
 
 plt.plot(iso_80_T1_75Hz, label='iso_80_T1')
