@@ -7,7 +7,7 @@ from scipy.signal import decimate
 import lib
 from matplotlib.widgets import SpanSelector
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Old.6'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Young.10'
 os.chdir(directory_path)
 # Determine the MVC and the different percentages
 ID = os.path.basename(directory_path)
@@ -31,6 +31,12 @@ Isometric_20_T2_75Hz = pd.read_csv(r'Isometric_20_T2.csv', skiprows=2)
 Isometric_05_T1_75Hz = pd.read_csv(r'Isometric_05_T1.csv', skiprows=2)
 Isometric_05_T2_75Hz = pd.read_csv(r'Isometric_05_T2.csv', skiprows=2)
 
+perc_05 = Isometric_05_T1_75Hz['Target'][0]
+perc_20 = Isometric_20_T1_75Hz['Target'][0]
+perc_40 = Isometric_40_T1_75Hz['Target'][0]
+perc_60 = Isometric_60_T1_75Hz['Target'][0]
+perc_80 = Isometric_80_T1_75Hz['Target'][0]
+
 
 # THE FOLLOWING PART KEEPS ONLY THE WANTED INDEX FROM EACH ISOMETRIC TRIAL
 selected_indices = {}
@@ -44,11 +50,13 @@ fig, axs = plt.subplots(1, 2, figsize=(15, 4))
 axs[0].plot(Isometric_80_T1_75Hz['Performance'], label='Force')
 axs[0].set_title('Isometric_80_T1')
 axs[0].axhline(y=perc_80, color='r', linestyle='--', label='Target')
+axs[0].set_ylim(0, perc_80+0.2*perc_80)
 axs[0].legend()
 
 axs[1].plot(Isometric_80_T2_75Hz['Performance'], label='Force')
 axs[1].set_title('Isometric_80_T2')
 axs[1].axhline(y=perc_80, color='r', linestyle='--', label='Target')
+axs[1].set_ylim(0, perc_80+0.2*perc_80)
 axs[1].legend()
 
 
@@ -62,11 +70,13 @@ fig, axs = plt.subplots(1, 2, figsize=(15, 5))
 axs[0].plot(Isometric_60_T1_75Hz['Performance'], label='Force')
 axs[0].set_title('Isometric_60_T1')
 axs[0].axhline(y=perc_60, color='r', linestyle='--', label='Target')
+axs[0].set_ylim(0, perc_60+0.2*perc_60)
 axs[0].legend()
 
 axs[1].plot(Isometric_60_T2_75Hz['Performance'], label='Force')
 axs[1].set_title('Isometric_60_T2')
 axs[1].axhline(y=perc_60, color='r', linestyle='--', label='Target')
+axs[1].set_ylim(0, perc_60+0.2*perc_60)
 axs[1].legend()
 
 
@@ -80,11 +90,13 @@ fig, axs = plt.subplots(1, 2, figsize=(15, 5))
 axs[0].plot(Isometric_40_T1_75Hz['Performance'], label='Force')
 axs[0].set_title('Isometric_40_T1')
 axs[0].axhline(y=perc_40, color='r', linestyle='--', label='Target')
+axs[0].set_ylim(0, perc_40+0.2*perc_40)
 axs[0].legend()
 
 axs[1].plot(Isometric_40_T2_75Hz['Performance'], label='Force')
 axs[1].set_title('Isometric_40_T2')
 axs[1].axhline(y=perc_40, color='r', linestyle='--', label='Target')
+axs[1].set_ylim(0, perc_40+0.2*perc_40)
 axs[1].legend()
 
 span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_40_75Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
@@ -97,11 +109,13 @@ fig, axs = plt.subplots(1, 2, figsize=(15, 5))
 axs[0].plot(Isometric_20_T1_75Hz['Performance'], label='Force')
 axs[0].set_title('Isometric_20_T1')
 axs[0].axhline(y=perc_20, color='r', linestyle='--', label='Target')
+axs[0].set_ylim(0, perc_20+0.2*perc_20)
 axs[0].legend()
 
 axs[1].plot(Isometric_20_T2_75Hz['Performance'], label='Force')
 axs[1].set_title('Isometric_20_T2')
 axs[1].axhline(y=perc_20, color='r', linestyle='--', label='Target')
+axs[1].set_ylim(0, perc_20+0.2*perc_20)
 axs[1].legend()
 
 span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_20_75Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
@@ -114,11 +128,13 @@ fig, axs = plt.subplots(1, 2, figsize=(15, 5))
 axs[0].plot(Isometric_05_T1_75Hz['Performance'], label='Force')
 axs[0].set_title('Isometric_5_T1')
 axs[0].axhline(y=perc_05, color='r', linestyle='--', label='Target')
+axs[0].set_ylim(0, perc_05+0.2*perc_05)
 axs[0].legend()
 
 axs[1].plot(Isometric_05_T2_75Hz['Performance'])
 axs[1].set_title('Isometric_5_T2')
 axs[1].axhline(y=perc_05, color='r', linestyle='--', label='Target')
+axs[1].set_ylim(0, perc_05+0.2*perc_05)
 axs[1].legend()
 
 span1 = SpanSelector(axs[0], lambda min_idx, max_idx: on_select(min_idx, max_idx, 'T1_iso_05_75Hz'), 'horizontal', minspan=5, useblit=True, props=dict(alpha=0.5, facecolor='red'), interactive=True, drag_from_anywhere=True)
@@ -136,7 +152,7 @@ for i in df_index.columns.tolist():
     else:
         raise ValueError(f'At the {i} the indices are not enough (indices = {df_index[i][1] - df_index[i][0]})')
 
-df_index.to_excel('index.xlsx')
+df_index.to_excel(f'index_{ID}.xlsx')
 
 
 

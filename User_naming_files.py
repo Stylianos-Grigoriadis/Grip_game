@@ -23,10 +23,10 @@ import numpy as np
 # Pert_up_T2
 
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game Paper 1\Pilot Study 10\Data\Strength data\Old.17'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Old.18'
 
 ID = os.path.basename(directory_path)
-excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip game Paper 1\Pilot Study 10\Participants.xlsx')
+excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Participants.xlsx')
 index = excel_for_names[excel_for_names['ID'] == ID].index[0]
 max_MVC = excel_for_names['MVC'][index]
 
@@ -95,5 +95,5 @@ def showing_plots(max_MVC,directory_path):
         ax2.plot(signal_target, label='Target', c='k')
         plt.show()
 
-renaming_process(index, directory_path)
+# renaming_process(index, directory_path)
 showing_plots(max_MVC,directory_path)
