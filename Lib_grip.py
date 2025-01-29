@@ -469,8 +469,6 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     min_sd = min(list_of_sd)
     min_sd_index = list_of_sd.index(min_sd)
     average_at_min_sd = list_of_means[min_sd_index]
-    print('Sd')
-    print(min_sd)
     # plt.plot(list_of_sd)
     # plt.show()
 
