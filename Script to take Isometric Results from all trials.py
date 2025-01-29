@@ -8,8 +8,10 @@ import statistics
 import matplotlib.patches as mpatches
 import matplotlib.lines as mlines
 
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.size'] = 16
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data'
 files = glob.glob(os.path.join(directory_path, "*"))
 
 SaEn_80_list_T1 = []
@@ -80,486 +82,225 @@ ID_list = []
 
 for file in files:
     directory = file
+    os.chdir(directory)
+    print(file)
     ID = os.path.basename(file)
-    ID = os.path.splitext(ID)[0]
-    ID_list.append(ID)
-    excel = pd.read_excel(file)
     print(ID)
-    print(excel)
-    
-    SaEn_80_list_T1.append(excel['SaEn_T1'][0])
-    SaEn_60_list_T1.append(excel['SaEn_T1'][1])
-    SaEn_40_list_T1.append(excel['SaEn_T1'][2])
-    SaEn_20_list_T1.append(excel['SaEn_T1'][3])
-    SaEn_05_list_T1.append(excel['SaEn_T1'][4])
-    SaEn_80_list_T2.append(excel['SaEn_T2'][0])
-    SaEn_60_list_T2.append(excel['SaEn_T2'][1])
-    SaEn_40_list_T2.append(excel['SaEn_T2'][2])
-    SaEn_20_list_T2.append(excel['SaEn_T2'][3])
-    SaEn_05_list_T2.append(excel['SaEn_T2'][4])
-    SaEn_80_list_Average.append(excel['SaEn_Average'][0])
-    SaEn_60_list_Average.append(excel['SaEn_Average'][1])
-    SaEn_40_list_Average.append(excel['SaEn_Average'][2])
-    SaEn_20_list_Average.append(excel['SaEn_Average'][3])
-    SaEn_05_list_Average.append(excel['SaEn_Average'][4])
-    
-    sd_80_list_T1.append(excel['std_T1'][0])
-    sd_60_list_T1.append(excel['std_T1'][1])
-    sd_40_list_T1.append(excel['std_T1'][2])
-    sd_20_list_T1.append(excel['std_T1'][3])
-    sd_05_list_T1.append(excel['std_T1'][4])
-    sd_80_list_T2.append(excel['std_T2'][0])
-    sd_60_list_T2.append(excel['std_T2'][1])
-    sd_40_list_T2.append(excel['std_T2'][2])
-    sd_20_list_T2.append(excel['std_T2'][3])
-    sd_05_list_T2.append(excel['std_T2'][4])
-    sd_80_list_Average.append(excel['std_Average'][0])
-    sd_60_list_Average.append(excel['std_Average'][1])
-    sd_40_list_Average.append(excel['std_Average'][2])
-    sd_20_list_Average.append(excel['std_Average'][3])
-    sd_05_list_Average.append(excel['std_Average'][4])
 
-    CoV_80_list_T1.append(excel['CoV_T1'][0])
-    CoV_60_list_T1.append(excel['CoV_T1'][1])
-    CoV_40_list_T1.append(excel['CoV_T1'][2])
-    CoV_20_list_T1.append(excel['CoV_T1'][3])
-    CoV_05_list_T1.append(excel['CoV_T1'][4])
-    CoV_80_list_T2.append(excel['CoV_T2'][0])
-    CoV_60_list_T2.append(excel['CoV_T2'][1])
-    CoV_40_list_T2.append(excel['CoV_T2'][2])
-    CoV_20_list_T2.append(excel['CoV_T2'][3])
-    CoV_05_list_T2.append(excel['CoV_T2'][4])
-    CoV_80_list_Average.append(excel['CoV_Average'][0])
-    CoV_60_list_Average.append(excel['CoV_Average'][1])
-    CoV_40_list_Average.append(excel['CoV_Average'][2])
-    CoV_20_list_Average.append(excel['CoV_Average'][3])
-    CoV_05_list_Average.append(excel['CoV_Average'][4])
+    ID_list.append(ID)
+    index = pd.read_excel(fr'index_{ID}.xlsx', index_col=None)
+    print(ID)
+    print(index)
 
-    DFA_80_list_T1.append(excel['DFA_T1'][0])
-    DFA_60_list_T1.append(excel['DFA_T1'][1])
-    DFA_40_list_T1.append(excel['DFA_T1'][2])
-    DFA_20_list_T1.append(excel['DFA_T1'][3])
-    DFA_05_list_T1.append(excel['DFA_T1'][4])
-    DFA_80_list_T2.append(excel['DFA_T2'][0])
-    DFA_60_list_T2.append(excel['DFA_T2'][1])
-    DFA_40_list_T2.append(excel['DFA_T2'][2])
-    DFA_20_list_T2.append(excel['DFA_T2'][3])
-    DFA_05_list_T2.append(excel['DFA_T2'][4])
-    DFA_80_list_Average.append(excel['DFA_Average'][0])
-    DFA_60_list_Average.append(excel['DFA_Average'][1])
-    DFA_40_list_Average.append(excel['DFA_Average'][2])
-    DFA_20_list_Average.append(excel['DFA_Average'][3])
-    DFA_05_list_Average.append(excel['DFA_Average'][4])
-    dist = {
-        'ID': ID_list,
-        'SaEn_80_T1': SaEn_80_list_T1,
-        'SaEn_60_T1': SaEn_60_list_T1,
-        'SaEn_40_T1': SaEn_40_list_T1,
-        'SaEn_20_T1': SaEn_20_list_T1,
-        'SaEn_05_T1': SaEn_05_list_T1,
-        'SaEn_80_T2': SaEn_80_list_T2,
-        'SaEn_60_T2': SaEn_60_list_T2,
-        'SaEn_40_T2': SaEn_40_list_T2,
-        'SaEn_20_T2': SaEn_20_list_T2,
-        'SaEn_05_T2': SaEn_05_list_T2,
-        'SaEn_80_Average': SaEn_80_list_Average,
-        'SaEn_60_Average': SaEn_60_list_Average,
-        'SaEn_40_Average': SaEn_40_list_Average,
-        'SaEn_20_Average': SaEn_20_list_Average,
-        'SaEn_05_Average': SaEn_05_list_Average,
-        'sd_80_T1': sd_80_list_T1,
-        'sd_60_T1': sd_60_list_T1,
-        'sd_40_T1': sd_40_list_T1,
-        'sd_20_T1': sd_20_list_T1,
-        'sd_05_T1': sd_05_list_T1,
-        'sd_80_T2': sd_80_list_T2,
-        'sd_60_T2': sd_60_list_T2,
-        'sd_40_T2': sd_40_list_T2,
-        'sd_20_T2': sd_20_list_T2,
-        'sd_05_T2': sd_05_list_T2,
-        'sd_80_Average': sd_80_list_Average,
-        'sd_60_Average': sd_60_list_Average,
-        'sd_40_Average': sd_40_list_Average,
-        'sd_20_Average': sd_20_list_Average,
-        'sd_05_Average': sd_05_list_Average,
-        'CoV_80_T1': CoV_80_list_T1,
-        'CoV_60_T1': CoV_60_list_T1,
-        'CoV_40_T1': CoV_40_list_T1,
-        'CoV_20_T1': CoV_20_list_T1,
-        'CoV_05_T1': CoV_05_list_T1,
-        'CoV_80_T2': CoV_80_list_T2,
-        'CoV_60_T2': CoV_60_list_T2,
-        'CoV_40_T2': CoV_40_list_T2,
-        'CoV_20_T2': CoV_20_list_T2,
-        'CoV_05_T2': CoV_05_list_T2,
-        'CoV_80_Average': CoV_80_list_Average,
-        'CoV_60_Average': CoV_60_list_Average,
-        'CoV_40_Average': CoV_40_list_Average,
-        'CoV_20_Average': CoV_20_list_Average,
-        'CoV_05_Average': CoV_05_list_Average,
-        'DFA_80_T1': DFA_80_list_T1,
-        'DFA_60_T1': DFA_60_list_T1,
-        'DFA_40_T1': DFA_40_list_T1,
-        'DFA_20_T1': DFA_20_list_T1,
-        'DFA_05_T1': DFA_05_list_T1,
-        'DFA_80_T2': DFA_80_list_T2,
-        'DFA_60_T2': DFA_60_list_T2,
-        'DFA_40_T2': DFA_40_list_T2,
-        'DFA_20_T2': DFA_20_list_T2,
-        'DFA_05_T2': DFA_05_list_T2,
-        'DFA_80_Average': DFA_80_list_Average,
-        'DFA_60_Average': DFA_60_list_Average,
-        'DFA_40_Average': DFA_40_list_Average,
-        'DFA_20_Average': DFA_20_list_Average,
-        'DFA_05_Average': DFA_05_list_Average,
-    }
-    new_excel = pd.DataFrame(dist)
-os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')
-new_excel.to_excel(r'results Isometrics all.xlsx')
+    Isometric_80_T1 = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
+    Isometric_80_T2 = pd.read_csv(r'Isometric_80_T2.csv', skiprows=2)
+    Isometric_60_T1 = pd.read_csv(r'Isometric_60_T1.csv', skiprows=2)
+    Isometric_60_T2 = pd.read_csv(r'Isometric_60_T2.csv', skiprows=2)
+    Isometric_40_T1 = pd.read_csv(r'Isometric_40_T1.csv', skiprows=2)
+    Isometric_40_T2 = pd.read_csv(r'Isometric_40_T2.csv', skiprows=2)
+    Isometric_20_T1 = pd.read_csv(r'Isometric_20_T1.csv', skiprows=2)
+    Isometric_20_T2 = pd.read_csv(r'Isometric_20_T2.csv', skiprows=2)
+    Isometric_05_T1 = pd.read_csv(r'Isometric_05_T1.csv', skiprows=2)
+    Isometric_05_T2 = pd.read_csv(r'Isometric_05_T2.csv', skiprows=2)
+
+    Isometric_80_T1 = Isometric_80_T1['Performance'][index['T2_iso_80_75Hz'][0]:index['T2_iso_80_75Hz'][1]].to_numpy()
+    Isometric_80_T2 = Isometric_80_T2['Performance'][index['T2_iso_80_75Hz'][0]:index['T2_iso_80_75Hz'][1]].to_numpy()
+    Isometric_60_T1 = Isometric_60_T1['Performance'][index['T1_iso_60_75Hz'][0]:index['T1_iso_60_75Hz'][1]].to_numpy()
+    Isometric_60_T2 = Isometric_60_T2['Performance'][index['T2_iso_60_75Hz'][0]:index['T2_iso_60_75Hz'][1]].to_numpy()
+    Isometric_40_T1 = Isometric_40_T1['Performance'][index['T1_iso_40_75Hz'][0]:index['T1_iso_40_75Hz'][1]].to_numpy()
+    Isometric_40_T2 = Isometric_40_T2['Performance'][index['T2_iso_40_75Hz'][0]:index['T2_iso_40_75Hz'][1]].to_numpy()
+    Isometric_20_T1 = Isometric_20_T1['Performance'][index['T1_iso_20_75Hz'][0]:index['T1_iso_20_75Hz'][1]].to_numpy()
+    Isometric_20_T2 = Isometric_20_T2['Performance'][index['T2_iso_20_75Hz'][0]:index['T2_iso_20_75Hz'][1]].to_numpy()
+    Isometric_05_T1 = Isometric_05_T1['Performance'][index['T1_iso_05_75Hz'][0]:index['T1_iso_05_75Hz'][1]].to_numpy()
+    Isometric_05_T2 = Isometric_05_T2['Performance'][index['T2_iso_05_75Hz'][0]:index['T2_iso_05_75Hz'][1]].to_numpy()
+
+    Isometric_80_T1 = lb.index_to_500(Isometric_80_T1)
+    Isometric_80_T2 = lb.index_to_500(Isometric_80_T2)
+    Isometric_60_T1 = lb.index_to_500(Isometric_60_T1)
+    Isometric_60_T2 = lb.index_to_500(Isometric_60_T2)
+    Isometric_40_T1 = lb.index_to_500(Isometric_40_T1)
+    Isometric_40_T2 = lb.index_to_500(Isometric_40_T2)
+    Isometric_20_T1 = lb.index_to_500(Isometric_20_T1)
+    Isometric_20_T2 = lb.index_to_500(Isometric_20_T2)
+    Isometric_05_T1 = lb.index_to_500(Isometric_05_T1)
+    Isometric_05_T2 = lb.index_to_500(Isometric_05_T2)
+
+    std_Isometric_80_T1 = np.std(Isometric_80_T1)
+    std_Isometric_80_T2 = np.std(Isometric_80_T2)
+    std_Isometric_60_T1 = np.std(Isometric_60_T1)
+    std_Isometric_60_T2 = np.std(Isometric_60_T2)
+    std_Isometric_40_T1 = np.std(Isometric_40_T1)
+    std_Isometric_40_T2 = np.std(Isometric_40_T2)
+    std_Isometric_20_T1 = np.std(Isometric_20_T1)
+    std_Isometric_20_T2 = np.std(Isometric_20_T2)
+    std_Isometric_05_T1 = np.std(Isometric_05_T1)
+    std_Isometric_05_T2 = np.std(Isometric_05_T2)
+
+    std_T1 = [std_Isometric_80_T1, std_Isometric_60_T1, std_Isometric_40_T1, std_Isometric_20_T1, std_Isometric_05_T1]
+    std_T2 = [std_Isometric_80_T2, std_Isometric_60_T2, std_Isometric_40_T2, std_Isometric_20_T2, std_Isometric_05_T2]
+    average_std = [np.mean((std_Isometric_80_T1, std_Isometric_80_T2)),
+                   np.mean((std_Isometric_60_T1, std_Isometric_60_T2)),
+                   np.mean((std_Isometric_40_T1, std_Isometric_40_T2)),
+                   np.mean((std_Isometric_20_T1, std_Isometric_05_T1)),
+                   np.mean((std_Isometric_05_T1, std_Isometric_05_T2))]
+
+    CoV_Isometric_80_T1 = (np.std(Isometric_80_T1) / np.mean(Isometric_80_T1)) * 100
+    CoV_Isometric_80_T2 = (np.std(Isometric_80_T2) / np.mean(Isometric_80_T2)) * 100
+    CoV_Isometric_60_T1 = (np.std(Isometric_60_T1) / np.mean(Isometric_60_T1)) * 100
+    CoV_Isometric_60_T2 = (np.std(Isometric_60_T2) / np.mean(Isometric_60_T2)) * 100
+    CoV_Isometric_40_T1 = (np.std(Isometric_40_T1) / np.mean(Isometric_40_T1)) * 100
+    CoV_Isometric_40_T2 = (np.std(Isometric_40_T2) / np.mean(Isometric_40_T2)) * 100
+    CoV_Isometric_20_T1 = (np.std(Isometric_20_T1) / np.mean(Isometric_20_T1)) * 100
+    CoV_Isometric_20_T2 = (np.std(Isometric_20_T2) / np.mean(Isometric_20_T2)) * 100
+    CoV_Isometric_05_T1 = (np.std(Isometric_05_T1) / np.mean(Isometric_05_T1)) * 100
+    CoV_Isometric_05_T2 = (np.std(Isometric_05_T2) / np.mean(Isometric_05_T2)) * 100
+
+    CoV_T1 = [CoV_Isometric_80_T1, CoV_Isometric_60_T1, CoV_Isometric_40_T1, CoV_Isometric_20_T1, CoV_Isometric_05_T1]
+    CoV_T2 = [CoV_Isometric_80_T2, CoV_Isometric_60_T2, CoV_Isometric_40_T2, CoV_Isometric_20_T2, CoV_Isometric_05_T2]
+    average_CoV = [np.mean((CoV_Isometric_80_T1, CoV_Isometric_80_T2)),
+                   np.mean((CoV_Isometric_60_T1, CoV_Isometric_60_T2)),
+                   np.mean((CoV_Isometric_40_T1, CoV_Isometric_40_T2)),
+                   np.mean((CoV_Isometric_20_T1, CoV_Isometric_20_T2)),
+                   np.mean((CoV_Isometric_05_T1, CoV_Isometric_05_T2))]
+
+    SaEn_Isometric_80_T1 = lb.Ent_Samp(Isometric_80_T1, 2, 0.2)
+    SaEn_Isometric_80_T2 = lb.Ent_Samp(Isometric_80_T2, 2, 0.2)
+    SaEn_Isometric_60_T1 = lb.Ent_Samp(Isometric_60_T1, 2, 0.2)
+    SaEn_Isometric_60_T2 = lb.Ent_Samp(Isometric_60_T2, 2, 0.2)
+    SaEn_Isometric_40_T1 = lb.Ent_Samp(Isometric_40_T1, 2, 0.2)
+    SaEn_Isometric_40_T2 = lb.Ent_Samp(Isometric_40_T2, 2, 0.2)
+    SaEn_Isometric_20_T1 = lb.Ent_Samp(Isometric_20_T1, 2, 0.2)
+    SaEn_Isometric_20_T2 = lb.Ent_Samp(Isometric_20_T2, 2, 0.2)
+    SaEn_Isometric_05_T1 = lb.Ent_Samp(Isometric_05_T1, 2, 0.2)
+    SaEn_Isometric_05_T2 = lb.Ent_Samp(Isometric_05_T2, 2, 0.2)
+
+    SaEn_T1 = [SaEn_Isometric_80_T1, SaEn_Isometric_60_T1, SaEn_Isometric_40_T1, SaEn_Isometric_20_T1, SaEn_Isometric_05_T1]
+    SaEn_T2 = [SaEn_Isometric_80_T2, SaEn_Isometric_60_T2, SaEn_Isometric_40_T2, SaEn_Isometric_20_T2, SaEn_Isometric_05_T2]
+    average_SaEn = [np.mean((SaEn_Isometric_80_T1, SaEn_Isometric_80_T2)),
+                    np.mean((SaEn_Isometric_60_T1, SaEn_Isometric_60_T2)),
+                    np.mean((SaEn_Isometric_40_T1, SaEn_Isometric_40_T2)),
+                    np.mean((SaEn_Isometric_20_T1, SaEn_Isometric_05_T1)),
+                    np.mean((SaEn_Isometric_05_T1, SaEn_Isometric_05_T2))]
 
 
 
-
-# for name in sorted_name_young:
-#     directory_path_young = directory_path
-#     directory_path_young = directory_path_young + f'\{name}'
-#     print(directory_path_young)
-#     os.chdir(directory_path_young)
-#     results_isometric = pd.read_excel(r'Results Isometric.xlsx')
+#     SaEn_05_list_T2.append(excel['SaEn_T2'][4])
+#     SaEn_80_list_Average.append(excel['SaEn_Average'][0])
+#     SaEn_60_list_Average.append(excel['SaEn_Average'][1])
+#     SaEn_40_list_Average.append(excel['SaEn_Average'][2])
+#     SaEn_20_list_Average.append(excel['SaEn_Average'][3])
+#     SaEn_05_list_Average.append(excel['SaEn_Average'][4])
 #
-#     young_SaEn_80_list.append(results_isometric['SaEn_Average'][0])
-#     young_SaEn_60_list.append(results_isometric['SaEn_Average'][1])
-#     young_SaEn_40_list.append(results_isometric['SaEn_Average'][2])
-#     young_SaEn_20_list.append(results_isometric['SaEn_Average'][3])
-#     young_SaEn_05_list.append(results_isometric['SaEn_Average'][4])
+#     sd_80_list_T1.append(excel['std_T1'][0])
+#     sd_60_list_T1.append(excel['std_T1'][1])
+#     sd_40_list_T1.append(excel['std_T1'][2])
+#     sd_20_list_T1.append(excel['std_T1'][3])
+#     sd_05_list_T1.append(excel['std_T1'][4])
+#     sd_80_list_T2.append(excel['std_T2'][0])
+#     sd_60_list_T2.append(excel['std_T2'][1])
+#     sd_40_list_T2.append(excel['std_T2'][2])
+#     sd_20_list_T2.append(excel['std_T2'][3])
+#     sd_05_list_T2.append(excel['std_T2'][4])
+#     sd_80_list_Average.append(excel['std_Average'][0])
+#     sd_60_list_Average.append(excel['std_Average'][1])
+#     sd_40_list_Average.append(excel['std_Average'][2])
+#     sd_20_list_Average.append(excel['std_Average'][3])
+#     sd_05_list_Average.append(excel['std_Average'][4])
 #
-#     young_sd_80_list.append(results_isometric['std_Average'][0])
-#     young_sd_60_list.append(results_isometric['std_Average'][1])
-#     young_sd_40_list.append(results_isometric['std_Average'][2])
-#     young_sd_20_list.append(results_isometric['std_Average'][3])
-#     young_sd_05_list.append(results_isometric['std_Average'][4])
+#     CoV_80_list_T1.append(excel['CoV_T1'][0])
+#     CoV_60_list_T1.append(excel['CoV_T1'][1])
+#     CoV_40_list_T1.append(excel['CoV_T1'][2])
+#     CoV_20_list_T1.append(excel['CoV_T1'][3])
+#     CoV_05_list_T1.append(excel['CoV_T1'][4])
+#     CoV_80_list_T2.append(excel['CoV_T2'][0])
+#     CoV_60_list_T2.append(excel['CoV_T2'][1])
+#     CoV_40_list_T2.append(excel['CoV_T2'][2])
+#     CoV_20_list_T2.append(excel['CoV_T2'][3])
+#     CoV_05_list_T2.append(excel['CoV_T2'][4])
+#     CoV_80_list_Average.append(excel['CoV_Average'][0])
+#     CoV_60_list_Average.append(excel['CoV_Average'][1])
+#     CoV_40_list_Average.append(excel['CoV_Average'][2])
+#     CoV_20_list_Average.append(excel['CoV_Average'][3])
+#     CoV_05_list_Average.append(excel['CoV_Average'][4])
 #
-# for name in sorted_name_old:
-#     directory_path_old = directory_path
-#     directory_path_old = directory_path_old + f'\{name}'
-#     print(directory_path_old)
-#     os.chdir(directory_path_old)
-#     results_isometric = pd.read_excel(r'Results Isometric.xlsx')
-#
-#     old_SaEn_80_list.append(results_isometric['SaEn_Average'][0])
-#     old_SaEn_60_list.append(results_isometric['SaEn_Average'][1])
-#     old_SaEn_40_list.append(results_isometric['SaEn_Average'][2])
-#     old_SaEn_20_list.append(results_isometric['SaEn_Average'][3])
-#     old_SaEn_05_list.append(results_isometric['SaEn_Average'][4])
-#
-#     old_sd_80_list.append(results_isometric['std_Average'][0])
-#     old_sd_60_list.append(results_isometric['std_Average'][1])
-#     old_sd_40_list.append(results_isometric['std_Average'][2])
-#     old_sd_20_list.append(results_isometric['std_Average'][3])
-#     old_sd_05_list.append(results_isometric['std_Average'][4])
-# #
-# young_SaEn_80_average = statistics.mean(young_SaEn_80_list)
-# young_SaEn_60_average = statistics.mean(young_SaEn_60_list)
-# young_SaEn_40_average = statistics.mean(young_SaEn_40_list)
-# young_SaEn_20_average = statistics.mean(young_SaEn_20_list)
-# young_SaEn_05_average = statistics.mean(young_SaEn_05_list)
-#
-# young_SaEn_80_sd = statistics.stdev(young_SaEn_80_list)
-# young_SaEn_60_sd = statistics.stdev(young_SaEn_60_list)
-# young_SaEn_40_sd = statistics.stdev(young_SaEn_40_list)
-# young_SaEn_20_sd = statistics.stdev(young_SaEn_20_list)
-# young_SaEn_05_sd = statistics.stdev(young_SaEn_05_list)
-#
-# old_SaEn_80_average = statistics.mean(old_SaEn_80_list)
-# old_SaEn_60_average = statistics.mean(old_SaEn_60_list)
-# old_SaEn_40_average = statistics.mean(old_SaEn_40_list)
-# old_SaEn_20_average = statistics.mean(old_SaEn_20_list)
-# old_SaEn_05_average = statistics.mean(old_SaEn_05_list)
-#
-# old_SaEn_80_sd = statistics.stdev(old_SaEn_80_list)
-# old_SaEn_60_sd = statistics.stdev(old_SaEn_60_list)
-# old_SaEn_40_sd = statistics.stdev(old_SaEn_40_list)
-# old_SaEn_20_sd = statistics.stdev(old_SaEn_20_list)
-# old_SaEn_05_sd = statistics.stdev(old_SaEn_05_list)
-#
-# young_SaEn_list = [young_SaEn_05_list, young_SaEn_20_list, young_SaEn_40_list, young_SaEn_60_list, young_SaEn_80_list]
-# old_SaEn_list = [old_SaEn_05_list, old_SaEn_20_list, old_SaEn_40_list, old_SaEn_60_list, old_SaEn_80_list]
-
-plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 16
-
-fig, ax = plt.subplots(figsize=(8, 6))
-young_positions = [1, 4, 7, 10, 13]
-plus_factor = 0.6
-old_positions = [young_positions[0]+plus_factor, young_positions[1]+plus_factor, young_positions[2]+plus_factor, young_positions[3]+plus_factor, young_positions[4]+plus_factor]
-# Create the box plot
-ax.boxplot(young_SaEn_list,
-           positions=young_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightblue', color='blue'),
-           meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
-           medianprops=dict(color='none'))
-
-ax.boxplot(old_SaEn_list,
-           positions=old_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightcoral', color='red'),
-           meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
-           medianprops=dict(color='none'))
-
-# Calculate means for each group
-young_means = [np.mean(data) for data in young_SaEn_list]
-old_means = [np.mean(data) for data in old_SaEn_list]
-
-# Plot dashed lines connecting the mean markers
-ax.plot(young_positions, young_means, color='blue', linestyle='--')
-ax.plot(old_positions, old_means, color='red', linestyle='--')
-
-
-# Manually create legend elements
-legend_elements = [
-    mpatches.Patch(color='lightblue', label='Young'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='Young Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='Old'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='Old Average', linestyle='None')
-]
-
-# Add the legend to the plot
-ax.legend(handles=legend_elements, loc='upper right', frameon=False)
-
-# Customize the plot
-ax.set_title(f'Sample Entropy Curve between Young (n={len(young_SaEn_80_list)}) and Old (n={len(old_SaEn_80_list)}) adults')
-ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
-ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
-ax.set_ylabel('Sample Entropy')
-ax.set_xlabel('Percentage of MVC')
-
-# Display the plot
-plt.show()
-#
-# young_sd_list = [young_sd_05_list, young_sd_20_list, young_sd_40_list, young_sd_60_list, young_sd_80_list]
-# old_sd_list = [old_sd_05_list, old_sd_20_list, old_sd_40_list, old_sd_60_list, old_sd_80_list]
-#
-# fig, ax = plt.subplots(figsize=(8, 6))
-# young_positions = [1, 4, 7, 10, 13]
-# plus_factor = 0.6
-# old_positions = [young_positions[0]+plus_factor, young_positions[1]+plus_factor, young_positions[2]+plus_factor, young_positions[3]+plus_factor, young_positions[4]+plus_factor]
-# # Create the box plot
-# ax.boxplot(young_sd_list,
-#            positions=young_positions,
-#            patch_artist=True,
-#            showmeans=True,
-#            showfliers=False,
-#            boxprops=dict(facecolor='lightblue', color='blue'),
-#            meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
-#            medianprops=dict(color='none'))
-#
-# ax.boxplot(old_sd_list,
-#            positions=old_positions,
-#            patch_artist=True,
-#            showmeans=True,
-#            showfliers=False,
-#            boxprops=dict(facecolor='lightcoral', color='red'),
-#            meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
-#            medianprops=dict(color='none'))
-#
-# # Calculate means for each group
-# young_means = [np.mean(data) for data in young_sd_list]
-# old_means = [np.mean(data) for data in old_sd_list]
-#
-# # Plot dashed lines connecting the mean markers
-# ax.plot(young_positions, young_means, color='blue', linestyle='--')
-# ax.plot(old_positions, old_means, color='red', linestyle='--')
-#
-#
-# # Manually create legend elements
-# legend_elements = [
-#     mpatches.Patch(color='lightblue', label='Young'),
-#     mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='Young Average', linestyle='None'),
-#     mpatches.Patch(color='lightcoral', label='Old'),
-#     mlines.Line2D([], [], color='red', marker='o', markersize=8, label='Old Average', linestyle='None')
-# ]
-#
-# # Add the legend to the plot
-# ax.legend(handles=legend_elements, loc='upper right', frameon=False)
-#
-# # Customize the plot
-# ax.set_title(f'Standard Deviation Curve between Young (n={len(young_sd_80_list)}) and Old (n={len(old_sd_80_list)}) adults')
-# ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
-# ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
-# ax.set_ylabel('Standard Deviation')
-# ax.set_xlabel('Percentage of MVC')
-#
-# # Display the plot
-# plt.show()
-
-# for file in files:
-#     directory_path = file
-#     os.chdir(file)
-#     inside_files = glob.glob(os.path.join(directory_path, "*"))
-#     participant = os.path.basename(directory_path)
-#
-#     Isometric_80_T1_75Hz = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
-#     Isometric_80_T2_75Hz = pd.read_csv(r'Isometric_80_T2.csv', skiprows=2)
-#     Isometric_60_T1_75Hz = pd.read_csv(r'Isometric_60_T1.csv', skiprows=2)
-#     Isometric_60_T2_75Hz = pd.read_csv(r'Isometric_60_T2.csv', skiprows=2)
-#     Isometric_40_T1_75Hz = pd.read_csv(r'Isometric_40_T1.csv', skiprows=2)
-#     Isometric_40_T2_75Hz = pd.read_csv(r'Isometric_40_T2.csv', skiprows=2)
-#     Isometric_20_T1_75Hz = pd.read_csv(r'Isometric_20_T1.csv', skiprows=2)
-#     Isometric_20_T2_75Hz = pd.read_csv(r'Isometric_20_T2.csv', skiprows=2)
-#     Isometric_05_T1_75Hz = pd.read_csv(r'Isometric_05_T1.csv', skiprows=2)
-#     Isometric_05_T2_75Hz = pd.read_csv(r'Isometric_05_T2.csv', skiprows=2)
-#
-#     index = pd.read_excel('index.xlsx')
-#
-#     iso_80_T1_75Hz = Isometric_80_T1_75Hz['Performance'][index['T1_iso_80_75Hz'][0]:index['T1_iso_80_75Hz'][1]].to_numpy()
-#     iso_80_T2_75Hz = Isometric_80_T2_75Hz['Performance'][index['T2_iso_80_75Hz'][0]:index['T2_iso_80_75Hz'][1]].to_numpy()
-#     iso_60_T1_75Hz = Isometric_60_T1_75Hz['Performance'][index['T1_iso_60_75Hz'][0]:index['T1_iso_60_75Hz'][1]].to_numpy()
-#     iso_60_T2_75Hz = Isometric_60_T2_75Hz['Performance'][index['T2_iso_60_75Hz'][0]:index['T2_iso_60_75Hz'][1]].to_numpy()
-#     iso_40_T1_75Hz = Isometric_40_T1_75Hz['Performance'][index['T1_iso_40_75Hz'][0]:index['T1_iso_40_75Hz'][1]].to_numpy()
-#     iso_40_T2_75Hz = Isometric_40_T2_75Hz['Performance'][index['T2_iso_40_75Hz'][0]:index['T2_iso_40_75Hz'][1]].to_numpy()
-#     iso_20_T1_75Hz = Isometric_20_T1_75Hz['Performance'][index['T1_iso_20_75Hz'][0]:index['T1_iso_20_75Hz'][1]].to_numpy()
-#     iso_20_T2_75Hz = Isometric_20_T2_75Hz['Performance'][index['T2_iso_20_75Hz'][0]:index['T2_iso_20_75Hz'][1]].to_numpy()
-#     iso_05_T1_75Hz = Isometric_05_T1_75Hz['Performance'][index['T1_iso_05_75Hz'][0]:index['T1_iso_05_75Hz'][1]].to_numpy()
-#     iso_05_T2_75Hz = Isometric_05_T2_75Hz['Performance'][index['T2_iso_05_75Hz'][0]:index['T2_iso_05_75Hz'][1]].to_numpy()
-#
-#
-#     def index_to_500(array):
-#         excess_length_array = len(array) - 500
-#         if excess_length_array > 0:
-#             remove_each_side = excess_length_array // 2
-#             array = array[remove_each_side: len(array) - remove_each_side]
-#         elif excess_length_array == 0:
-#             pass
-#         else:
-#             raise ValueError("Length is less than 500 points")
-#         return array
-#
-#
-#     iso_80_T1_75Hz = index_to_500(iso_80_T1_75Hz)
-#     iso_80_T2_75Hz = index_to_500(iso_80_T2_75Hz)
-#     iso_60_T1_75Hz = index_to_500(iso_60_T1_75Hz)
-#     iso_60_T2_75Hz = index_to_500(iso_60_T2_75Hz)
-#     iso_40_T1_75Hz = index_to_500(iso_40_T1_75Hz)
-#     iso_40_T2_75Hz = index_to_500(iso_40_T2_75Hz)
-#     iso_20_T1_75Hz = index_to_500(iso_20_T1_75Hz)
-#     iso_20_T2_75Hz = index_to_500(iso_20_T2_75Hz)
-#     iso_05_T1_75Hz = index_to_500(iso_05_T1_75Hz)
-#     iso_05_T2_75Hz = index_to_500(iso_05_T2_75Hz)
-#
-#     print(f'iso_80_T1_75Hz: {len(iso_80_T1_75Hz)}')
-#     print(f'iso_80_T1_75Hz: {len(iso_80_T1_75Hz)}')
-#     print(f'iso_60_T1_75Hz: {len(iso_60_T1_75Hz)}')
-#     print(f'iso_60_T1_75Hz: {len(iso_60_T1_75Hz)}')
-#     print(f'iso_40_T1_75Hz: {len(iso_40_T1_75Hz)}')
-#     print(f'iso_40_T1_75Hz: {len(iso_40_T1_75Hz)}')
-#     print(f'iso_20_T1_75Hz: {len(iso_20_T1_75Hz)}')
-#     print(f'iso_20_T1_75Hz: {len(iso_20_T1_75Hz)}')
-#     print(f'iso_05_T1_75Hz: {len(iso_05_T1_75Hz)}')
-#     print(f'iso_05_T1_75Hz: {len(iso_05_T1_75Hz)}')
-#
-#     plt.plot(iso_80_T1_75Hz, label='iso_80_T1')
-#     plt.plot(iso_80_T2_75Hz, label='iso_80_T2')
-#     plt.plot(iso_60_T1_75Hz, label='iso_60_T1')
-#     plt.plot(iso_60_T2_75Hz, label='iso_60_T2')
-#     plt.plot(iso_40_T1_75Hz, label='iso_40_T1')
-#     plt.plot(iso_40_T2_75Hz, label='iso_40_T2')
-#     plt.plot(iso_20_T1_75Hz, label='iso_20_T1')
-#     plt.plot(iso_20_T2_75Hz, label='iso_20_T2')
-#     plt.plot(iso_05_T1_75Hz, label='iso_05_T1')
-#     plt.plot(iso_05_T2_75Hz, label='iso_05_T2')
-#     plt.title(participant)
-#     plt.legend()
-#     plt.show()
-#
-#     std_iso_80_T1_75Hz = np.std(iso_80_T1_75Hz)
-#     std_iso_80_T2_75Hz = np.std(iso_80_T2_75Hz)
-#     std_iso_60_T1_75Hz = np.std(iso_60_T1_75Hz)
-#     std_iso_60_T2_75Hz = np.std(iso_60_T2_75Hz)
-#     std_iso_40_T1_75Hz = np.std(iso_40_T1_75Hz)
-#     std_iso_40_T2_75Hz = np.std(iso_40_T2_75Hz)
-#     std_iso_20_T1_75Hz = np.std(iso_20_T1_75Hz)
-#     std_iso_20_T2_75Hz = np.std(iso_20_T2_75Hz)
-#     std_iso_05_T1_75Hz = np.std(iso_05_T1_75Hz)
-#     std_iso_05_T2_75Hz = np.std(iso_05_T2_75Hz)
-#
-#     SaEn_iso_80_T1_75Hz = lb.Ent_Samp(iso_80_T1_75Hz, 2, 0.2)
-#     SaEn_iso_80_T2_75Hz = lb.Ent_Samp(iso_80_T2_75Hz, 2, 0.2)
-#     SaEn_iso_60_T1_75Hz = lb.Ent_Samp(iso_60_T1_75Hz, 2, 0.2)
-#     SaEn_iso_60_T2_75Hz = lb.Ent_Samp(iso_60_T2_75Hz, 2, 0.2)
-#     SaEn_iso_40_T1_75Hz = lb.Ent_Samp(iso_40_T1_75Hz, 2, 0.2)
-#     SaEn_iso_40_T2_75Hz = lb.Ent_Samp(iso_40_T2_75Hz, 2, 0.2)
-#     SaEn_iso_20_T1_75Hz = lb.Ent_Samp(iso_20_T1_75Hz, 2, 0.2)
-#     SaEn_iso_20_T2_75Hz = lb.Ent_Samp(iso_20_T2_75Hz, 2, 0.2)
-#     SaEn_iso_05_T1_75Hz = lb.Ent_Samp(iso_05_T1_75Hz, 2, 0.2)
-#     SaEn_iso_05_T2_75Hz = lb.Ent_Samp(iso_05_T2_75Hz, 2, 0.2)
-#
-#     DFA_iso_80_T1_75Hz = lb.DFA(iso_80_T1_75Hz)
-#     DFA_iso_80_T2_75Hz = lb.DFA(iso_80_T2_75Hz)
-#     DFA_iso_60_T1_75Hz = lb.DFA(iso_60_T1_75Hz)
-#     DFA_iso_60_T2_75Hz = lb.DFA(iso_60_T2_75Hz)
-#     DFA_iso_40_T1_75Hz = lb.DFA(iso_40_T1_75Hz)
-#     DFA_iso_40_T2_75Hz = lb.DFA(iso_40_T2_75Hz)
-#     DFA_iso_20_T1_75Hz = lb.DFA(iso_20_T1_75Hz)
-#     DFA_iso_20_T2_75Hz = lb.DFA(iso_20_T2_75Hz)
-#     DFA_iso_05_T1_75Hz = lb.DFA(iso_05_T1_75Hz)
-#     DFA_iso_05_T2_75Hz = lb.DFA(iso_05_T2_75Hz)
-#
-#     std_T1 = [std_iso_80_T1_75Hz, std_iso_60_T1_75Hz, std_iso_40_T1_75Hz, std_iso_20_T1_75Hz, std_iso_05_T1_75Hz]
-#     std_T2 = [std_iso_80_T2_75Hz, std_iso_60_T2_75Hz, std_iso_40_T2_75Hz, std_iso_20_T2_75Hz, std_iso_05_T2_75Hz]
-#
-#     average_std = [np.mean((std_iso_80_T1_75Hz, std_iso_80_T2_75Hz)),
-#                    np.mean((std_iso_60_T1_75Hz, std_iso_60_T2_75Hz)),
-#                    np.mean((std_iso_40_T1_75Hz, std_iso_40_T2_75Hz)),
-#                    np.mean((std_iso_20_T1_75Hz, std_iso_20_T2_75Hz)),
-#                    np.mean((std_iso_05_T1_75Hz, std_iso_05_T2_75Hz))]
-#
-#     SaEn_T1 = [SaEn_iso_80_T1_75Hz, SaEn_iso_60_T1_75Hz, SaEn_iso_40_T1_75Hz, SaEn_iso_20_T1_75Hz, SaEn_iso_05_T1_75Hz]
-#     SaEn_T2 = [SaEn_iso_80_T2_75Hz, SaEn_iso_60_T2_75Hz, SaEn_iso_40_T2_75Hz, SaEn_iso_20_T2_75Hz, SaEn_iso_05_T2_75Hz]
-#     average_SaEn = [np.mean((SaEn_iso_80_T1_75Hz, SaEn_iso_80_T2_75Hz)),
-#                     np.mean((SaEn_iso_60_T1_75Hz, SaEn_iso_60_T2_75Hz)),
-#                     np.mean((SaEn_iso_40_T1_75Hz, SaEn_iso_40_T2_75Hz)),
-#                     np.mean((SaEn_iso_20_T1_75Hz, SaEn_iso_20_T2_75Hz)),
-#                     np.mean((SaEn_iso_05_T1_75Hz, SaEn_iso_05_T2_75Hz))]
-#
-#     DFA_T1 = [DFA_iso_80_T1_75Hz, DFA_iso_60_T1_75Hz, DFA_iso_40_T1_75Hz, DFA_iso_20_T1_75Hz, DFA_iso_05_T1_75Hz]
-#     DFA_T2 = [DFA_iso_80_T2_75Hz, DFA_iso_60_T2_75Hz, DFA_iso_40_T2_75Hz, DFA_iso_20_T2_75Hz, DFA_iso_05_T2_75Hz]
-#     average_DFA = [np.mean((DFA_iso_80_T1_75Hz, DFA_iso_80_T2_75Hz)),
-#                     np.mean((DFA_iso_60_T1_75Hz, DFA_iso_60_T2_75Hz)),
-#                     np.mean((DFA_iso_40_T1_75Hz, DFA_iso_40_T2_75Hz)),
-#                     np.mean((DFA_iso_20_T1_75Hz, DFA_iso_20_T2_75Hz)),
-#                     np.mean((DFA_iso_05_T1_75Hz, DFA_iso_05_T2_75Hz))]
-#
-#     Percentage_iso = [80, 60, 40, 20, 5]
-#
-#     plt.plot(Percentage_iso, std_T1, label='T1')
-#     plt.plot(Percentage_iso, std_T2, label='T2')
-#     plt.plot(Percentage_iso, average_std, label='average_std', lw=4)
-#     plt.title(f'Sd {participant}')
-#     plt.legend()
-#     plt.show()
-#
-#     plt.plot(Percentage_iso, SaEn_T1, label='T1')
-#     plt.plot(Percentage_iso, SaEn_T2, label='T2')
-#     plt.plot(Percentage_iso, average_SaEn, label='average_SaEn', lw=4)
-#     plt.title(f'SaEn {participant}')
-#     plt.legend()
-#     plt.show()
-#
-#
-#     plt.plot(Percentage_iso, DFA_T1, label='T1')
-#     plt.plot(Percentage_iso, DFA_T2, label='T2')
-#     plt.plot(Percentage_iso, average_DFA, label='average_DFA', lw=4)
-#     plt.title(f'DFA {participant}')
-#     plt.legend()
-#     plt.show()
-
-
-
-
-
-
+#     DFA_80_list_T1.append(excel['DFA_T1'][0])
+#     DFA_60_list_T1.append(excel['DFA_T1'][1])
+#     DFA_40_list_T1.append(excel['DFA_T1'][2])
+#     DFA_20_list_T1.append(excel['DFA_T1'][3])
+#     DFA_05_list_T1.append(excel['DFA_T1'][4])
+#     DFA_80_list_T2.append(excel['DFA_T2'][0])
+#     DFA_60_list_T2.append(excel['DFA_T2'][1])
+#     DFA_40_list_T2.append(excel['DFA_T2'][2])
+#     DFA_20_list_T2.append(excel['DFA_T2'][3])
+#     DFA_05_list_T2.append(excel['DFA_T2'][4])
+#     DFA_80_list_Average.append(excel['DFA_Average'][0])
+#     DFA_60_list_Average.append(excel['DFA_Average'][1])
+#     DFA_40_list_Average.append(excel['DFA_Average'][2])
+#     DFA_20_list_Average.append(excel['DFA_Average'][3])
+#     DFA_05_list_Average.append(excel['DFA_Average'][4])
+#     dist = {
+#         'ID': ID_list,
+#         'SaEn_80_T1': SaEn_80_list_T1,
+#         'SaEn_60_T1': SaEn_60_list_T1,
+#         'SaEn_40_T1': SaEn_40_list_T1,
+#         'SaEn_20_T1': SaEn_20_list_T1,
+#         'SaEn_05_T1': SaEn_05_list_T1,
+#         'SaEn_80_T2': SaEn_80_list_T2,
+#         'SaEn_60_T2': SaEn_60_list_T2,
+#         'SaEn_40_T2': SaEn_40_list_T2,
+#         'SaEn_20_T2': SaEn_20_list_T2,
+#         'SaEn_05_T2': SaEn_05_list_T2,
+#         'SaEn_80_Average': SaEn_80_list_Average,
+#         'SaEn_60_Average': SaEn_60_list_Average,
+#         'SaEn_40_Average': SaEn_40_list_Average,
+#         'SaEn_20_Average': SaEn_20_list_Average,
+#         'SaEn_05_Average': SaEn_05_list_Average,
+#         'sd_80_T1': sd_80_list_T1,
+#         'sd_60_T1': sd_60_list_T1,
+#         'sd_40_T1': sd_40_list_T1,
+#         'sd_20_T1': sd_20_list_T1,
+#         'sd_05_T1': sd_05_list_T1,
+#         'sd_80_T2': sd_80_list_T2,
+#         'sd_60_T2': sd_60_list_T2,
+#         'sd_40_T2': sd_40_list_T2,
+#         'sd_20_T2': sd_20_list_T2,
+#         'sd_05_T2': sd_05_list_T2,
+#         'sd_80_Average': sd_80_list_Average,
+#         'sd_60_Average': sd_60_list_Average,
+#         'sd_40_Average': sd_40_list_Average,
+#         'sd_20_Average': sd_20_list_Average,
+#         'sd_05_Average': sd_05_list_Average,
+#         'CoV_80_T1': CoV_80_list_T1,
+#         'CoV_60_T1': CoV_60_list_T1,
+#         'CoV_40_T1': CoV_40_list_T1,
+#         'CoV_20_T1': CoV_20_list_T1,
+#         'CoV_05_T1': CoV_05_list_T1,
+#         'CoV_80_T2': CoV_80_list_T2,
+#         'CoV_60_T2': CoV_60_list_T2,
+#         'CoV_40_T2': CoV_40_list_T2,
+#         'CoV_20_T2': CoV_20_list_T2,
+#         'CoV_05_T2': CoV_05_list_T2,
+#         'CoV_80_Average': CoV_80_list_Average,
+#         'CoV_60_Average': CoV_60_list_Average,
+#         'CoV_40_Average': CoV_40_list_Average,
+#         'CoV_20_Average': CoV_20_list_Average,
+#         'CoV_05_Average': CoV_05_list_Average,
+#         'DFA_80_T1': DFA_80_list_T1,
+#         'DFA_60_T1': DFA_60_list_T1,
+#         'DFA_40_T1': DFA_40_list_T1,
+#         'DFA_20_T1': DFA_20_list_T1,
+#         'DFA_05_T1': DFA_05_list_T1,
+#         'DFA_80_T2': DFA_80_list_T2,
+#         'DFA_60_T2': DFA_60_list_T2,
+#         'DFA_40_T2': DFA_40_list_T2,
+#         'DFA_20_T2': DFA_20_list_T2,
+#         'DFA_05_T2': DFA_05_list_T2,
+#         'DFA_80_Average': DFA_80_list_Average,
+#         'DFA_60_Average': DFA_60_list_Average,
+#         'DFA_40_Average': DFA_40_list_Average,
+#         'DFA_20_Average': DFA_20_list_Average,
+#         'DFA_05_Average': DFA_05_list_Average,
+#     }
+#     new_excel = pd.DataFrame(dist)
+# os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')
+# new_excel.to_excel(r'results Isometrics all.xlsx')
