@@ -244,13 +244,13 @@ def derivative(array,fs):
         der.append((array[i+1]-array[i])/dt)
     return der
 
-def DFA(variable):
-    a = fu.toAggregated(variable)
+def DFA(time_series):
+    a = fu.toAggregated(time_series)
         #b = fu.toAggregated(b)
 
     pydfa = fathon.DFA(a)
 
-    winSizes = fu.linRangeByStep(start=4, end=int(len(variable)/4))
+    winSizes = fu.linRangeByStep(start=16, end=int(len(time_series)/9))
     revSeg = True
     polOrd = 1
 
