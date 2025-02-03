@@ -647,4 +647,22 @@ def down_sampling(df, f_out, f_in):
 
     return df_downsampled
 
+def FFT(signal, sampling_frequency):
+    # Compute FFT
+    fft_values = np.fft.fft(signal)
+    frequencies = np.fft.fftfreq(len(signal), d=1 / sampling_frequency)  # Frequency bins
+
+    # Compute power spectrum (magnitude of FFT)
+    power_spectrum = np.abs(fft_values)
+
+    # Plot
+    plt.figure(figsize=(8, 4))
+    plt.plot(frequencies[:len(frequencies) // 2],
+             power_spectrum[:len(frequencies) // 2])
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Power")
+    plt.title("FFT Spectrum")
+    plt.grid()
+    plt.show()
+
 

@@ -18,8 +18,8 @@ def FFT(var,fs):
 
     f = freqs[mask]
     a = pSpec[mask]
-    plt.plot(f,a)
-    plt.show()
+    # plt.plot(f,a)
+    # plt.show()
     sumA=[0]
     for i in range(1,len(a)):
         sumA.append(a[i]+sumA[i-1])
@@ -142,7 +142,7 @@ def Butterworth(fs,fc,var):
     """
     w = fc / (fs / 2)
 
-    b, a = signal.butter(2, w, 'low')
+    b, a = signal.butter(N=2, Wn=w, btype='low', fs=fs)
     return signal.filtfilt(b, a, var)
 
 def Average(lst):
