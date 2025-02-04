@@ -4,23 +4,6 @@ import os
 import glob
 import numpy as np
 
-# Warm_up_1
-# Warm_up_2
-# Warm_up_3
-# Isometric_05_T1
-# Isometric_05_T2
-# Isometric_20_T1
-# Isometric_20_T2
-# Isometric_40_T1
-# Isometric_40_T2
-# Isometric_60_T1
-# Isometric_60_T2
-# Isometric_80_T1
-# Isometric_80_T2
-# Pert_down_T1
-# Pert_down_T2
-# Pert_up_T1
-# Pert_up_T2
 
 
 directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Old.18'

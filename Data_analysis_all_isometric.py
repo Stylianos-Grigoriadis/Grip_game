@@ -21,13 +21,11 @@ SaEn_40_list = []
 SaEn_20_list = []
 SaEn_05_list = []
 
-
 std_80_list = []
 std_60_list = []
 std_40_list = []
 std_20_list = []
 std_05_list = []
-
 
 CoV_80_list = []
 CoV_60_list = []
@@ -35,14 +33,11 @@ CoV_40_list = []
 CoV_20_list = []
 CoV_05_list = []
 
-
 Isometric_80_freq_90_list = []
 Isometric_60_freq_90_list = []
 Isometric_40_freq_90_list = []
 Isometric_20_freq_90_list = []
 Isometric_05_freq_90_list = []
-
-
 
 Isometric_80_freq_95_list = []
 Isometric_60_freq_95_list = []
@@ -56,25 +51,18 @@ Isometric_40_freq_99_list = []
 Isometric_20_freq_99_list = []
 Isometric_05_freq_99_list = []
 
-Adaptation_down_T1_list = []
-Adaptation_down_T2_list = []
-Adaptation_down_list_Average = []
-Adaptation_up_T1_list = []
-Adaptation_up_T2_list = []
-Adaptation_up_list_Average = []
+Adaptation_down_min_list = []
+Adaptation_up_min_list = []
 
-SaEn_Adaptation_down_T1_list = []
-SaEn_Adaptation_down_T2_list = []
-SaEn_Adaptation_down_list_Average = []
-SaEn_Adaptation_up_T1_list = []
-SaEn_Adaptation_up_T2_list = []
-SaEn_Adaptation_up_list_Average = []
+SaEn_Adaptation_down_list = []
+SaEn_Adaptation_up_list = []
 
 sd = 2
 consecutive_values = 37
 
 ID_list = []
-excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Participants.xlsx')
+excel_for_names = pd.read_excel(
+    r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Participants.xlsx')
 
 for file in files:
     directory = file
@@ -94,7 +82,6 @@ for file in files:
     percentage_60 = 0.6 * max_MVC
     percentage_80 = 0.8 * max_MVC
 
-
     Isometric_80_T1 = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
     Isometric_80_T2 = pd.read_csv(r'Isometric_80_T2.csv', skiprows=2)
     Isometric_60_T1 = pd.read_csv(r'Isometric_60_T1.csv', skiprows=2)
@@ -111,7 +98,6 @@ for file in files:
     Pert_up_T1 = pd.read_csv(r'Pert_up_T1.csv', skiprows=2)
     Pert_up_T2 = pd.read_csv(r'Pert_up_T2.csv', skiprows=2)
 
-
     Isometric_80_T1 = Isometric_80_T1['Performance'][index['T2_iso_80_75Hz'][0]:index['T2_iso_80_75Hz'][1]].to_numpy()
     Isometric_80_T2 = Isometric_80_T2['Performance'][index['T2_iso_80_75Hz'][0]:index['T2_iso_80_75Hz'][1]].to_numpy()
     Isometric_60_T1 = Isometric_60_T1['Performance'][index['T1_iso_60_75Hz'][0]:index['T1_iso_60_75Hz'][1]].to_numpy()
@@ -123,7 +109,6 @@ for file in files:
     Isometric_05_T1 = Isometric_05_T1['Performance'][index['T1_iso_05_75Hz'][0]:index['T1_iso_05_75Hz'][1]].to_numpy()
     Isometric_05_T2 = Isometric_05_T2['Performance'][index['T2_iso_05_75Hz'][0]:index['T2_iso_05_75Hz'][1]].to_numpy()
 
-
     Isometric_80_T1 = lb.index_to_500(Isometric_80_T1)
     Isometric_80_T2 = lb.index_to_500(Isometric_80_T2)
     Isometric_60_T1 = lb.index_to_500(Isometric_60_T1)
@@ -134,7 +119,6 @@ for file in files:
     Isometric_20_T2 = lb.index_to_500(Isometric_20_T2)
     Isometric_05_T1 = lb.index_to_500(Isometric_05_T1)
     Isometric_05_T2 = lb.index_to_500(Isometric_05_T2)
-
 
     # Butterworth filtering at 50Hz
     Isometric_80_T1 = lib.Butterworth(75, 50, Isometric_80_T1)
@@ -191,7 +175,6 @@ for file in files:
     else:
         Isometric_05 = Isometric_05_T2
 
-
     # Calculation of Frequency of 90%, 95%, and 99% of total power for every rep for all percentages of MVC
     Isometric_80_freq_90, Isometric_80_freq_95, Isometric_80_freq_99 = lib.FFT(Isometric_80, 75)
     Isometric_60_freq_90, Isometric_60_freq_95, Isometric_60_freq_99 = lib.FFT(Isometric_60, 75)
@@ -200,14 +183,13 @@ for file in files:
     Isometric_05_freq_90, Isometric_05_freq_95, Isometric_05_freq_99 = lib.FFT(Isometric_05, 75)
 
     freq_90 = [Isometric_80_freq_90, Isometric_60_freq_90, Isometric_40_freq_90, Isometric_20_freq_90,
-                  Isometric_05_freq_90]
+               Isometric_05_freq_90]
 
     freq_95 = [Isometric_80_freq_95, Isometric_60_freq_95, Isometric_40_freq_95, Isometric_20_freq_95,
-                  Isometric_05_freq_95]
+               Isometric_05_freq_95]
 
     freq_99 = [Isometric_80_freq_99, Isometric_60_freq_99, Isometric_40_freq_99, Isometric_20_freq_99,
-                  Isometric_05_freq_99]
-
+               Isometric_05_freq_99]
 
     # Calculation of standard deviation for every rep for all percentages of MVC
     std_Isometric_80 = np.std(Isometric_80)
@@ -231,50 +213,15 @@ for file in files:
     SaEn_Isometric_05 = lb.Ent_Samp(Isometric_05, 2, 0.2)
 
     # Calculation of time to adaptation for all perturbation trials
-    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, sd, 100, consecutive_values, 100, 500,'Pert_down_T1', 20, plot=False)
-    time_of_adaptation_down_T2 = lb.adaptation_time_using_sd(Pert_down_T2, 250, sd, 100, consecutive_values, 100, 500,'Pert_down_T2', 20, plot=False)
-    time_of_adaptation_up_T1 = lb.adaptation_time_using_sd(Pert_up_T1, 250, sd, 100, consecutive_values, 100, 500,'Pert_up_T1', 20, plot=False)
-    time_of_adaptation_up_T2 = lb.adaptation_time_using_sd(Pert_up_T2, 250, sd, 100, consecutive_values, 100, 500,'Pert_up_T2', 20, plot=False)
+    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, sd, 100, consecutive_values, 100, 500,
+                                                             'Pert_down_T1', 20, plot=False)
+    time_of_adaptation_down_T2 = lb.adaptation_time_using_sd(Pert_down_T2, 250, sd, 100, consecutive_values, 100, 500,
+                                                             'Pert_down_T2', 20, plot=False)
+    time_of_adaptation_up_T1 = lb.adaptation_time_using_sd(Pert_up_T1, 250, sd, 100, consecutive_values, 100, 500,
+                                                           'Pert_up_T1', 20, plot=False)
+    time_of_adaptation_up_T2 = lb.adaptation_time_using_sd(Pert_up_T2, 250, sd, 100, consecutive_values, 100, 500,
+                                                           'Pert_up_T2', 20, plot=False)
 
-    if time_of_adaptation_down_T1 != None:
-        time_of_adaptation_down_T1 = round(time_of_adaptation_down_T1, 3)
-
-    if time_of_adaptation_down_T2 != None:
-        time_of_adaptation_down_T2 = round(time_of_adaptation_down_T2, 3)
-
-    if time_of_adaptation_up_T1 != None:
-        time_of_adaptation_up_T1 = round(time_of_adaptation_up_T1, 3)
-
-    if time_of_adaptation_up_T2 != None:
-        time_of_adaptation_up_T2 = round(time_of_adaptation_up_T2, 3)
-
-    if time_of_adaptation_down_T1 != None and time_of_adaptation_down_T2 != None:
-        time_of_adaptation_down_average = np.mean((time_of_adaptation_down_T1, time_of_adaptation_down_T2))
-
-    elif time_of_adaptation_down_T1 != None and time_of_adaptation_down_T2 == None:
-        time_of_adaptation_down_average = time_of_adaptation_down_T1
-
-    elif time_of_adaptation_down_T1 == None and time_of_adaptation_down_T2 != None:
-        time_of_adaptation_down_average = time_of_adaptation_down_T2
-
-    elif time_of_adaptation_down_T1 == None and time_of_adaptation_down_T2 == None:
-        time_of_adaptation_down_average = None
-        print(f'no adaptation occurred for {ID} in down perturbation')
-
-    if time_of_adaptation_up_T1 != None and time_of_adaptation_up_T2 != None:
-        time_of_adaptation_up_average = np.mean((time_of_adaptation_up_T1, time_of_adaptation_up_T2))
-
-    elif time_of_adaptation_up_T1 != None and time_of_adaptation_up_T2 == None:
-        time_of_adaptation_up_average = time_of_adaptation_up_T1
-
-    elif time_of_adaptation_up_T1 == None and time_of_adaptation_up_T2 != None:
-        time_of_adaptation_up_average = time_of_adaptation_up_T2
-
-    elif time_of_adaptation_up_T1 == None and time_of_adaptation_up_T2 == None:
-        time_of_adaptation_up_average = None
-        print(f'no adaptation occurred for {ID} in up perturbation')
-
-    # Calculate the SaEn of the perturbation trials
 
     if not ID == 'Old.18' and not ID == 'Old.7':
         Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
@@ -294,11 +241,75 @@ for file in files:
         Pert_up_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
         Pert_up_T2_array = Pert_down_T1['Performance'][450:1800].to_numpy()
 
+    if time_of_adaptation_down_T1 != None:
+        time_of_adaptation_down_T1 = round(time_of_adaptation_down_T1, 3)
+    else:
+        time_of_adaptation_down_T1 = 100
 
-    SaEn_Pert_down_T1_array = lb.Ent_Samp(Pert_down_T1_array, 2, 0.2)
-    SaEn_Pert_down_T2_array = lb.Ent_Samp(Pert_down_T2_array, 2, 0.2)
-    SaEn_Pert_up_T1_array = lb.Ent_Samp(Pert_up_T1_array, 2, 0.2)
-    SaEn_Pert_up_T2_array = lb.Ent_Samp(Pert_up_T2_array, 2, 0.2)
+    if time_of_adaptation_down_T2 != None:
+        time_of_adaptation_down_T2 = round(time_of_adaptation_down_T2, 3)
+    else:
+        time_of_adaptation_down_T2 = 100
+
+    if time_of_adaptation_up_T1 != None:
+        time_of_adaptation_up_T1 = round(time_of_adaptation_up_T1, 3)
+    else:
+        time_of_adaptation_up_T1 = 100
+
+    if time_of_adaptation_up_T2 != None:
+        time_of_adaptation_up_T2 = round(time_of_adaptation_up_T2, 3)
+    else:
+        time_of_adaptation_up_T2 = 100
+
+
+    if time_of_adaptation_down_T1 != 0 and time_of_adaptation_down_T2 != 0:
+        time_of_adaptation_down_min = np.min((time_of_adaptation_down_T1, time_of_adaptation_down_T2))
+
+        if time_of_adaptation_down_min == time_of_adaptation_down_T1:
+            Pert_down_array = Pert_down_T1_array
+        elif time_of_adaptation_down_min == time_of_adaptation_down_T2:
+            Pert_down_array = Pert_down_T2_array
+
+    elif time_of_adaptation_down_T1 != 0 and time_of_adaptation_down_T2 == 0:
+        time_of_adaptation_down_min = time_of_adaptation_down_T1
+        Pert_down_array = Pert_down_T1_array
+
+    elif time_of_adaptation_down_T1 == 0 and time_of_adaptation_down_T2 != 0:
+        time_of_adaptation_down_min = time_of_adaptation_down_T2
+        Pert_down_array = Pert_down_T2_array
+
+    elif time_of_adaptation_down_T1 == 0 and time_of_adaptation_down_T2 == 0:
+        time_of_adaptation_down_min = None
+        Pert_down_array = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        print(f'no adaptation occurred for {ID} in down perturbation')
+
+    if time_of_adaptation_up_T1 != 0 and time_of_adaptation_up_T2 != 0:
+        time_of_adaptation_up_min = np.min((time_of_adaptation_up_T1, time_of_adaptation_up_T2))
+        if time_of_adaptation_up_min == time_of_adaptation_up_T1:
+            Pert_up_array = Pert_up_T1_array
+        elif time_of_adaptation_up_min == time_of_adaptation_up_T2:
+            Pert_up_array = Pert_up_T2_array
+
+    elif time_of_adaptation_up_T1 != 0 and time_of_adaptation_up_T2 == 0:
+        time_of_adaptation_up_min = time_of_adaptation_up_T1
+        Pert_up_array = Pert_up_T1_array
+
+    elif time_of_adaptation_up_T1 == 0 and time_of_adaptation_up_T2 != 0:
+        time_of_adaptation_up_min = time_of_adaptation_up_T2
+        Pert_up_array = Pert_up_T2_array
+
+    elif time_of_adaptation_up_T1 == 0 and time_of_adaptation_up_T2 == 0:
+        time_of_adaptation_up_min = None
+        Pert_up_array = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        print(f'no adaptation occurred for {ID} in up perturbation')
+
+    print(time_of_adaptation_down_min)
+    print(time_of_adaptation_up_min)
+
+
+    # Calculate the SaEn of the perturbation trials
+    SaEn_Pert_down = lb.Ent_Samp(Pert_down_array, 2, 0.2)
+    SaEn_Pert_up = lb.Ent_Samp(Pert_up_array, 2, 0.2)
 
     # Append every value to each dedicated list
     SaEn_80_list.append(SaEn_Isometric_80)
@@ -337,20 +348,11 @@ for file in files:
     Isometric_20_freq_99_list.append(Isometric_20_freq_99)
     Isometric_05_freq_99_list.append(Isometric_05_freq_99)
 
+    Adaptation_down_min_list.append(time_of_adaptation_down_min)
+    Adaptation_up_min_list.append(time_of_adaptation_up_min)
 
-    Adaptation_down_T1_list.append(time_of_adaptation_down_T1)
-    Adaptation_down_T2_list.append(time_of_adaptation_down_T2)
-    Adaptation_down_list_Average.append(time_of_adaptation_down_average)
-    Adaptation_up_T1_list.append(time_of_adaptation_up_T1)
-    Adaptation_up_T2_list.append(time_of_adaptation_up_T2)
-    Adaptation_up_list_Average.append(time_of_adaptation_up_average)
-
-    SaEn_Adaptation_down_T1_list.append(SaEn_Pert_down_T1_array)
-    SaEn_Adaptation_down_T2_list.append(SaEn_Pert_down_T2_array)
-    SaEn_Adaptation_down_list_Average.append(np.mean((SaEn_Pert_down_T1_array, SaEn_Pert_down_T2_array)))
-    SaEn_Adaptation_up_T1_list.append(SaEn_Pert_up_T1_array)
-    SaEn_Adaptation_up_T2_list.append(SaEn_Pert_up_T2_array)
-    SaEn_Adaptation_up_list_Average.append(np.mean((SaEn_Pert_up_T1_array, SaEn_Pert_down_T2_array)))
+    SaEn_Adaptation_down_list.append(SaEn_Pert_down)
+    SaEn_Adaptation_up_list.append(SaEn_Pert_up)
 
 # Creation of a dictionary with all the data for all participants
 dist = {
@@ -385,22 +387,12 @@ dist = {
     'Freq_99_40': Isometric_40_freq_99_list,
     'Freq_99_20': Isometric_20_freq_99_list,
     'Freq_99_05': Isometric_05_freq_99_list,
-    'time_of_adaptation_down_T1': Adaptation_down_T1_list,
-    'time_of_adaptation_down_T2': Adaptation_down_T2_list,
-    'time_of_adaptation_down_average': Adaptation_down_list_Average,
-    'time_of_adaptation_up_T1': Adaptation_up_T1_list,
-    'time_of_adaptation_up_T2': Adaptation_up_T2_list,
-    'time_of_adaptation_up_average': Adaptation_up_list_Average,
-    'SaEn_Pert_down_T1': SaEn_Adaptation_down_T1_list,
-    'SaEn_Pert_down_T3': SaEn_Adaptation_down_T2_list,
-    'SaEn_Pert_down_Average': SaEn_Adaptation_down_list_Average,
-    'SaEn_Pert_up_T1': SaEn_Adaptation_up_T1_list,
-    'SaEn_Pert_up_T3': SaEn_Adaptation_up_T2_list,
-    'SaEn_Pert_up_Average': SaEn_Adaptation_up_list_Average
+    'Adaptation_down_min': Adaptation_down_min_list,
+    'Adaptation_up_min': Adaptation_up_min_list,
+    'SaEn_Adaptation_down': SaEn_Adaptation_down_list,
+    'SaEn_Adaptation_up': SaEn_Adaptation_up_list
 
 }
-
-
 
 # new_excel = pd.DataFrame(dist)
 # os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')

@@ -7,7 +7,7 @@ from scipy.signal import decimate
 import lib
 from matplotlib.widgets import SpanSelector
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Young.10'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data\Young.19'
 os.chdir(directory_path)
 # Determine the MVC and the different percentages
 ID = os.path.basename(directory_path)
