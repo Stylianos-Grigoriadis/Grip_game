@@ -509,6 +509,7 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     except:
         time_of_adaptation = None
         return time_of_adaptation
+
 def single_perturbation_generator(baseline, perturbation, data_num):
     baseline_array = np.full(int(data_num/2), baseline)
     perturbation_array = np.full(int(data_num/2), perturbation)

@@ -15,103 +15,46 @@ plt.rcParams['font.size'] = 16
 directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data'
 files = glob.glob(os.path.join(directory_path, "*"))
 
-SaEn_80_list_T1 = []
-SaEn_60_list_T1 = []
-SaEn_40_list_T1 = []
-SaEn_20_list_T1 = []
-SaEn_05_list_T1 = []
-SaEn_80_list_T2 = []
-SaEn_60_list_T2 = []
-SaEn_40_list_T2 = []
-SaEn_20_list_T2 = []
-SaEn_05_list_T2 = []
-SaEn_80_list_Average = []
-SaEn_60_list_Average = []
-SaEn_40_list_Average = []
-SaEn_20_list_Average = []
-SaEn_05_list_Average = []
+SaEn_80_list = []
+SaEn_60_list = []
+SaEn_40_list = []
+SaEn_20_list = []
+SaEn_05_list = []
 
-std_80_list_T1 = []
-std_60_list_T1 = []
-std_40_list_T1 = []
-std_20_list_T1 = []
-std_05_list_T1 = []
-std_80_list_T2 = []
-std_60_list_T2 = []
-std_40_list_T2 = []
-std_20_list_T2 = []
-std_05_list_T2 = []
-std_80_list_Average = []
-std_60_list_Average = []
-std_40_list_Average = []
-std_20_list_Average = []
-std_05_list_Average = []
 
-CoV_80_list_T1 = []
-CoV_60_list_T1 = []
-CoV_40_list_T1 = []
-CoV_20_list_T1 = []
-CoV_05_list_T1 = []
-CoV_80_list_T2 = []
-CoV_60_list_T2 = []
-CoV_40_list_T2 = []
-CoV_20_list_T2 = []
-CoV_05_list_T2 = []
-CoV_80_list_Average = []
-CoV_60_list_Average = []
-CoV_40_list_Average = []
-CoV_20_list_Average = []
-CoV_05_list_Average = []
+std_80_list = []
+std_60_list = []
+std_40_list = []
+std_20_list = []
+std_05_list = []
 
-Isometric_80_T1_freq_90_list = []
-Isometric_60_T1_freq_90_list = []
-Isometric_40_T1_freq_90_list = []
-Isometric_20_T1_freq_90_list = []
-Isometric_05_T1_freq_90_list = []
-Isometric_80_T2_freq_90_list = []
-Isometric_60_T2_freq_90_list = []
-Isometric_40_T2_freq_90_list = []
-Isometric_20_T2_freq_90_list = []
-Isometric_05_T2_freq_90_list = []
-Isometric_80_freq_90_list_Average = []
-Isometric_60_freq_90_list_Average = []
-Isometric_40_freq_90_list_Average = []
-Isometric_20_freq_90_list_Average = []
-Isometric_05_freq_90_list_Average = []
+
+CoV_80_list = []
+CoV_60_list = []
+CoV_40_list = []
+CoV_20_list = []
+CoV_05_list = []
+
+
+Isometric_80_freq_90_list = []
+Isometric_60_freq_90_list = []
+Isometric_40_freq_90_list = []
+Isometric_20_freq_90_list = []
+Isometric_05_freq_90_list = []
 
 
 
-Isometric_80_T1_freq_95_list = []
-Isometric_60_T1_freq_95_list = []
-Isometric_40_T1_freq_95_list = []
-Isometric_20_T1_freq_95_list = []
-Isometric_05_T1_freq_95_list = []
-Isometric_80_T2_freq_95_list = []
-Isometric_60_T2_freq_95_list = []
-Isometric_40_T2_freq_95_list = []
-Isometric_20_T2_freq_95_list = []
-Isometric_05_T2_freq_95_list = []
-Isometric_80_freq_95_list_Average = []
-Isometric_60_freq_95_list_Average = []
-Isometric_40_freq_95_list_Average = []
-Isometric_20_freq_95_list_Average = []
-Isometric_05_freq_95_list_Average = []
+Isometric_80_freq_95_list = []
+Isometric_60_freq_95_list = []
+Isometric_40_freq_95_list = []
+Isometric_20_freq_95_list = []
+Isometric_05_freq_95_list = []
 
-Isometric_80_T1_freq_99_list = []
-Isometric_60_T1_freq_99_list = []
-Isometric_40_T1_freq_99_list = []
-Isometric_20_T1_freq_99_list = []
-Isometric_05_T1_freq_99_list = []
-Isometric_80_T2_freq_99_list = []
-Isometric_60_T2_freq_99_list = []
-Isometric_40_T2_freq_99_list = []
-Isometric_20_T2_freq_99_list = []
-Isometric_05_T2_freq_99_list = []
-Isometric_80_freq_99_list_Average = []
-Isometric_60_freq_99_list_Average = []
-Isometric_40_freq_99_list_Average = []
-Isometric_20_freq_99_list_Average = []
-Isometric_05_freq_99_list_Average = []
+Isometric_80_freq_99_list = []
+Isometric_60_freq_99_list = []
+Isometric_40_freq_99_list = []
+Isometric_20_freq_99_list = []
+Isometric_05_freq_99_list = []
 
 Adaptation_down_T1_list = []
 Adaptation_down_T2_list = []
@@ -120,19 +63,36 @@ Adaptation_up_T1_list = []
 Adaptation_up_T2_list = []
 Adaptation_up_list_Average = []
 
+SaEn_Adaptation_down_T1_list = []
+SaEn_Adaptation_down_T2_list = []
+SaEn_Adaptation_down_list_Average = []
+SaEn_Adaptation_up_T1_list = []
+SaEn_Adaptation_up_T2_list = []
+SaEn_Adaptation_up_list_Average = []
+
 sd = 2
 consecutive_values = 37
 
 ID_list = []
+excel_for_names = pd.read_excel(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Participants.xlsx')
 
 for file in files:
     directory = file
     os.chdir(directory)
     ID = os.path.basename(file)
-
     ID_list.append(ID)
-    index = pd.read_excel(fr'index_{ID}.xlsx', index_col=None)
     print(ID)
+
+    index = pd.read_excel(fr'index_{ID}.xlsx', index_col=None)
+
+    index_for_excel = excel_for_names[excel_for_names['ID'] == ID].index[0]
+    max_MVC = excel_for_names['MVC'][index_for_excel]
+
+    percentage_05 = 0.05 * max_MVC
+    percentage_20 = 0.2 * max_MVC
+    percentage_40 = 0.4 * max_MVC
+    percentage_60 = 0.6 * max_MVC
+    percentage_80 = 0.8 * max_MVC
 
 
     Isometric_80_T1 = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
@@ -174,7 +134,9 @@ for file in files:
     Isometric_20_T2 = lb.index_to_500(Isometric_20_T2)
     Isometric_05_T1 = lb.index_to_500(Isometric_05_T1)
     Isometric_05_T2 = lb.index_to_500(Isometric_05_T2)
-    #
+
+
+    # Butterworth filtering at 50Hz
     Isometric_80_T1 = lib.Butterworth(75, 50, Isometric_80_T1)
     Isometric_80_T2 = lib.Butterworth(75, 50, Isometric_80_T2)
     Isometric_60_T1 = lib.Butterworth(75, 50, Isometric_60_T1)
@@ -190,109 +152,83 @@ for file in files:
     Pert_up_T1['Performance'] = lib.Butterworth(75, 50, Pert_up_T1['Performance'])
     Pert_up_T2['Performance'] = lib.Butterworth(75, 50, Pert_up_T2['Performance'])
 
+    # Average of spatial error so that we can determine which Isometric trial to use for each percentage
+    # for further analysis
+
+    Spatial_error_Isometric_80_T1 = np.mean(np.abs(Isometric_80_T1 - percentage_80))
+    Spatial_error_Isometric_80_T2 = np.mean(np.abs(Isometric_80_T2 - percentage_80))
+    Spatial_error_Isometric_60_T1 = np.mean(np.abs(Isometric_60_T1 - percentage_60))
+    Spatial_error_Isometric_60_T2 = np.mean(np.abs(Isometric_60_T2 - percentage_60))
+    Spatial_error_Isometric_40_T1 = np.mean(np.abs(Isometric_40_T1 - percentage_40))
+    Spatial_error_Isometric_40_T2 = np.mean(np.abs(Isometric_40_T2 - percentage_40))
+    Spatial_error_Isometric_20_T1 = np.mean(np.abs(Isometric_20_T1 - percentage_20))
+    Spatial_error_Isometric_20_T2 = np.mean(np.abs(Isometric_20_T2 - percentage_20))
+    Spatial_error_Isometric_05_T1 = np.mean(np.abs(Isometric_05_T1 - percentage_05))
+    Spatial_error_Isometric_05_T2 = np.mean(np.abs(Isometric_05_T2 - percentage_05))
+
+    if Spatial_error_Isometric_80_T1 >= Spatial_error_Isometric_80_T2:
+        Isometric_80 = Isometric_80_T1
+    else:
+        Isometric_80 = Isometric_80_T2
+
+    if Spatial_error_Isometric_60_T1 >= Spatial_error_Isometric_60_T2:
+        Isometric_60 = Isometric_60_T1
+    else:
+        Isometric_60 = Isometric_60_T2
+
+    if Spatial_error_Isometric_40_T1 >= Spatial_error_Isometric_40_T2:
+        Isometric_40 = Isometric_40_T1
+    else:
+        Isometric_40 = Isometric_40_T2
+
+    if Spatial_error_Isometric_20_T1 >= Spatial_error_Isometric_20_T2:
+        Isometric_20 = Isometric_20_T1
+    else:
+        Isometric_20 = Isometric_20_T2
+
+    if Spatial_error_Isometric_05_T1 >= Spatial_error_Isometric_05_T2:
+        Isometric_05 = Isometric_05_T1
+    else:
+        Isometric_05 = Isometric_05_T2
+
 
     # Calculation of Frequency of 90%, 95%, and 99% of total power for every rep for all percentages of MVC
-    Isometric_80_T1_freq_90, Isometric_80_T1_freq_95, Isometric_80_T1_freq_99 = lib.FFT(Isometric_80_T1, 75)
-    Isometric_80_T2_freq_90, Isometric_80_T2_freq_95, Isometric_80_T2_freq_99 = lib.FFT(Isometric_80_T2, 75)
-    Isometric_60_T1_freq_90, Isometric_60_T1_freq_95, Isometric_60_T1_freq_99 = lib.FFT(Isometric_60_T1, 75)
-    Isometric_60_T2_freq_90, Isometric_60_T2_freq_95, Isometric_60_T2_freq_99 = lib.FFT(Isometric_60_T2, 75)
-    Isometric_40_T1_freq_90, Isometric_40_T1_freq_95, Isometric_40_T1_freq_99 = lib.FFT(Isometric_40_T1, 75)
-    Isometric_40_T2_freq_90, Isometric_40_T2_freq_95, Isometric_40_T2_freq_99 = lib.FFT(Isometric_40_T2, 75)
-    Isometric_20_T1_freq_90, Isometric_20_T1_freq_95, Isometric_20_T1_freq_99 = lib.FFT(Isometric_20_T1, 75)
-    Isometric_20_T2_freq_90, Isometric_20_T2_freq_95, Isometric_20_T2_freq_99 = lib.FFT(Isometric_20_T2, 75)
-    Isometric_05_T1_freq_90, Isometric_05_T1_freq_95, Isometric_05_T1_freq_99 = lib.FFT(Isometric_05_T1, 75)
-    Isometric_05_T2_freq_90, Isometric_05_T2_freq_95, Isometric_05_T2_freq_99 = lib.FFT(Isometric_05_T2, 75)
+    Isometric_80_freq_90, Isometric_80_freq_95, Isometric_80_freq_99 = lib.FFT(Isometric_80, 75)
+    Isometric_60_freq_90, Isometric_60_freq_95, Isometric_60_freq_99 = lib.FFT(Isometric_60, 75)
+    Isometric_40_freq_90, Isometric_40_freq_95, Isometric_40_freq_99 = lib.FFT(Isometric_40, 75)
+    Isometric_20_freq_90, Isometric_20_freq_95, Isometric_20_freq_99 = lib.FFT(Isometric_20, 75)
+    Isometric_05_freq_90, Isometric_05_freq_95, Isometric_05_freq_99 = lib.FFT(Isometric_05, 75)
 
-    freq_T1_90 = [Isometric_80_T1_freq_90, Isometric_60_T1_freq_90, Isometric_40_T1_freq_90, Isometric_20_T1_freq_90,
-                  Isometric_05_T1_freq_90]
-    freq_T2_90 = [Isometric_80_T2_freq_90, Isometric_60_T2_freq_90, Isometric_40_T2_freq_90, Isometric_20_T2_freq_90,
-                  Isometric_05_T2_freq_90]
-    freq_T1_95 = [Isometric_80_T1_freq_95, Isometric_60_T1_freq_95, Isometric_40_T1_freq_95, Isometric_20_T1_freq_95,
-                  Isometric_05_T1_freq_95]
-    freq_T2_95 = [Isometric_80_T2_freq_95, Isometric_60_T2_freq_95, Isometric_40_T2_freq_95, Isometric_20_T2_freq_95,
-                  Isometric_05_T2_freq_95]
-    freq_T1_99 = [Isometric_80_T1_freq_99, Isometric_60_T1_freq_99, Isometric_40_T1_freq_99, Isometric_20_T1_freq_99,
-                  Isometric_05_T1_freq_99]
-    freq_T2_99 = [Isometric_80_T2_freq_99, Isometric_60_T2_freq_99, Isometric_40_T2_freq_99, Isometric_20_T2_freq_99,
-                  Isometric_05_T2_freq_99]
+    freq_90 = [Isometric_80_freq_90, Isometric_60_freq_90, Isometric_40_freq_90, Isometric_20_freq_90,
+                  Isometric_05_freq_90]
 
-    average_freq_90 = [np.mean((Isometric_80_T1_freq_90, Isometric_80_T2_freq_90)),
-                    np.mean((Isometric_60_T1_freq_90, Isometric_60_T2_freq_90)),
-                    np.mean((Isometric_40_T1_freq_90, Isometric_40_T2_freq_90)),
-                    np.mean((Isometric_20_T1_freq_90, Isometric_20_T2_freq_90)),
-                    np.mean((Isometric_05_T1_freq_90, Isometric_05_T2_freq_90))]
-    average_freq_95 = [np.mean((Isometric_80_T1_freq_95, Isometric_80_T2_freq_95)),
-                    np.mean((Isometric_60_T1_freq_95, Isometric_60_T2_freq_95)),
-                    np.mean((Isometric_40_T1_freq_95, Isometric_40_T2_freq_95)),
-                    np.mean((Isometric_20_T1_freq_95, Isometric_20_T2_freq_95)),
-                    np.mean((Isometric_05_T1_freq_95, Isometric_05_T2_freq_95))]
-    average_freq_99 = [np.mean((Isometric_80_T1_freq_99, Isometric_80_T2_freq_99)),
-                    np.mean((Isometric_60_T1_freq_99, Isometric_60_T2_freq_99)),
-                    np.mean((Isometric_40_T1_freq_99, Isometric_40_T2_freq_99)),
-                    np.mean((Isometric_20_T1_freq_99, Isometric_20_T2_freq_99)),
-                    np.mean((Isometric_05_T1_freq_99, Isometric_05_T2_freq_99))]
+    freq_95 = [Isometric_80_freq_95, Isometric_60_freq_95, Isometric_40_freq_95, Isometric_20_freq_95,
+                  Isometric_05_freq_95]
+
+    freq_99 = [Isometric_80_freq_99, Isometric_60_freq_99, Isometric_40_freq_99, Isometric_20_freq_99,
+                  Isometric_05_freq_99]
 
 
     # Calculation of standard deviation for every rep for all percentages of MVC
-    std_Isometric_80_T1 = np.std(Isometric_80_T1)
-    std_Isometric_80_T2 = np.std(Isometric_80_T2)
-    std_Isometric_60_T1 = np.std(Isometric_60_T1)
-    std_Isometric_60_T2 = np.std(Isometric_60_T2)
-    std_Isometric_40_T1 = np.std(Isometric_40_T1)
-    std_Isometric_40_T2 = np.std(Isometric_40_T2)
-    std_Isometric_20_T1 = np.std(Isometric_20_T1)
-    std_Isometric_20_T2 = np.std(Isometric_20_T2)
-    std_Isometric_05_T1 = np.std(Isometric_05_T1)
-    std_Isometric_05_T2 = np.std(Isometric_05_T2)
-
-    std_T1 = [std_Isometric_80_T1, std_Isometric_60_T1, std_Isometric_40_T1, std_Isometric_20_T1, std_Isometric_05_T1]
-    std_T2 = [std_Isometric_80_T2, std_Isometric_60_T2, std_Isometric_40_T2, std_Isometric_20_T2, std_Isometric_05_T2]
-    average_std = [np.mean((std_Isometric_80_T1, std_Isometric_80_T2)),
-                   np.mean((std_Isometric_60_T1, std_Isometric_60_T2)),
-                   np.mean((std_Isometric_40_T1, std_Isometric_40_T2)),
-                   np.mean((std_Isometric_20_T1, std_Isometric_05_T1)),
-                   np.mean((std_Isometric_05_T1, std_Isometric_05_T2))]
+    std_Isometric_80 = np.std(Isometric_80)
+    std_Isometric_60 = np.std(Isometric_60)
+    std_Isometric_40 = np.std(Isometric_40)
+    std_Isometric_20 = np.std(Isometric_20)
+    std_Isometric_05 = np.std(Isometric_05)
 
     # Calculation of Coefficient of Variation for every rep for all percentages of MVC
-    CoV_Isometric_80_T1 = (np.std(Isometric_80_T1) / np.mean(Isometric_80_T1)) * 100
-    CoV_Isometric_80_T2 = (np.std(Isometric_80_T2) / np.mean(Isometric_80_T2)) * 100
-    CoV_Isometric_60_T1 = (np.std(Isometric_60_T1) / np.mean(Isometric_60_T1)) * 100
-    CoV_Isometric_60_T2 = (np.std(Isometric_60_T2) / np.mean(Isometric_60_T2)) * 100
-    CoV_Isometric_40_T1 = (np.std(Isometric_40_T1) / np.mean(Isometric_40_T1)) * 100
-    CoV_Isometric_40_T2 = (np.std(Isometric_40_T2) / np.mean(Isometric_40_T2)) * 100
-    CoV_Isometric_20_T1 = (np.std(Isometric_20_T1) / np.mean(Isometric_20_T1)) * 100
-    CoV_Isometric_20_T2 = (np.std(Isometric_20_T2) / np.mean(Isometric_20_T2)) * 100
-    CoV_Isometric_05_T1 = (np.std(Isometric_05_T1) / np.mean(Isometric_05_T1)) * 100
-    CoV_Isometric_05_T2 = (np.std(Isometric_05_T2) / np.mean(Isometric_05_T2)) * 100
-
-    CoV_T1 = [CoV_Isometric_80_T1, CoV_Isometric_60_T1, CoV_Isometric_40_T1, CoV_Isometric_20_T1, CoV_Isometric_05_T1]
-    CoV_T2 = [CoV_Isometric_80_T2, CoV_Isometric_60_T2, CoV_Isometric_40_T2, CoV_Isometric_20_T2, CoV_Isometric_05_T2]
-    average_CoV = [np.mean((CoV_Isometric_80_T1, CoV_Isometric_80_T2)),
-                   np.mean((CoV_Isometric_60_T1, CoV_Isometric_60_T2)),
-                   np.mean((CoV_Isometric_40_T1, CoV_Isometric_40_T2)),
-                   np.mean((CoV_Isometric_20_T1, CoV_Isometric_20_T2)),
-                   np.mean((CoV_Isometric_05_T1, CoV_Isometric_05_T2))]
+    CoV_Isometric_80 = (np.std(Isometric_80) / np.mean(Isometric_80)) * 100
+    CoV_Isometric_60 = (np.std(Isometric_60) / np.mean(Isometric_60)) * 100
+    CoV_Isometric_40 = (np.std(Isometric_40) / np.mean(Isometric_40)) * 100
+    CoV_Isometric_20 = (np.std(Isometric_20) / np.mean(Isometric_20)) * 100
+    CoV_Isometric_05 = (np.std(Isometric_05) / np.mean(Isometric_05)) * 100
 
     # Calculation of Sample Entropy for every rep for all percentages of MVC
-    SaEn_Isometric_80_T1 = lb.Ent_Samp(Isometric_80_T1, 2, 0.2)
-    SaEn_Isometric_80_T2 = lb.Ent_Samp(Isometric_80_T2, 2, 0.2)
-    SaEn_Isometric_60_T1 = lb.Ent_Samp(Isometric_60_T1, 2, 0.2)
-    SaEn_Isometric_60_T2 = lb.Ent_Samp(Isometric_60_T2, 2, 0.2)
-    SaEn_Isometric_40_T1 = lb.Ent_Samp(Isometric_40_T1, 2, 0.2)
-    SaEn_Isometric_40_T2 = lb.Ent_Samp(Isometric_40_T2, 2, 0.2)
-    SaEn_Isometric_20_T1 = lb.Ent_Samp(Isometric_20_T1, 2, 0.2)
-    SaEn_Isometric_20_T2 = lb.Ent_Samp(Isometric_20_T2, 2, 0.2)
-    SaEn_Isometric_05_T1 = lb.Ent_Samp(Isometric_05_T1, 2, 0.2)
-    SaEn_Isometric_05_T2 = lb.Ent_Samp(Isometric_05_T2, 2, 0.2)
-
-    SaEn_T1 = [SaEn_Isometric_80_T1, SaEn_Isometric_60_T1, SaEn_Isometric_40_T1, SaEn_Isometric_20_T1, SaEn_Isometric_05_T1]
-    SaEn_T2 = [SaEn_Isometric_80_T2, SaEn_Isometric_60_T2, SaEn_Isometric_40_T2, SaEn_Isometric_20_T2, SaEn_Isometric_05_T2]
-
-    average_SaEn = [np.mean((SaEn_Isometric_80_T1, SaEn_Isometric_80_T2)),
-                    np.mean((SaEn_Isometric_60_T1, SaEn_Isometric_60_T2)),
-                    np.mean((SaEn_Isometric_40_T1, SaEn_Isometric_40_T2)),
-                    np.mean((SaEn_Isometric_20_T1, SaEn_Isometric_20_T2)),
-                    np.mean((SaEn_Isometric_05_T1, SaEn_Isometric_05_T2))]
+    SaEn_Isometric_80 = lb.Ent_Samp(Isometric_80, 2, 0.2)
+    SaEn_Isometric_60 = lb.Ent_Samp(Isometric_60, 2, 0.2)
+    SaEn_Isometric_40 = lb.Ent_Samp(Isometric_40, 2, 0.2)
+    SaEn_Isometric_20 = lb.Ent_Samp(Isometric_20, 2, 0.2)
+    SaEn_Isometric_05 = lb.Ent_Samp(Isometric_05, 2, 0.2)
 
     # Calculation of time to adaptation for all perturbation trials
     time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, sd, 100, consecutive_values, 100, 500,'Pert_down_T1', 20, plot=False)
@@ -338,104 +274,69 @@ for file in files:
         time_of_adaptation_up_average = None
         print(f'no adaptation occurred for {ID} in up perturbation')
 
+    # Calculate the SaEn of the perturbation trials
 
+    if not ID == 'Old.18' and not ID == 'Old.7':
+        Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_down_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+
+    elif ID == 'Old.18':
+        Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_down_T2_array = Pert_down_T1['Performance'][150:600].to_numpy()
+        Pert_up_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+
+    elif ID == 'Old.7':
+        Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_down_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T2_array = Pert_down_T1['Performance'][450:1800].to_numpy()
+
+
+    SaEn_Pert_down_T1_array = lb.Ent_Samp(Pert_down_T1_array, 2, 0.2)
+    SaEn_Pert_down_T2_array = lb.Ent_Samp(Pert_down_T2_array, 2, 0.2)
+    SaEn_Pert_up_T1_array = lb.Ent_Samp(Pert_up_T1_array, 2, 0.2)
+    SaEn_Pert_up_T2_array = lb.Ent_Samp(Pert_up_T2_array, 2, 0.2)
 
     # Append every value to each dedicated list
-    SaEn_80_list_T1.append(SaEn_Isometric_80_T1)
-    SaEn_60_list_T1.append(SaEn_Isometric_60_T1)
-    SaEn_40_list_T1.append(SaEn_Isometric_40_T1)
-    SaEn_20_list_T1.append(SaEn_Isometric_20_T1)
-    SaEn_05_list_T1.append(SaEn_Isometric_05_T1)
-    SaEn_80_list_T2.append(SaEn_Isometric_80_T2)
-    SaEn_60_list_T2.append(SaEn_Isometric_60_T2)
-    SaEn_40_list_T2.append(SaEn_Isometric_40_T2)
-    SaEn_20_list_T2.append(SaEn_Isometric_20_T2)
-    SaEn_05_list_T2.append(SaEn_Isometric_05_T2)
-    SaEn_80_list_Average.append(average_SaEn[0])
-    SaEn_60_list_Average.append(average_SaEn[1])
-    SaEn_40_list_Average.append(average_SaEn[2])
-    SaEn_20_list_Average.append(average_SaEn[3])
-    SaEn_05_list_Average.append(average_SaEn[4])
+    SaEn_80_list.append(SaEn_Isometric_80)
+    SaEn_60_list.append(SaEn_Isometric_60)
+    SaEn_40_list.append(SaEn_Isometric_40)
+    SaEn_20_list.append(SaEn_Isometric_20)
+    SaEn_05_list.append(SaEn_Isometric_05)
 
-    std_80_list_T1.append(std_Isometric_80_T1)
-    std_60_list_T1.append(std_Isometric_60_T1)
-    std_40_list_T1.append(std_Isometric_40_T1)
-    std_20_list_T1.append(std_Isometric_20_T1)
-    std_05_list_T1.append(std_Isometric_05_T1)
-    std_80_list_T2.append(std_Isometric_80_T2)
-    std_60_list_T2.append(std_Isometric_60_T2)
-    std_40_list_T2.append(std_Isometric_40_T2)
-    std_20_list_T2.append(std_Isometric_20_T2)
-    std_05_list_T2.append(std_Isometric_05_T2)
-    std_80_list_Average.append(average_std[0])
-    std_60_list_Average.append(average_std[1])
-    std_40_list_Average.append(average_std[2])
-    std_20_list_Average.append(average_std[3])
-    std_05_list_Average.append(average_std[4])
+    std_80_list.append(std_Isometric_80)
+    std_60_list.append(std_Isometric_60)
+    std_40_list.append(std_Isometric_40)
+    std_20_list.append(std_Isometric_20)
+    std_05_list.append(std_Isometric_05)
 
-    CoV_80_list_T1.append(CoV_Isometric_80_T1)
-    CoV_60_list_T1.append(CoV_Isometric_60_T1)
-    CoV_40_list_T1.append(CoV_Isometric_40_T1)
-    CoV_20_list_T1.append(CoV_Isometric_20_T1)
-    CoV_05_list_T1.append(CoV_Isometric_05_T1)
-    CoV_80_list_T2.append(CoV_Isometric_80_T2)
-    CoV_60_list_T2.append(CoV_Isometric_60_T2)
-    CoV_40_list_T2.append(CoV_Isometric_40_T2)
-    CoV_20_list_T2.append(CoV_Isometric_20_T2)
-    CoV_05_list_T2.append(CoV_Isometric_05_T2)
-    CoV_80_list_Average.append(average_CoV[0])
-    CoV_60_list_Average.append(average_CoV[1])
-    CoV_40_list_Average.append(average_CoV[2])
-    CoV_20_list_Average.append(average_CoV[3])
-    CoV_05_list_Average.append(average_CoV[4])
+    CoV_80_list.append(CoV_Isometric_80)
+    CoV_60_list.append(CoV_Isometric_60)
+    CoV_40_list.append(CoV_Isometric_40)
+    CoV_20_list.append(CoV_Isometric_20)
+    CoV_05_list.append(CoV_Isometric_05)
 
-    Isometric_80_T1_freq_90_list.append(Isometric_80_T1_freq_90)
-    Isometric_60_T1_freq_90_list.append(Isometric_60_T1_freq_90)
-    Isometric_40_T1_freq_90_list.append(Isometric_40_T1_freq_90)
-    Isometric_20_T1_freq_90_list.append(Isometric_20_T1_freq_90)
-    Isometric_05_T1_freq_90_list.append(Isometric_05_T1_freq_90)
-    Isometric_80_T2_freq_90_list.append(Isometric_80_T2_freq_90)
-    Isometric_60_T2_freq_90_list.append(Isometric_60_T2_freq_90)
-    Isometric_40_T2_freq_90_list.append(Isometric_40_T2_freq_90)
-    Isometric_20_T2_freq_90_list.append(Isometric_20_T2_freq_90)
-    Isometric_05_T2_freq_90_list.append(Isometric_05_T2_freq_90)
-    Isometric_80_freq_90_list_Average.append(average_freq_90[0])
-    Isometric_60_freq_90_list_Average.append(average_freq_90[1])
-    Isometric_40_freq_90_list_Average.append(average_freq_90[2])
-    Isometric_20_freq_90_list_Average.append(average_freq_90[3])
-    Isometric_05_freq_90_list_Average.append(average_freq_90[4])
+    Isometric_80_freq_90_list.append(Isometric_80_freq_90)
+    Isometric_60_freq_90_list.append(Isometric_60_freq_90)
+    Isometric_40_freq_90_list.append(Isometric_40_freq_90)
+    Isometric_20_freq_90_list.append(Isometric_20_freq_90)
+    Isometric_05_freq_90_list.append(Isometric_05_freq_90)
 
-    Isometric_80_T1_freq_95_list.append(Isometric_80_T1_freq_95)
-    Isometric_60_T1_freq_95_list.append(Isometric_60_T1_freq_95)
-    Isometric_40_T1_freq_95_list.append(Isometric_40_T1_freq_95)
-    Isometric_20_T1_freq_95_list.append(Isometric_20_T1_freq_95)
-    Isometric_05_T1_freq_95_list.append(Isometric_05_T1_freq_95)
-    Isometric_80_T2_freq_95_list.append(Isometric_80_T2_freq_95)
-    Isometric_60_T2_freq_95_list.append(Isometric_60_T2_freq_95)
-    Isometric_40_T2_freq_95_list.append(Isometric_40_T2_freq_95)
-    Isometric_20_T2_freq_95_list.append(Isometric_20_T2_freq_95)
-    Isometric_05_T2_freq_95_list.append(Isometric_05_T2_freq_95)
-    Isometric_80_freq_95_list_Average.append(average_freq_95[0])
-    Isometric_60_freq_95_list_Average.append(average_freq_95[1])
-    Isometric_40_freq_95_list_Average.append(average_freq_95[2])
-    Isometric_20_freq_95_list_Average.append(average_freq_95[3])
-    Isometric_05_freq_95_list_Average.append(average_freq_95[4])
+    Isometric_80_freq_95_list.append(Isometric_80_freq_95)
+    Isometric_60_freq_95_list.append(Isometric_60_freq_95)
+    Isometric_40_freq_95_list.append(Isometric_40_freq_95)
+    Isometric_20_freq_95_list.append(Isometric_20_freq_95)
+    Isometric_05_freq_95_list.append(Isometric_05_freq_95)
 
-    Isometric_80_T1_freq_99_list.append(Isometric_80_T1_freq_99)
-    Isometric_60_T1_freq_99_list.append(Isometric_60_T1_freq_99)
-    Isometric_40_T1_freq_99_list.append(Isometric_40_T1_freq_99)
-    Isometric_20_T1_freq_99_list.append(Isometric_20_T1_freq_99)
-    Isometric_05_T1_freq_99_list.append(Isometric_05_T1_freq_99)
-    Isometric_80_T2_freq_99_list.append(Isometric_80_T2_freq_99)
-    Isometric_60_T2_freq_99_list.append(Isometric_60_T2_freq_99)
-    Isometric_40_T2_freq_99_list.append(Isometric_40_T2_freq_99)
-    Isometric_20_T2_freq_99_list.append(Isometric_20_T2_freq_99)
-    Isometric_05_T2_freq_99_list.append(Isometric_05_T2_freq_99)
-    Isometric_80_freq_99_list_Average.append(average_freq_99[0])
-    Isometric_60_freq_99_list_Average.append(average_freq_99[1])
-    Isometric_40_freq_99_list_Average.append(average_freq_99[2])
-    Isometric_20_freq_99_list_Average.append(average_freq_99[3])
-    Isometric_05_freq_99_list_Average.append(average_freq_99[4])
+    Isometric_80_freq_99_list.append(Isometric_80_freq_99)
+    Isometric_60_freq_99_list.append(Isometric_60_freq_99)
+    Isometric_40_freq_99_list.append(Isometric_40_freq_99)
+    Isometric_20_freq_99_list.append(Isometric_20_freq_99)
+    Isometric_05_freq_99_list.append(Isometric_05_freq_99)
+
 
     Adaptation_down_T1_list.append(time_of_adaptation_down_T1)
     Adaptation_down_T2_list.append(time_of_adaptation_down_T2)
@@ -444,112 +345,63 @@ for file in files:
     Adaptation_up_T2_list.append(time_of_adaptation_up_T2)
     Adaptation_up_list_Average.append(time_of_adaptation_up_average)
 
-
+    SaEn_Adaptation_down_T1_list.append(SaEn_Pert_down_T1_array)
+    SaEn_Adaptation_down_T2_list.append(SaEn_Pert_down_T2_array)
+    SaEn_Adaptation_down_list_Average.append(np.mean((SaEn_Pert_down_T1_array, SaEn_Pert_down_T2_array)))
+    SaEn_Adaptation_up_T1_list.append(SaEn_Pert_up_T1_array)
+    SaEn_Adaptation_up_T2_list.append(SaEn_Pert_up_T2_array)
+    SaEn_Adaptation_up_list_Average.append(np.mean((SaEn_Pert_up_T1_array, SaEn_Pert_down_T2_array)))
 
 # Creation of a dictionary with all the data for all participants
 dist = {
     'ID': ID_list,
-    'SaEn_80_T1': SaEn_80_list_T1,
-    'SaEn_60_T1': SaEn_60_list_T1,
-    'SaEn_40_T1': SaEn_40_list_T1,
-    'SaEn_20_T1': SaEn_20_list_T1,
-    'SaEn_05_T1': SaEn_05_list_T1,
-    'SaEn_80_T2': SaEn_80_list_T2,
-    'SaEn_60_T2': SaEn_60_list_T2,
-    'SaEn_40_T2': SaEn_40_list_T2,
-    'SaEn_20_T2': SaEn_20_list_T2,
-    'SaEn_05_T2': SaEn_05_list_T2,
-    'SaEn_80_Average': SaEn_80_list_Average,
-    'SaEn_60_Average': SaEn_60_list_Average,
-    'SaEn_40_Average': SaEn_40_list_Average,
-    'SaEn_20_Average': SaEn_20_list_Average,
-    'SaEn_05_Average': SaEn_05_list_Average,
-    'sd_80_T1': std_80_list_T1,
-    'sd_60_T1': std_60_list_T1,
-    'sd_40_T1': std_40_list_T1,
-    'sd_20_T1': std_20_list_T1,
-    'sd_05_T1': std_05_list_T1,
-    'sd_80_T2': std_80_list_T2,
-    'sd_60_T2': std_60_list_T2,
-    'sd_40_T2': std_40_list_T2,
-    'sd_20_T2': std_20_list_T2,
-    'sd_05_T2': std_05_list_T2,
-    'sd_80_Average': std_80_list_Average,
-    'sd_60_Average': std_60_list_Average,
-    'sd_40_Average': std_40_list_Average,
-    'sd_20_Average': std_20_list_Average,
-    'sd_05_Average': std_05_list_Average,
-    'CoV_80_T1': CoV_80_list_T1,
-    'CoV_60_T1': CoV_60_list_T1,
-    'CoV_40_T1': CoV_40_list_T1,
-    'CoV_20_T1': CoV_20_list_T1,
-    'CoV_05_T1': CoV_05_list_T1,
-    'CoV_80_T2': CoV_80_list_T2,
-    'CoV_60_T2': CoV_60_list_T2,
-    'CoV_40_T2': CoV_40_list_T2,
-    'CoV_20_T2': CoV_20_list_T2,
-    'CoV_05_T2': CoV_05_list_T2,
-    'CoV_80_Average': CoV_80_list_Average,
-    'CoV_60_Average': CoV_60_list_Average,
-    'CoV_40_Average': CoV_40_list_Average,
-    'CoV_20_Average': CoV_20_list_Average,
-    'CoV_05_Average': CoV_05_list_Average,
-    'Freq_90_T1_80': Isometric_80_T1_freq_90_list,
-    'Freq_90_T1_60': Isometric_60_T1_freq_90_list,
-    'Freq_90_T1_40': Isometric_40_T1_freq_90_list,
-    'Freq_90_T1_20': Isometric_20_T1_freq_90_list,
-    'Freq_90_T1_05': Isometric_05_T1_freq_90_list,
-    'Freq_90_T2_80': Isometric_80_T2_freq_90_list,
-    'Freq_90_T2_60': Isometric_60_T2_freq_90_list,
-    'Freq_90_T2_40': Isometric_40_T2_freq_90_list,
-    'Freq_90_T2_20': Isometric_20_T2_freq_90_list,
-    'Freq_90_T2_05': Isometric_05_T2_freq_90_list,
-    'Freq_90_Average_80': Isometric_80_freq_90_list_Average,
-    'Freq_90_Average_60': Isometric_60_freq_90_list_Average,
-    'Freq_90_Average_40': Isometric_40_freq_90_list_Average,
-    'Freq_90_Average_20': Isometric_20_freq_90_list_Average,
-    'Freq_90_Average_05': Isometric_05_freq_90_list_Average,
-    'Freq_95_T1_80': Isometric_80_T1_freq_95_list,
-    'Freq_95_T1_60': Isometric_60_T1_freq_95_list,
-    'Freq_95_T1_40': Isometric_40_T1_freq_95_list,
-    'Freq_95_T1_20': Isometric_20_T1_freq_95_list,
-    'Freq_95_T1_05': Isometric_05_T1_freq_95_list,
-    'Freq_95_T2_80': Isometric_80_T2_freq_95_list,
-    'Freq_95_T2_60': Isometric_60_T2_freq_95_list,
-    'Freq_95_T2_40': Isometric_40_T2_freq_95_list,
-    'Freq_95_T2_20': Isometric_20_T2_freq_95_list,
-    'Freq_95_T2_05': Isometric_05_T2_freq_95_list,
-    'Freq_95_Average_80': Isometric_80_freq_95_list_Average,
-    'Freq_95_Average_60': Isometric_60_freq_95_list_Average,
-    'Freq_95_Average_40': Isometric_40_freq_95_list_Average,
-    'Freq_95_Average_20': Isometric_20_freq_95_list_Average,
-    'Freq_95_Average_05': Isometric_05_freq_95_list_Average,
-    'Freq_99_T1_80': Isometric_80_T1_freq_99_list,
-    'Freq_99_T1_60': Isometric_60_T1_freq_99_list,
-    'Freq_99_T1_40': Isometric_40_T1_freq_99_list,
-    'Freq_99_T1_20': Isometric_20_T1_freq_99_list,
-    'Freq_99_T1_05': Isometric_05_T1_freq_99_list,
-    'Freq_99_T2_80': Isometric_80_T2_freq_99_list,
-    'Freq_99_T2_60': Isometric_60_T2_freq_99_list,
-    'Freq_99_T2_40': Isometric_40_T2_freq_99_list,
-    'Freq_99_T2_20': Isometric_20_T2_freq_99_list,
-    'Freq_99_T2_05': Isometric_05_T2_freq_99_list,
-    'Freq_99_Average_80': Isometric_80_freq_99_list_Average,
-    'Freq_99_Average_60': Isometric_60_freq_99_list_Average,
-    'Freq_99_Average_40': Isometric_40_freq_99_list_Average,
-    'Freq_99_Average_20': Isometric_20_freq_99_list_Average,
-    'Freq_99_Average_05': Isometric_05_freq_99_list_Average,
+    'SaEn_80': SaEn_80_list,
+    'SaEn_60': SaEn_60_list,
+    'SaEn_40': SaEn_40_list,
+    'SaEn_20': SaEn_20_list,
+    'SaEn_05': SaEn_05_list,
+    'sd_80': std_80_list,
+    'sd_60': std_60_list,
+    'sd_40': std_40_list,
+    'sd_20': std_20_list,
+    'sd_05': std_05_list,
+    'CoV_80': CoV_80_list,
+    'CoV_60': CoV_60_list,
+    'CoV_40': CoV_40_list,
+    'CoV_20': CoV_20_list,
+    'CoV_05': CoV_05_list,
+    'Freq_90_80': Isometric_80_freq_90_list,
+    'Freq_90_60': Isometric_60_freq_90_list,
+    'Freq_90_40': Isometric_40_freq_90_list,
+    'Freq_90_20': Isometric_20_freq_90_list,
+    'Freq_90_05': Isometric_05_freq_90_list,
+    'Freq_95_80': Isometric_80_freq_95_list,
+    'Freq_95_60': Isometric_60_freq_95_list,
+    'Freq_95_40': Isometric_40_freq_95_list,
+    'Freq_95_20': Isometric_20_freq_95_list,
+    'Freq_95_05': Isometric_05_freq_95_list,
+    'Freq_99_80': Isometric_80_freq_99_list,
+    'Freq_99_60': Isometric_60_freq_99_list,
+    'Freq_99_40': Isometric_40_freq_99_list,
+    'Freq_99_20': Isometric_20_freq_99_list,
+    'Freq_99_05': Isometric_05_freq_99_list,
     'time_of_adaptation_down_T1': Adaptation_down_T1_list,
     'time_of_adaptation_down_T2': Adaptation_down_T2_list,
     'time_of_adaptation_down_average': Adaptation_down_list_Average,
     'time_of_adaptation_up_T1': Adaptation_up_T1_list,
     'time_of_adaptation_up_T2': Adaptation_up_T2_list,
     'time_of_adaptation_up_average': Adaptation_up_list_Average,
+    'SaEn_Pert_down_T1': SaEn_Adaptation_down_T1_list,
+    'SaEn_Pert_down_T3': SaEn_Adaptation_down_T2_list,
+    'SaEn_Pert_down_Average': SaEn_Adaptation_down_list_Average,
+    'SaEn_Pert_up_T1': SaEn_Adaptation_up_T1_list,
+    'SaEn_Pert_up_T3': SaEn_Adaptation_up_T2_list,
+    'SaEn_Pert_up_Average': SaEn_Adaptation_up_list_Average
 
 }
 
 
 
-new_excel = pd.DataFrame(dist)
-os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')
-new_excel.to_excel(r'Results all Lowpass 50Hz.xlsx')
+# new_excel = pd.DataFrame(dist)
+# os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')
+# new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials.xlsx')
