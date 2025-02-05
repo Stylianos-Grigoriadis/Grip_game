@@ -12,72 +12,48 @@ plt.rcParams['font.size'] = 16
 
 directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric'
 os.chdir(directory)
-old_data = pd.read_excel(r'results Isometrics all.xlsx', sheet_name='Old')
-young_data = pd.read_excel(r'results Isometrics all.xlsx', sheet_name='Young')
+results = pd.read_excel(r'Results all Lowpass 50Hz only best iso trials for graphs.xlsx')
+print(results.columns)
 
-print(old_data)
-print(young_data)
-print(old_data.columns)
+SaEn_80_Old = results[results['ID_group'] == 'Old']['SaEn_80'].to_numpy()
+SaEn_60_Old = results[results['ID_group'] == 'Old']['SaEn_60'].to_numpy()
+SaEn_40_Old = results[results['ID_group'] == 'Old']['SaEn_40'].to_numpy()
+SaEn_20_Old = results[results['ID_group'] == 'Old']['SaEn_20'].to_numpy()
+SaEn_05_Old = results[results['ID_group'] == 'Old']['SaEn_05'].to_numpy()
 
-old_SaEn_80_Average = old_data['SaEn_80_Average'].to_list()
-old_SaEn_60_Average = old_data['SaEn_60_Average'].to_list()
-old_SaEn_40_Average = old_data['SaEn_40_Average'].to_list()
-old_SaEn_20_Average = old_data['SaEn_20_Average'].to_list()
-old_SaEn_05_Average = old_data['SaEn_05_Average'].to_list()
+SaEn_80_Young = results[results['ID_group'] == 'Young']['SaEn_80'].to_numpy()
+SaEn_60_Young = results[results['ID_group'] == 'Young']['SaEn_60'].to_numpy()
+SaEn_40_Young = results[results['ID_group'] == 'Young']['SaEn_40'].to_numpy()
+SaEn_20_Young = results[results['ID_group'] == 'Young']['SaEn_20'].to_numpy()
+SaEn_05_Young = results[results['ID_group'] == 'Young']['SaEn_05'].to_numpy()
 
-young_SaEn_80_Average = young_data['SaEn_80_Average'].to_list()
-young_SaEn_60_Average = young_data['SaEn_60_Average'].to_list()
-young_SaEn_40_Average = young_data['SaEn_40_Average'].to_list()
-young_SaEn_20_Average = young_data['SaEn_20_Average'].to_list()
-young_SaEn_05_Average = young_data['SaEn_05_Average'].to_list()
+sd_80_Old = results[results['ID_group'] == 'Old']['sd_80'].to_numpy()
+sd_60_Old = results[results['ID_group'] == 'Old']['sd_60'].to_numpy()
+sd_40_Old = results[results['ID_group'] == 'Old']['sd_40'].to_numpy()
+sd_20_Old = results[results['ID_group'] == 'Old']['sd_20'].to_numpy()
+sd_05_Old = results[results['ID_group'] == 'Old']['sd_05'].to_numpy()
 
-old_sd_80_Average = old_data['sd_80_Average'].to_list()
-old_sd_60_Average = old_data['sd_60_Average'].to_list()
-old_sd_40_Average = old_data['sd_40_Average'].to_list()
-old_sd_20_Average = old_data['sd_20_Average'].to_list()
-old_sd_05_Average = old_data['sd_05_Average'].to_list()
+sd_80_Young = results[results['ID_group'] == 'Young']['sd_80'].to_numpy()
+sd_60_Young = results[results['ID_group'] == 'Young']['sd_60'].to_numpy()
+sd_40_Young = results[results['ID_group'] == 'Young']['sd_40'].to_numpy()
+sd_20_Young = results[results['ID_group'] == 'Young']['sd_20'].to_numpy()
+sd_05_Young = results[results['ID_group'] == 'Young']['sd_05'].to_numpy()
 
-young_sd_80_Average = young_data['sd_80_Average'].to_list()
-young_sd_60_Average = young_data['sd_60_Average'].to_list()
-young_sd_40_Average = young_data['sd_40_Average'].to_list()
-young_sd_20_Average = young_data['sd_20_Average'].to_list()
-young_sd_05_Average = young_data['sd_05_Average'].to_list()
+Pert_down_Old = results[results['ID_group'] == 'Old']['Adaptation_down_min'].to_numpy()
+Pert_up_Old = results[results['ID_group'] == 'Old']['Adaptation_up_min'].to_numpy()
+Pert_down_Young = results[results['ID_group'] == 'Old']['Adaptation_down_min'].to_numpy()
+Pert_up_Young = results[results['ID_group'] == 'Old']['Adaptation_up_min'].to_numpy()
 
-old_CoV_80_Average = old_data['CoV_80_Average'].to_list()
-old_CoV_60_Average = old_data['CoV_60_Average'].to_list()
-old_CoV_40_Average = old_data['CoV_40_Average'].to_list()
-old_CoV_20_Average = old_data['CoV_20_Average'].to_list()
-old_CoV_05_Average = old_data['CoV_05_Average'].to_list()
 
-young_CoV_80_Average = young_data['CoV_80_Average'].to_list()
-young_CoV_60_Average = young_data['CoV_60_Average'].to_list()
-young_CoV_40_Average = young_data['CoV_40_Average'].to_list()
-young_CoV_20_Average = young_data['CoV_20_Average'].to_list()
-young_CoV_05_Average = young_data['CoV_05_Average'].to_list()
 
-old_DFA_80_Average = old_data['DFA_80_Average'].to_list()
-old_DFA_60_Average = old_data['DFA_60_Average'].to_list()
-old_DFA_40_Average = old_data['DFA_40_Average'].to_list()
-old_DFA_20_Average = old_data['DFA_20_Average'].to_list()
-old_DFA_05_Average = old_data['DFA_05_Average'].to_list()
 
-young_DFA_80_Average = young_data['DFA_80_Average'].to_list()
-young_DFA_60_Average = young_data['DFA_60_Average'].to_list()
-young_DFA_40_Average = young_data['DFA_40_Average'].to_list()
-young_DFA_20_Average = young_data['DFA_20_Average'].to_list()
-young_DFA_05_Average = young_data['DFA_05_Average'].to_list()
 
-old_SaEn = [old_SaEn_05_Average, old_SaEn_20_Average, old_SaEn_40_Average, old_SaEn_60_Average, old_SaEn_80_Average]
-young_SaEn = [young_SaEn_05_Average, young_SaEn_20_Average, young_SaEn_40_Average, young_SaEn_60_Average, young_SaEn_80_Average]
+old_SaEn = [SaEn_05_Old, SaEn_20_Old, SaEn_40_Old, SaEn_60_Old, SaEn_80_Old]
+young_SaEn = [SaEn_05_Young, SaEn_20_Young, SaEn_40_Young, SaEn_60_Young, SaEn_80_Young]
 
-old_sd = [old_sd_05_Average, old_sd_20_Average, old_sd_40_Average, old_sd_60_Average, old_sd_80_Average]
-young_sd = [young_sd_05_Average, young_sd_20_Average, young_sd_40_Average, young_sd_60_Average, young_sd_80_Average]
+old_sd = [sd_05_Old, sd_20_Old, sd_40_Old, sd_60_Old, sd_80_Old]
+young_sd = [sd_05_Young, sd_20_Young, sd_40_Young, sd_60_Young, sd_80_Young]
 
-old_CoV = [old_CoV_05_Average, old_CoV_20_Average, old_CoV_40_Average, old_CoV_60_Average, old_CoV_80_Average]
-young_CoV = [young_CoV_05_Average, young_CoV_20_Average, young_CoV_40_Average, young_CoV_60_Average, young_CoV_80_Average]
-
-old_DFA = [old_DFA_05_Average, old_DFA_20_Average, old_DFA_40_Average, old_DFA_60_Average, old_DFA_80_Average]
-young_DFA = [young_DFA_05_Average, young_DFA_20_Average, young_DFA_40_Average, young_DFA_60_Average, young_DFA_80_Average]
 
 
 
@@ -127,7 +103,7 @@ legend_elements = [
 ax.legend(handles=legend_elements, loc='upper right', frameon=False)
 
 # Customize the plot
-ax.set_title(f'Sample Entropy Curve between Young (n={len(young_SaEn_80_Average)}) and Old (n={len(old_SaEn_80_Average)}) adults')
+ax.set_title(f'Sample Entropy Curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Sample Entropy')
@@ -184,120 +160,10 @@ legend_elements = [
 ax.legend(handles=legend_elements, loc='upper right', frameon=False)
 
 # Customize the plot
-ax.set_title(f'Standard Deviation curve between Young (n={len(young_sd_80_Average)}) and Old (n={len(old_sd_80_Average)}) adults')
+ax.set_title(f'Standard Deviation curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Standard Deviation')
-ax.set_xlabel('Percentage of MVC')
-
-# Display the plot
-plt.show()
-
-# Graph for CoV
-
-fig, ax = plt.subplots(figsize=(8, 6))
-young_positions = [1, 4, 7, 10, 13]
-plus_factor = 0.6
-old_positions = [young_positions[0]+plus_factor, young_positions[1]+plus_factor, young_positions[2]+plus_factor, young_positions[3]+plus_factor, young_positions[4]+plus_factor]
-# Create the box plot
-ax.boxplot(young_CoV,
-           positions=young_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightblue', color='blue'),
-           meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
-           medianprops=dict(color='none'))
-
-ax.boxplot(old_CoV,
-           positions=old_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightcoral', color='red'),
-           meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
-           medianprops=dict(color='none'))
-
-# Calculate means for each group
-young_means = [np.mean(data) for data in young_CoV]
-old_means = [np.mean(data) for data in old_CoV]
-
-# Plot dashed lines connecting the mean markers
-ax.plot(young_positions, young_means, color='blue', linestyle='--')
-ax.plot(old_positions, old_means, color='red', linestyle='--')
-
-
-# Manually create legend elements
-legend_elements = [
-    mpatches.Patch(color='lightblue', label='Young'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='Young Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='Old'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='Old Average', linestyle='None')
-]
-
-# Add the legend to the plot
-ax.legend(handles=legend_elements, loc='upper right', frameon=False)
-
-# Customize the plot
-ax.set_title(f'CoV curve between Young (n={len(young_CoV_80_Average)}) and Old (n={len(old_CoV_80_Average)}) adults')
-ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
-ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
-ax.set_ylabel('Coefficient of Variation')
-ax.set_xlabel('Percentage of MVC')
-
-# Display the plot
-plt.show()
-
-# Graph for DFA
-
-fig, ax = plt.subplots(figsize=(8, 6))
-young_positions = [1, 4, 7, 10, 13]
-plus_factor = 0.6
-old_positions = [young_positions[0]+plus_factor, young_positions[1]+plus_factor, young_positions[2]+plus_factor, young_positions[3]+plus_factor, young_positions[4]+plus_factor]
-# Create the box plot
-ax.boxplot(young_DFA,
-           positions=young_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightblue', color='blue'),
-           meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
-           medianprops=dict(color='none'))
-
-ax.boxplot(old_DFA,
-           positions=old_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightcoral', color='red'),
-           meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
-           medianprops=dict(color='none'))
-
-# Calculate means for each group
-young_means = [np.mean(data) for data in young_DFA]
-old_means = [np.mean(data) for data in old_DFA]
-
-# Plot dashed lines connecting the mean markers
-ax.plot(young_positions, young_means, color='blue', linestyle='--')
-ax.plot(old_positions, old_means, color='red', linestyle='--')
-
-
-# Manually create legend elements
-legend_elements = [
-    mpatches.Patch(color='lightblue', label='Young'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='Young Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='Old'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='Old Average', linestyle='None')
-]
-
-# Add the legend to the plot
-ax.legend(handles=legend_elements, loc='upper right', frameon=False)
-
-# Customize the plot
-ax.set_title(f'Exponent α curve between Young (n={len(young_DFA_80_Average)}) and Old (n={len(old_DFA_80_Average)}) adults')
-ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
-ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
-ax.set_ylabel('α Exponent')
 ax.set_xlabel('Percentage of MVC')
 
 # Display the plot
