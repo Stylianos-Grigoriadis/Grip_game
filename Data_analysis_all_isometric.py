@@ -225,21 +225,21 @@ for file in files:
 
     if not ID == 'Old.18' and not ID == 'Old.7':
         Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_down_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_up_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_up_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_down_T2_array = Pert_down_T2['Performance'][300:1200].to_numpy()
+        Pert_up_T1_array = Pert_up_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T2_array = Pert_up_T2['Performance'][300:1200].to_numpy()
 
     elif ID == 'Old.18':
         Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_down_T2_array = Pert_down_T1['Performance'][150:600].to_numpy()
-        Pert_up_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_up_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
+        Pert_down_T2_array = Pert_down_T2['Performance'][150:600].to_numpy()
+        Pert_up_T1_array = Pert_up_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T2_array = Pert_up_T2['Performance'][300:1200].to_numpy()
 
     elif ID == 'Old.7':
         Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_down_T2_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_up_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
-        Pert_up_T2_array = Pert_down_T1['Performance'][450:1800].to_numpy()
+        Pert_down_T2_array = Pert_down_T2['Performance'][300:1200].to_numpy()
+        Pert_up_T1_array = Pert_up_T1['Performance'][300:1200].to_numpy()
+        Pert_up_T2_array = Pert_up_T2['Performance'][450:1800].to_numpy()
 
     if time_of_adaptation_down_T1 != None:
         time_of_adaptation_down_T1 = round(time_of_adaptation_down_T1, 3)
@@ -303,13 +303,13 @@ for file in files:
         Pert_up_array = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
         print(f'no adaptation occurred for {ID} in up perturbation')
 
-    print(time_of_adaptation_down_min)
-    print(time_of_adaptation_up_min)
 
 
     # Calculate the SaEn of the perturbation trials
     SaEn_Pert_down = lb.Ent_Samp(Pert_down_array, 2, 0.2)
     SaEn_Pert_up = lb.Ent_Samp(Pert_up_array, 2, 0.2)
+    print(Pert_down_array)
+    print(Pert_up_array)
 
     # Append every value to each dedicated list
     SaEn_80_list.append(SaEn_Isometric_80)
@@ -394,6 +394,6 @@ dist = {
 
 }
 
-# new_excel = pd.DataFrame(dist)
-# os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')
-# new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials.xlsx')
+new_excel = pd.DataFrame(dist)
+os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')
+new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials.xlsx')
