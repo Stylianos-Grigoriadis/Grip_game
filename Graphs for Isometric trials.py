@@ -10,10 +10,10 @@ import matplotlib.lines as mlines
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 
-directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric'
+directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\Education\Classes\Advanced Statistics\Final project'
 os.chdir(directory)
 results = pd.read_excel(r'Results all Lowpass 50Hz only best iso trials for graphs.xlsx')
-print(results.columns)
+print(results['sd_80'])
 
 SaEn_80_Old = results[results['ID_group'] == 'Old']['SaEn_80'].to_numpy()
 SaEn_60_Old = results[results['ID_group'] == 'Old']['SaEn_60'].to_numpy()
@@ -27,8 +27,8 @@ SaEn_40_Young = results[results['ID_group'] == 'Young']['SaEn_40'].to_numpy()
 SaEn_20_Young = results[results['ID_group'] == 'Young']['SaEn_20'].to_numpy()
 SaEn_05_Young = results[results['ID_group'] == 'Young']['SaEn_05'].to_numpy()
 
-sd_80_Old = results[results['ID_group'] == 'Old']['sd_80'].to_numpy()
-sd_60_Old = results[results['ID_group'] == 'Old']['sd_60'].to_numpy()
+sd_80_Old = results[results['ID_group'] == 'Old']['sd_80'].dropna().to_numpy()
+sd_60_Old = results[results['ID_group'] == 'Old']['sd_60'].dropna().to_numpy()
 sd_40_Old = results[results['ID_group'] == 'Old']['sd_40'].to_numpy()
 sd_20_Old = results[results['ID_group'] == 'Old']['sd_20'].to_numpy()
 sd_05_Old = results[results['ID_group'] == 'Old']['sd_05'].to_numpy()
@@ -107,7 +107,8 @@ legend_elements = [
 ax.legend(handles=legend_elements, loc='upper right', frameon=False)
 
 # Customize the plot
-ax.set_title(f'Sample Entropy Curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+# ax.set_title(f'Sample Entropy Curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+ax.set_title(f'Sample Entropy Curve between Young (n=17) and Old (n=17) adults')
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Sample Entropy')
@@ -163,7 +164,9 @@ legend_elements = [
 ax.legend(handles=legend_elements, loc='upper right', frameon=False)
 
 # Customize the plot
-ax.set_title(f'Standard Deviation curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+# ax.set_title(f'Standard Deviation curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+ax.set_title(f'Standard Deviation curve between Young (n=17) and Old (n=17) adults')
+
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Standard Deviation')
@@ -220,7 +223,9 @@ legend_elements = [
 ax.legend(handles=legend_elements, loc='upper right', frameon=False)
 
 # Customize the plot
-ax.set_title(f'Time to adapt curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+# ax.set_title(f'Time to adapt curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+ax.set_title(f'Time to adapt curve between Young (n=17) and Old (n=17) adults')
+
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['Perturbation\ndownwards', 'Perturbation\nupwards'])
 ax.set_ylabel('Time to adapt')
