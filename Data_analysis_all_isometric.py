@@ -53,9 +53,21 @@ Isometric_05_freq_99_list = []
 
 Adaptation_down_min_list = []
 Adaptation_up_min_list = []
+Adaptation_down_max_list = []
+Adaptation_up_max_list = []
+Adaptation_down_T1_list = []
+Adaptation_up_T1_list = []
+Adaptation_down_T2_list = []
+Adaptation_up_T2_list = []
 
-SaEn_Adaptation_down_list = []
-SaEn_Adaptation_up_list = []
+SaEn_Adaptation_down_min_list = []
+SaEn_Adaptation_up_min_list = []
+SaEn_Adaptation_down_max_list = []
+SaEn_Adaptation_up_max_list = []
+SaEn_Adaptation_down_T1_list = []
+SaEn_Adaptation_up_T1_list = []
+SaEn_Adaptation_down_T2_list = []
+SaEn_Adaptation_up_T2_list = []
 
 sd = 2
 consecutive_values = 37
@@ -244,72 +256,117 @@ for file in files:
     if time_of_adaptation_down_T1 != None:
         time_of_adaptation_down_T1 = round(time_of_adaptation_down_T1, 3)
     else:
-        time_of_adaptation_down_T1 = 100
+        time_of_adaptation_down_T1 = 0
 
     if time_of_adaptation_down_T2 != None:
         time_of_adaptation_down_T2 = round(time_of_adaptation_down_T2, 3)
     else:
-        time_of_adaptation_down_T2 = 100
+        time_of_adaptation_down_T2 = 0
 
     if time_of_adaptation_up_T1 != None:
         time_of_adaptation_up_T1 = round(time_of_adaptation_up_T1, 3)
     else:
-        time_of_adaptation_up_T1 = 100
+        time_of_adaptation_up_T1 = 0
 
     if time_of_adaptation_up_T2 != None:
         time_of_adaptation_up_T2 = round(time_of_adaptation_up_T2, 3)
     else:
-        time_of_adaptation_up_T2 = 100
+        time_of_adaptation_up_T2 = 0
+
 
 
     if time_of_adaptation_down_T1 != 0 and time_of_adaptation_down_T2 != 0:
         time_of_adaptation_down_min = np.min((time_of_adaptation_down_T1, time_of_adaptation_down_T2))
+        time_of_adaptation_down_max = np.max((time_of_adaptation_down_T1, time_of_adaptation_down_T2))
 
         if time_of_adaptation_down_min == time_of_adaptation_down_T1:
-            Pert_down_array = Pert_down_T1_array
+            Pert_down_array_min = Pert_down_T1_array
+            Pert_down_array_max = Pert_down_T2_array
         elif time_of_adaptation_down_min == time_of_adaptation_down_T2:
-            Pert_down_array = Pert_down_T2_array
+            Pert_down_array_min = Pert_down_T2_array
+            Pert_down_array_max = Pert_down_T1_array
 
     elif time_of_adaptation_down_T1 != 0 and time_of_adaptation_down_T2 == 0:
         time_of_adaptation_down_min = time_of_adaptation_down_T1
-        Pert_down_array = Pert_down_T1_array
+        time_of_adaptation_down_max = None
+        Pert_down_array_min = Pert_down_T1_array
+        Pert_down_array_max = None
+
 
     elif time_of_adaptation_down_T1 == 0 and time_of_adaptation_down_T2 != 0:
         time_of_adaptation_down_min = time_of_adaptation_down_T2
+        time_of_adaptation_down_max = None
         Pert_down_array = Pert_down_T2_array
+        Pert_down_array_max = None
 
     elif time_of_adaptation_down_T1 == 0 and time_of_adaptation_down_T2 == 0:
         time_of_adaptation_down_min = None
-        Pert_down_array = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        time_of_adaptation_down_max = None
+        Pert_down_array_min = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        Pert_down_array_max = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
         print(f'no adaptation occurred for {ID} in down perturbation')
 
     if time_of_adaptation_up_T1 != 0 and time_of_adaptation_up_T2 != 0:
         time_of_adaptation_up_min = np.min((time_of_adaptation_up_T1, time_of_adaptation_up_T2))
+        time_of_adaptation_up_max = np.max((time_of_adaptation_up_T1, time_of_adaptation_up_T2))
+
         if time_of_adaptation_up_min == time_of_adaptation_up_T1:
-            Pert_up_array = Pert_up_T1_array
+            Pert_up_array_min = Pert_up_T1_array
+            Pert_up_array_max = Pert_up_T2_array
         elif time_of_adaptation_up_min == time_of_adaptation_up_T2:
-            Pert_up_array = Pert_up_T2_array
+            Pert_up_array_min = Pert_up_T2_array
+            Pert_up_array_max = Pert_up_T1_array
 
     elif time_of_adaptation_up_T1 != 0 and time_of_adaptation_up_T2 == 0:
         time_of_adaptation_up_min = time_of_adaptation_up_T1
-        Pert_up_array = Pert_up_T1_array
+        time_of_adaptation_up_max = None
+        Pert_up_array_min = Pert_up_T1_array
+        Pert_up_array_max = None
+
 
     elif time_of_adaptation_up_T1 == 0 and time_of_adaptation_up_T2 != 0:
         time_of_adaptation_up_min = time_of_adaptation_up_T2
+        time_of_adaptation_up_max = None
         Pert_up_array = Pert_up_T2_array
+        Pert_up_array_max = None
 
     elif time_of_adaptation_up_T1 == 0 and time_of_adaptation_up_T2 == 0:
         time_of_adaptation_up_min = None
-        Pert_up_array = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        time_of_adaptation_up_max = None
+        Pert_up_array_min = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        Pert_up_array_max = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
         print(f'no adaptation occurred for {ID} in up perturbation')
 
 
 
     # Calculate the SaEn of the perturbation trials
-    SaEn_Pert_down = lb.Ent_Samp(Pert_down_array, 2, 0.2)
-    SaEn_Pert_up = lb.Ent_Samp(Pert_up_array, 2, 0.2)
-    print(Pert_down_array)
-    print(Pert_up_array)
+    if Pert_down_array_min is not None:
+        SaEn_Pert_down_min = lb.Ent_Samp(Pert_down_array_min, 2, 0.2)
+    else:
+        SaEn_Pert_down_min = None
+
+    if Pert_down_array_max is not None:
+        SaEn_Pert_down_max = lb.Ent_Samp(Pert_down_array_max, 2, 0.2)
+    else:
+        SaEn_Pert_down_max = None
+
+    SaEn_Pert_down_T1 = lb.Ent_Samp(Pert_down_T1_array, 2, 0.2)
+    SaEn_Pert_down_T2 = lb.Ent_Samp(Pert_down_T2_array, 2, 0.2)
+
+    if Pert_up_array_min is not None:
+        SaEn_Pert_up_min = lb.Ent_Samp(Pert_up_array_min, 2, 0.2)
+    else:
+        SaEn_Pert_up_min = None
+
+    if Pert_up_array_max is not None:
+        SaEn_Pert_up_max = lb.Ent_Samp(Pert_up_array_max, 2, 0.2)
+    else:
+        SaEn_Pert_up_max = None
+
+    SaEn_Pert_up_T1 = lb.Ent_Samp(Pert_up_T1_array, 2, 0.2)
+    SaEn_Pert_up_T2 = lb.Ent_Samp(Pert_up_T2_array, 2, 0.2)
+
+
 
     # Append every value to each dedicated list
     SaEn_80_list.append(SaEn_Isometric_80)
@@ -349,10 +406,22 @@ for file in files:
     Isometric_05_freq_99_list.append(Isometric_05_freq_99)
 
     Adaptation_down_min_list.append(time_of_adaptation_down_min)
+    Adaptation_down_max_list.append(time_of_adaptation_down_max)
+    Adaptation_down_T1_list.append(time_of_adaptation_down_T1)
+    Adaptation_down_T2_list.append(time_of_adaptation_down_T2)
     Adaptation_up_min_list.append(time_of_adaptation_up_min)
+    Adaptation_up_max_list.append(time_of_adaptation_up_max)
+    Adaptation_up_T1_list.append(time_of_adaptation_up_T1)
+    Adaptation_up_T2_list.append(time_of_adaptation_up_T2)
 
-    SaEn_Adaptation_down_list.append(SaEn_Pert_down)
-    SaEn_Adaptation_up_list.append(SaEn_Pert_up)
+    SaEn_Adaptation_down_min_list.append(SaEn_Pert_down_min)
+    SaEn_Adaptation_down_max_list.append(SaEn_Pert_down_max)
+    SaEn_Adaptation_down_T1_list.append(SaEn_Pert_down_T1)
+    SaEn_Adaptation_down_T2_list.append(SaEn_Pert_down_T2)
+    SaEn_Adaptation_up_min_list.append(SaEn_Pert_up_min)
+    SaEn_Adaptation_up_max_list.append(SaEn_Pert_up_max)
+    SaEn_Adaptation_up_T1_list.append(SaEn_Pert_up_T1)
+    SaEn_Adaptation_up_T2_list.append(SaEn_Pert_up_T2)
 
 # Creation of a dictionary with all the data for all participants
 dist = {
@@ -388,12 +457,24 @@ dist = {
     'Freq_99_20': Isometric_20_freq_99_list,
     'Freq_99_05': Isometric_05_freq_99_list,
     'Adaptation_down_min': Adaptation_down_min_list,
+    'Adaptation_down_max': Adaptation_down_max_list,
+    'Adaptation_down_T1': Adaptation_down_T1_list,
+    'Adaptation_down_T2': Adaptation_down_T2_list,
     'Adaptation_up_min': Adaptation_up_min_list,
-    'SaEn_Adaptation_down': SaEn_Adaptation_down_list,
-    'SaEn_Adaptation_up': SaEn_Adaptation_up_list
+    'Adaptation_up_max': Adaptation_up_max_list,
+    'Adaptation_up_T1': Adaptation_up_T1_list,
+    'Adaptation_up_T2': Adaptation_up_T2_list,
+    'SaEn_Adaptation_down_min_list': SaEn_Adaptation_down_min_list,
+    'SaEn_Adaptation_down_max_list': SaEn_Adaptation_down_max_list,
+    'SaEn_Adaptation_down_T1_list': SaEn_Adaptation_down_T1_list,
+    'SaEn_Adaptation_down_T2_list': SaEn_Adaptation_down_T2_list,
+    'SaEn_Adaptation_up_min_list': SaEn_Adaptation_up_min_list,
+    'SaEn_Adaptation_up_max_list': SaEn_Adaptation_up_max_list,
+    'SaEn_Adaptation_up_T1_list': SaEn_Adaptation_up_T1_list,
+    'SaEn_Adaptation_up_T2_list': SaEn_Adaptation_up_T2_list,
 
 }
 
-new_excel = pd.DataFrame(dist)
-os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results\Isometric')
-new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials.xlsx')
+# new_excel = pd.DataFrame(dist)
+# os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results')
+# new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials.xlsx')
