@@ -105,33 +105,33 @@ y_labels_young = ['SaEn_Iso_80_Young', 'SaEn_Iso_60_Young', 'SaEn_Iso_40_Young',
 #         plt.show()
 
 
-for i in range(len(y_axis_old)):
-
-    # Calculate IQR
-    Q1 = np.percentile(data, 25)
-    Q3 = np.percentile(data, 75)
-    IQR = Q3 - Q1
-
-    # Define thresholds for outliers
-    mild_outlier_threshold = Q3 + 1.5 * IQR
-    extreme_outlier_threshold = Q3 + 3 * IQR
-
-    # Identify outliers
-    mild_outliers = data[(data > mild_outlier_threshold) & (data <= extreme_outlier_threshold)]
-    extreme_outliers = data[data > extreme_outlier_threshold]
-
-    # Create Boxplot
-    plt.figure(figsize=(6, 4))
-    sns.boxplot(y=data, color="lightblue", width=0.3)
-
-    # Highlight mild outliers (orange)
-    plt.scatter(np.zeros_like(mild_outliers), mild_outliers, color="orange", label="Mild Outliers", zorder=3)
-
-    # Highlight extreme outliers (red)
-    plt.scatter(np.zeros_like(extreme_outliers), extreme_outliers, color="red", label="Extreme Outliers", zorder=3)
-
-    plt.title(f"Boxplot {y_labels[index]} with Mild & Extreme Outliers", fontsize=14)
-    plt.ylabel("Values")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+# for i in range(len(y_axis_old)):
+#
+#     # Calculate IQR
+#     Q1 = np.percentile(data, 25)
+#     Q3 = np.percentile(data, 75)
+#     IQR = Q3 - Q1
+#
+#     # Define thresholds for outliers
+#     mild_outlier_threshold = Q3 + 1.5 * IQR
+#     extreme_outlier_threshold = Q3 + 3 * IQR
+#
+#     # Identify outliers
+#     mild_outliers = data[(data > mild_outlier_threshold) & (data <= extreme_outlier_threshold)]
+#     extreme_outliers = data[data > extreme_outlier_threshold]
+#
+#     # Create Boxplot
+#     plt.figure(figsize=(6, 4))
+#     sns.boxplot(y=data, color="lightblue", width=0.3)
+#
+#     # Highlight mild outliers (orange)
+#     plt.scatter(np.zeros_like(mild_outliers), mild_outliers, color="orange", label="Mild Outliers", zorder=3)
+#
+#     # Highlight extreme outliers (red)
+#     plt.scatter(np.zeros_like(extreme_outliers), extreme_outliers, color="red", label="Extreme Outliers", zorder=3)
+#
+#     plt.title(f"Boxplot {y_labels[index]} with Mild & Extreme Outliers", fontsize=14)
+#     plt.ylabel("Values")
+#     plt.legend()
+#     plt.grid(True)
+#     plt.show()
