@@ -464,14 +464,14 @@ dist = {
     'Adaptation_up_max': Adaptation_up_max_list,
     'Adaptation_up_T1': Adaptation_up_T1_list,
     'Adaptation_up_T2': Adaptation_up_T2_list,
-    'SaEn_Adaptation_down_min_list': SaEn_Adaptation_down_min_list,
-    'SaEn_Adaptation_down_max_list': SaEn_Adaptation_down_max_list,
-    'SaEn_Adaptation_down_T1_list': SaEn_Adaptation_down_T1_list,
-    'SaEn_Adaptation_down_T2_list': SaEn_Adaptation_down_T2_list,
-    'SaEn_Adaptation_up_min_list': SaEn_Adaptation_up_min_list,
-    'SaEn_Adaptation_up_max_list': SaEn_Adaptation_up_max_list,
-    'SaEn_Adaptation_up_T1_list': SaEn_Adaptation_up_T1_list,
-    'SaEn_Adaptation_up_T2_list': SaEn_Adaptation_up_T2_list,
+    'SaEn_Adaptation_down_min': SaEn_Adaptation_down_min_list,
+    'SaEn_Adaptation_down_max': SaEn_Adaptation_down_max_list,
+    'SaEn_Adaptation_down_T1': SaEn_Adaptation_down_T1_list,
+    'SaEn_Adaptation_down_T2': SaEn_Adaptation_down_T2_list,
+    'SaEn_Adaptation_up_min': SaEn_Adaptation_up_min_list,
+    'SaEn_Adaptation_up_max': SaEn_Adaptation_up_max_list,
+    'SaEn_Adaptation_up_T1': SaEn_Adaptation_up_T1_list,
+    'SaEn_Adaptation_up_T2': SaEn_Adaptation_up_T2_list,
 
 }
 
