@@ -475,6 +475,6 @@ dist = {
 
 }
 
-# new_excel = pd.DataFrame(dist)
-# os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results')
-# new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials.xlsx')
+new_excel = pd.DataFrame(dist)
+os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results')
+new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials.xlsx')
