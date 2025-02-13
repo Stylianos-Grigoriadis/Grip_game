@@ -275,7 +275,7 @@ def total_force(signal):
     total = np.sum(signal)
     return total
 
-def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N, trial_time):
+def synchronization_of_Time_and_ClosestSampleTime_Stylianos(df, Targets_N, trial_time):
     """ This function takes a dataframe and converts it so that the Time column and the ClosestSampleTime column
         are matched. This is a method to synchronize the two time stamps
     Parameters
@@ -325,6 +325,37 @@ def synchronization_of_Time_and_ClosestSampleTime(df, Targets_N, trial_time):
 
     # create the new_df
     dist = {'Time': Time, 'Performance': Performance, 'ClosestSampleTime': list_ClosestSampleTime, 'Target': Target}
+    new_df = pd.DataFrame(dist)
+
+    return new_df
+
+def synchronization_of_Time_and_ClosestSampleTime_Anestis(df):
+    """ This function creates a new dataframe by synchronizing the Time column to the ClosestSampleTime column and then returns a new dataframe with the correct values"""
+
+    time_index = []
+    for i in range(len(df)):
+        # Calculate the difference of the element i of the column ClosestSampleTime with every value of the column Time
+        closest_index = (df['Time'] - df['ClosestSampleTime'].iloc[i]).abs()
+        # Drop the None values of the closest_index so that in the next step the .empty attribute if it has only None values it would show False
+        closest_index = closest_index.dropna()
+
+        if not closest_index.empty:
+            # Find the index of the minimum difference
+            closest_index = closest_index.idxmin()
+            # Keep only the index of minimum difference
+            time_index.append(closest_index)
+    # Create all other columns
+    time = df.loc[time_index, 'Time'].to_numpy()
+    performance = df.loc[time_index, 'Performance'].to_numpy()
+    targets = df['Target'].dropna().to_numpy()
+    time_close_to_target = df['ClosestSampleTime'].dropna().to_numpy()
+
+    # Create the dataframe which will be returned afterward.
+    dist = {'Indices': time_index,
+            'Time': time,
+            'Performance': performance,
+            'ClosestSampleTime': time_close_to_target,
+            'Target': targets}
     new_df = pd.DataFrame(dist)
 
     return new_df
@@ -421,7 +452,7 @@ def asymptotes(df):
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
 
-def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, total_targets, name, trial_time, plot=False):
+def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot=False):
     """
     This function returns the time after the perturbation which was needed to adapt to the perturbation
     Parameters
@@ -445,7 +476,7 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     """
     # First synchronize the Time and ClosestSampleTime columns and create a new df with
     # only the synchronized values
-    df = synchronization_of_Time_and_ClosestSampleTime(df, total_targets, trial_time)
+    df = synchronization_of_Time_and_ClosestSampleTime_Anestis(df)
 
     # Calculate the spatial error and the average and sd of the spatial error
     # after the first_values
