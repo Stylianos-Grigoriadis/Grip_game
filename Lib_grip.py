@@ -1,6 +1,4 @@
 import numpy as np
-from fathon import fathonUtils as fu
-import fathon
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 import pandas as pd
@@ -11,30 +9,6 @@ from scipy.signal import decimate
 from scipy.stats import t
 import math
 
-
-def DFA(variable):
-    a = fu.toAggregated(variable)
-
-    pydfa = fathon.DFA(a)
-
-    winSizes = fu.linRangeByStep(start=16, end=int(len(variable)/9))
-    print(winSizes)
-    revSeg = True
-    polOrd = 1
-
-    n, F = pydfa.computeFlucVec(winSizes, revSeg=revSeg, polOrd=polOrd)
-    print(n)
-    print(np.log(n))
-    H, H_intercept = pydfa.fitFlucVec()
-    # plt.plot(np.log(n), np.log(F), 'ro')
-    # plt.plot(np.log(n), H_intercept + H * np.log(n), 'k-', label='H = {:.2f}'.format(H))
-    # plt.xlabel('ln(n)', fontsize=14)
-    # plt.ylabel('ln(F(n))', fontsize=14)
-    # plt.title('DFA', fontsize=14)
-    # plt.legend(loc=0, fontsize=14)
-    # #plt.clf()
-    # plt.show()
-    return H
 
 def Ent_Ap(data, dim, r):
     """
