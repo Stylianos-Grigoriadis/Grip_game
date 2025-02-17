@@ -12,7 +12,7 @@ import lib
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Strength data'
+directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Data\Strength data'
 files = glob.glob(os.path.join(directory_path, "*"))
 
 SaEn_80_list = []
@@ -69,12 +69,21 @@ SaEn_Adaptation_up_T1_list = []
 SaEn_Adaptation_down_T2_list = []
 SaEn_Adaptation_up_T2_list = []
 
+SaEn_Adaptation_down_min_before_pert_list = []
+SaEn_Adaptation_up_min_before_pert_list = []
+SaEn_Adaptation_down_max_before_pert_list = []
+SaEn_Adaptation_up_max_before_pert_list = []
+SaEn_Adaptation_down_T1_before_pert_list = []
+SaEn_Adaptation_up_T1_before_pert_list = []
+SaEn_Adaptation_down_T2_before_pert_list = []
+SaEn_Adaptation_up_T2_before_pert_list = []
+
 sd = 2
 consecutive_values = 37
 
 ID_list = []
 excel_for_names = pd.read_excel(
-    r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Participants.xlsx')
+    r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Participants.xlsx')
 
 for file in files:
     directory = file
@@ -249,6 +258,17 @@ for file in files:
         Pert_up_T1_array = Pert_up_T1['Performance'][300:1200].to_numpy()
         Pert_up_T2_array = Pert_up_T2['Performance'][450:1800].to_numpy()
 
+    print((len(Pert_down_T1_array)/2) - 10)
+    print((len(Pert_down_T2_array)/2) - 10)
+    print((len(Pert_up_T1_array)/2) - 10)
+    print((len(Pert_up_T2_array)/2) - 10)
+
+
+    Pert_down_T1_before_pert_array = Pert_down_T1_array[:(int(len(Pert_down_T1_array)/2) - 10)]
+    Pert_down_T2_before_pert_array = Pert_down_T2_array[:(int(len(Pert_down_T2_array)/2) - 10)]
+    Pert_up_T1_before_pert_array = Pert_up_T1_array[:(int(len(Pert_up_T1_array)/2) - 10)]
+    Pert_up_T2_before_pert_array = Pert_up_T2_array[:(int(len(Pert_up_T2_array)/2) - 10)]
+
     if time_of_adaptation_down_T1 != None:
         time_of_adaptation_down_T1 = round(time_of_adaptation_down_T1, 3)
     else:
@@ -271,6 +291,8 @@ for file in files:
 
 
 
+
+
     if time_of_adaptation_down_T1 != 0 and time_of_adaptation_down_T2 != 0:
         time_of_adaptation_down_min = np.min((time_of_adaptation_down_T1, time_of_adaptation_down_T2))
         time_of_adaptation_down_max = np.max((time_of_adaptation_down_T1, time_of_adaptation_down_T2))
@@ -278,15 +300,21 @@ for file in files:
         if time_of_adaptation_down_min == time_of_adaptation_down_T1:
             Pert_down_array_min = Pert_down_T1_array
             Pert_down_array_max = Pert_down_T2_array
+            Pert_down_before_pert_array_min = Pert_down_T1_before_pert_array
+            Pert_down_before_pert_array_max = Pert_down_T2_before_pert_array
         elif time_of_adaptation_down_min == time_of_adaptation_down_T2:
             Pert_down_array_min = Pert_down_T2_array
             Pert_down_array_max = Pert_down_T1_array
+            Pert_down_before_pert_array_min = Pert_down_T2_before_pert_array
+            Pert_down_before_pert_array_max = Pert_down_T1_before_pert_array
 
     elif time_of_adaptation_down_T1 != 0 and time_of_adaptation_down_T2 == 0:
         time_of_adaptation_down_min = time_of_adaptation_down_T1
         time_of_adaptation_down_max = None
         Pert_down_array_min = Pert_down_T1_array
         Pert_down_array_max = None
+        Pert_down_before_pert_array_min = Pert_down_T1_before_pert_array
+        Pert_down_before_pert_array_max = None
 
 
     elif time_of_adaptation_down_T1 == 0 and time_of_adaptation_down_T2 != 0:
@@ -294,12 +322,16 @@ for file in files:
         time_of_adaptation_down_max = None
         Pert_down_array = Pert_down_T2_array
         Pert_down_array_max = None
+        Pert_down_before_pert_array_min = Pert_down_T2_before_pert_array
+        Pert_down_before_pert_array_max = None
 
     elif time_of_adaptation_down_T1 == 0 and time_of_adaptation_down_T2 == 0:
         time_of_adaptation_down_min = None
         time_of_adaptation_down_max = None
         Pert_down_array_min = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
         Pert_down_array_max = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        Pert_down_before_pert_array_min = None
+        Pert_down_before_pert_array_max = None
         print(f'no adaptation occurred for {ID} in down perturbation')
 
     if time_of_adaptation_up_T1 != 0 and time_of_adaptation_up_T2 != 0:
@@ -309,15 +341,21 @@ for file in files:
         if time_of_adaptation_up_min == time_of_adaptation_up_T1:
             Pert_up_array_min = Pert_up_T1_array
             Pert_up_array_max = Pert_up_T2_array
+            Pert_up_before_pert_array_min = Pert_up_T1_before_pert_array
+            Pert_up_before_pert_array_max = Pert_up_T2_before_pert_array
         elif time_of_adaptation_up_min == time_of_adaptation_up_T2:
             Pert_up_array_min = Pert_up_T2_array
             Pert_up_array_max = Pert_up_T1_array
+            Pert_up_before_pert_array_min = Pert_up_T2_before_pert_array
+            Pert_up_before_pert_array_max = Pert_up_T1_before_pert_array
 
     elif time_of_adaptation_up_T1 != 0 and time_of_adaptation_up_T2 == 0:
         time_of_adaptation_up_min = time_of_adaptation_up_T1
         time_of_adaptation_up_max = None
         Pert_up_array_min = Pert_up_T1_array
         Pert_up_array_max = None
+        Pert_up_before_pert_array_min = Pert_up_T1_before_pert_array
+        Pert_up_before_pert_array_max = None
 
 
     elif time_of_adaptation_up_T1 == 0 and time_of_adaptation_up_T2 != 0:
@@ -325,12 +363,16 @@ for file in files:
         time_of_adaptation_up_max = None
         Pert_up_array = Pert_up_T2_array
         Pert_up_array_max = None
+        Pert_up_before_pert_array_min = Pert_up_T2_before_pert_array
+        Pert_up_before_pert_array_max = None
 
     elif time_of_adaptation_up_T1 == 0 and time_of_adaptation_up_T2 == 0:
         time_of_adaptation_up_min = None
         time_of_adaptation_up_max = None
         Pert_up_array_min = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
         Pert_up_array_max = None  # This is because we haven't found any adaptation in both trials thus, no array has any meaning
+        Pert_up_before_pert_array_min = None
+        Pert_up_before_pert_array_max = None
         print(f'no adaptation occurred for {ID} in up perturbation')
 
 
@@ -338,29 +380,45 @@ for file in files:
     # Calculate the SaEn of the perturbation trials
     if Pert_down_array_min is not None:
         SaEn_Pert_down_min = lb.Ent_Samp(Pert_down_array_min, 2, 0.2)
+        SaEn_Pert_before_pert_down_min = lb.Ent_Samp(Pert_down_before_pert_array_min, 2, 0.2)
     else:
         SaEn_Pert_down_min = None
+        SaEn_Pert_before_pert_down_min = None
 
     if Pert_down_array_max is not None:
         SaEn_Pert_down_max = lb.Ent_Samp(Pert_down_array_max, 2, 0.2)
+        SaEn_Pert_before_pert_down_max = lb.Ent_Samp(Pert_down_before_pert_array_max, 2, 0.2)
+
     else:
         SaEn_Pert_down_max = None
+        SaEn_Pert_before_pert_down_max = None
+
 
     SaEn_Pert_down_T1 = lb.Ent_Samp(Pert_down_T1_array, 2, 0.2)
     SaEn_Pert_down_T2 = lb.Ent_Samp(Pert_down_T2_array, 2, 0.2)
+    SaEn_Pert_before_pert_down_T1 = lb.Ent_Samp(Pert_down_T1_before_pert_array, 2, 0.2)
+    SaEn_Pert_before_pert_down_T2 = lb.Ent_Samp(Pert_down_T2_before_pert_array, 2, 0.2)
 
     if Pert_up_array_min is not None:
         SaEn_Pert_up_min = lb.Ent_Samp(Pert_up_array_min, 2, 0.2)
+        SaEn_Pert_before_pert_up_min = lb.Ent_Samp(Pert_up_before_pert_array_min, 2, 0.2)
     else:
         SaEn_Pert_up_min = None
+        SaEn_Pert_before_pert_up_min = None
 
     if Pert_up_array_max is not None:
         SaEn_Pert_up_max = lb.Ent_Samp(Pert_up_array_max, 2, 0.2)
+        SaEn_Pert_before_pert_up_max = lb.Ent_Samp(Pert_up_before_pert_array_max, 2, 0.2)
+
     else:
         SaEn_Pert_up_max = None
+        SaEn_Pert_before_pert_up_max = None
+
 
     SaEn_Pert_up_T1 = lb.Ent_Samp(Pert_up_T1_array, 2, 0.2)
     SaEn_Pert_up_T2 = lb.Ent_Samp(Pert_up_T2_array, 2, 0.2)
+    SaEn_Pert_before_pert_up_T1 = lb.Ent_Samp(Pert_up_T1_before_pert_array, 2, 0.2)
+    SaEn_Pert_before_pert_up_T2 = lb.Ent_Samp(Pert_up_T2_before_pert_array, 2, 0.2)
 
 
 
@@ -419,6 +477,20 @@ for file in files:
     SaEn_Adaptation_up_T1_list.append(SaEn_Pert_up_T1)
     SaEn_Adaptation_up_T2_list.append(SaEn_Pert_up_T2)
 
+    SaEn_Adaptation_down_min_before_pert_list.append(SaEn_Pert_before_pert_down_min)
+    SaEn_Adaptation_up_min_before_pert_list.append(SaEn_Pert_before_pert_up_min)
+    SaEn_Adaptation_down_max_before_pert_list.append(SaEn_Pert_before_pert_down_max)
+    SaEn_Adaptation_up_max_before_pert_list.append(SaEn_Pert_before_pert_up_max)
+    SaEn_Adaptation_down_T1_before_pert_list.append(SaEn_Pert_before_pert_down_T1)
+    SaEn_Adaptation_up_T1_before_pert_list.append(SaEn_Pert_before_pert_up_T1)
+    SaEn_Adaptation_down_T2_before_pert_list.append(SaEn_Pert_before_pert_down_T2)
+    SaEn_Adaptation_up_T2_before_pert_list.append(SaEn_Pert_before_pert_up_T2)
+
+
+
+
+
+
 # Creation of a dictionary with all the data for all participants
 dist = {
     'ID': ID_list,
@@ -468,9 +540,17 @@ dist = {
     'SaEn_Adaptation_up_max': SaEn_Adaptation_up_max_list,
     'SaEn_Adaptation_up_T1': SaEn_Adaptation_up_T1_list,
     'SaEn_Adaptation_up_T2': SaEn_Adaptation_up_T2_list,
+    'SaEn_Adaptation_down_min_before_pert': SaEn_Adaptation_down_min_before_pert_list,
+    'SaEn_Adaptation_up_min_before_pert': SaEn_Adaptation_up_min_before_pert_list,
+    'SaEn_Adaptation_down_max_before_pert': SaEn_Adaptation_down_max_before_pert_list,
+    'SaEn_Adaptation_up_max_before_pert': SaEn_Adaptation_up_max_before_pert_list,
+    'SaEn_Adaptation_down_T1_before_pert': SaEn_Adaptation_down_T1_before_pert_list,
+    'SaEn_Adaptation_up_T1_before_pert': SaEn_Adaptation_up_T1_before_pert_list,
+    'SaEn_Adaptation_down_T2_before_pert': SaEn_Adaptation_down_T2_before_pert_list,
+    'SaEn_Adaptation_up_T2_before_pert': SaEn_Adaptation_up_T2_before_pert_list,
 
 }
-
-new_excel = pd.DataFrame(dist)
-os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results')
-new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials 3.xlsx')
+# #
+# new_excel = pd.DataFrame(dist)
+# os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results')
+# new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials 2.xlsx')
