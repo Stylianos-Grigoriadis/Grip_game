@@ -160,9 +160,13 @@ for file in files:
 
     time_original = 0
     time_surrogation = np.linspace(1,19,19)
-    plt.scatter(time_original, SaEn_Isometric_80, c='red')
-    plt.scatter(time_surrogation, SaEn_Isometric_80_surrogate_signals_list, c='blue')
+    plt.scatter(time_original, SaEn_Isometric_60, c='red')
+    plt.scatter(time_surrogation, SaEn_Isometric_60_surrogate_signals_list, c='blue')
     plt.show()
+    SaEn_Isometric_60_surrogate_signals_list.append(SaEn_Isometric_60)
+    plt.hist(SaEn_Isometric_60_surrogate_signals_list)
+    plt.show()
+
 
 
 
