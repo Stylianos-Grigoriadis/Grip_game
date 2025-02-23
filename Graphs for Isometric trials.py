@@ -10,7 +10,7 @@ import matplotlib.lines as mlines
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 
-directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Pilot Study 10\Data\Results'
+directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results'
 os.chdir(directory)
 results = pd.read_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials.xlsx')
 
@@ -100,20 +100,20 @@ legend_elements = [
     mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young Average', linestyle='None'),
     mpatches.Patch(color='lightcoral', label='  Old'),
     mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Old Average', linestyle='None'),
-    mlines.Line2D([], [], color='k', marker=r'$\ast$', markersize=10, linestyle='None',
-                  label=r'  Sig > $SaEn_{5\%}$ Both Groups'),
-    mlines.Line2D([], [], color='k', marker=r'$\ast\ast$', markersize=25, linestyle='None',
-                  label=r'  Sig > $SaEn_{20\%}$ Both Groups'),
+    # mlines.Line2D([], [], color='k', marker=r'$\ast$', markersize=10, linestyle='None',
+    #               label=r'  Sig > $SaEn_{5\%}$ Both Groups'),
+    # mlines.Line2D([], [], color='k', marker=r'$\ast\ast$', markersize=25, linestyle='None',
+    #               label=r'  Sig > $SaEn_{20\%}$ Both Groups'),
 ]
 
-y_text_position = 0.35
-minus_factor = 0.02
-
-ax.text(young_positions[2] + plus_factor/2, y_text_position, '*', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
-ax.text(young_positions[2] + plus_factor/2, y_text_position - minus_factor, '**', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
-
-ax.text(young_positions[3] + plus_factor/2, y_text_position, '*', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
-ax.text(young_positions[3] + plus_factor/2, y_text_position - minus_factor, '**', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
+# y_text_position = 0.35
+# minus_factor = 0.02
+#
+# ax.text(young_positions[2] + plus_factor/2, y_text_position, '*', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
+# ax.text(young_positions[2] + plus_factor/2, y_text_position - minus_factor, '**', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
+#
+# ax.text(young_positions[3] + plus_factor/2, y_text_position, '*', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
+# ax.text(young_positions[3] + plus_factor/2, y_text_position - minus_factor, '**', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
 
 
 
@@ -122,12 +122,14 @@ ax.text(young_positions[3] + plus_factor/2, y_text_position - minus_factor, '**'
 ax.legend(handles=legend_elements, loc='upper left', frameon=False)
 
 # Customize the plot
-ax.set_title(f'Sample Entropy Curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+# ax.set_title(f'Sample Entropy Curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+ax.set_title(f'Sample Entropy Curve between Young and Old adults')
+
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Sample Entropy')
 ax.set_xlabel('Percentage of MVC')
-ax.set_ylim([0, 0.4])
+ax.set_ylim([0, 0.5])
 
 # Display the plot
 plt.show()
@@ -176,55 +178,55 @@ legend_elements = [
     mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young Average', linestyle='None'),
     mpatches.Patch(color='lightcoral', label='  Old'),
     mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Old Average', linestyle='None'),
-
-    # SD markers for older adults
-    mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast$', markersize=10, linestyle='None', label=r'  Sig > $SD_{5\%}$ Young Adults'),
-    mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast$', markersize=25, linestyle='None', label=r'  Sig > $SD_{20\%}$ Young Adults'),
-    mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast\ast$', markersize=40, linestyle='None', label=r'  Sig > $SD_{40\%}$ Young Adults'),
-    mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast\ast\ast$', markersize=55, linestyle='None', label=r'  Sig > $SD_{60\%}$ Young Adults'),
-
-    # SD markers for older adults
-    mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast$', markersize=10, linestyle='None', label=r'  Sig > $SD_{5\%}$ Older Adults'),
-    mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast\ast$', markersize=25, linestyle='None', label=r'  Sig > $SD_{20\%}$ Older Adults'),
-    mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast\ast\ast$', markersize=40, linestyle='None', label=r'  Sig > $SD_{40\%}$ Older Adults'),
+    #
+    # # SD markers for older adults
+    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast$', markersize=10, linestyle='None', label=r'  Sig > $SD_{5\%}$ Young Adults'),
+    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast$', markersize=25, linestyle='None', label=r'  Sig > $SD_{20\%}$ Young Adults'),
+    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast\ast$', markersize=40, linestyle='None', label=r'  Sig > $SD_{40\%}$ Young Adults'),
+    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast\ast\ast$', markersize=55, linestyle='None', label=r'  Sig > $SD_{60\%}$ Young Adults'),
+    #
+    # # SD markers for older adults
+    # mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast$', markersize=10, linestyle='None', label=r'  Sig > $SD_{5\%}$ Older Adults'),
+    # mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast\ast$', markersize=25, linestyle='None', label=r'  Sig > $SD_{20\%}$ Older Adults'),
+    # mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast\ast\ast$', markersize=40, linestyle='None', label=r'  Sig > $SD_{40\%}$ Older Adults'),
 
 ]
-
-minus_factor = 0.17
-old_basic_40 = 0.9
-old_basic_60 = 1.7
-old_basic_80 = 2.7
-
-young_basic_20 = -0.3
-young_basic_40 = -0.3
-young_basic_60 = -0.3
-young_basic_80 = -0.3
-
-ax.text(young_positions[1] + plus_factor/2, young_basic_20, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-ax.text(young_positions[2] + plus_factor/2, young_basic_40, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-ax.text(young_positions[3] + plus_factor/2, young_basic_60, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-ax.text(young_positions[4] + plus_factor/2, young_basic_80, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-
-ax.text(young_positions[2] + plus_factor/2, young_basic_40 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-ax.text(young_positions[3] + plus_factor/2, young_basic_60 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-ax.text(young_positions[4] + plus_factor/2, young_basic_80 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-
-ax.text(young_positions[3] + plus_factor/2, young_basic_60 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-ax.text(young_positions[4] + plus_factor/2, young_basic_80 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-
-ax.text(young_positions[4] + plus_factor/2, young_basic_80 - 3*minus_factor, '****', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-
-
-ax.text(young_positions[2] + plus_factor/2, old_basic_40, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-ax.text(young_positions[3] + plus_factor/2, old_basic_60, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-ax.text(young_positions[4] + plus_factor/2, old_basic_80, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-
-ax.text(young_positions[2] + plus_factor/2, old_basic_40 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-ax.text(young_positions[3] + plus_factor/2, old_basic_60 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-ax.text(young_positions[4] + plus_factor/2, old_basic_80 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-
-ax.text(young_positions[3] + plus_factor/2, old_basic_60 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-ax.text(young_positions[4] + plus_factor/2, old_basic_80 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+#
+# minus_factor = 0.17
+# old_basic_40 = 0.9
+# old_basic_60 = 1.7
+# old_basic_80 = 2.7
+#
+# young_basic_20 = -0.3
+# young_basic_40 = -0.3
+# young_basic_60 = -0.3
+# young_basic_80 = -0.3
+#
+# ax.text(young_positions[1] + plus_factor/2, young_basic_20, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+# ax.text(young_positions[2] + plus_factor/2, young_basic_40, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+# ax.text(young_positions[3] + plus_factor/2, young_basic_60, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+# ax.text(young_positions[4] + plus_factor/2, young_basic_80, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+#
+# ax.text(young_positions[2] + plus_factor/2, young_basic_40 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+# ax.text(young_positions[3] + plus_factor/2, young_basic_60 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+# ax.text(young_positions[4] + plus_factor/2, young_basic_80 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+#
+# ax.text(young_positions[3] + plus_factor/2, young_basic_60 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+# ax.text(young_positions[4] + plus_factor/2, young_basic_80 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+#
+# ax.text(young_positions[4] + plus_factor/2, young_basic_80 - 3*minus_factor, '****', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
+#
+#
+# ax.text(young_positions[2] + plus_factor/2, old_basic_40, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+# ax.text(young_positions[3] + plus_factor/2, old_basic_60, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+# ax.text(young_positions[4] + plus_factor/2, old_basic_80, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+#
+# ax.text(young_positions[2] + plus_factor/2, old_basic_40 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+# ax.text(young_positions[3] + plus_factor/2, old_basic_60 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+# ax.text(young_positions[4] + plus_factor/2, old_basic_80 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+#
+# ax.text(young_positions[3] + plus_factor/2, old_basic_60 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+# ax.text(young_positions[4] + plus_factor/2, old_basic_80 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
 
 
 # Add the legend to the plot
@@ -233,13 +235,13 @@ ax.legend(handles=legend_elements, loc='upper left', frameon=False)
 
 
 # Customize the plot
-ax.set_title(f'Standard Deviation curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
-
+# ax.set_title(f'Standard Deviation curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+ax.set_title(f'Standard Deviation curve between Young and Old adults')
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Standard Deviation')
 ax.set_xlabel('Percentage of MVC')
-ax.set_ylim([-1, 3])
+ax.set_ylim([-1.5, 4.5])
 
 # Display the plot
 plt.show()
