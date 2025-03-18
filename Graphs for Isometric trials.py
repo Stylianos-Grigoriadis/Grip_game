@@ -313,43 +313,43 @@ young_time_of_adaptation = [Pert_down_Young, Pert_up_Young]
 # Regression Graph
 
 # Independent variables for each group
-X_Old = np.column_stack((SaEn_80_Old, SaEn_60_Old, SaEn_40_Old, SaEn_20_Old, SaEn_05_Old,
-                         sd_80_Old, sd_60_Old, sd_40_Old, sd_20_Old, sd_05_Old))
-
-X_Young = np.column_stack((SaEn_80_Young, SaEn_60_Young, SaEn_40_Young, SaEn_20_Young, SaEn_05_Young,
-                           sd_80_Young, sd_60_Young, sd_40_Young, sd_20_Young, sd_05_Young))
-
-# Function to fit multiple linear regression and predict values
-def fit_and_predict(X, y):
-    model = LinearRegression()
-    model.fit(X, y)
-    y_pred = model.predict(X)
-    return y_pred
-
-# Fit models
-pred_down_Old = fit_and_predict(X_Old, Pert_down_Old)
-pred_down_Young = fit_and_predict(X_Young, Pert_down_Young)
-pred_up_Old = fit_and_predict(X_Old, Pert_up_Old)
-pred_up_Young = fit_and_predict(X_Young, Pert_up_Young)
-
-# Create subplots
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 10))
-
-# Plot Down Perturbation
-ax1.scatter(range(len(Pert_down_Old)), Pert_down_Old, color='red', label='Old (Down)', alpha=0.5)
-ax1.scatter(range(len(Pert_down_Young)), Pert_down_Young, color='blue', label='Young (Down)', alpha=0.5)
-ax1.plot(range(len(pred_down_Old)), pred_down_Old, color='red', linestyle='dashed')
-ax1.plot(range(len(pred_down_Young)), pred_down_Young, color='blue', linestyle='dashed')
-ax1.set_title("Down Perturbation")
-ax1.legend()
-
-# Plot Up Perturbation
-ax2.scatter(range(len(Pert_up_Old)), Pert_up_Old, color='red', label='Old (Up)', alpha=0.5)
-ax2.scatter(range(len(Pert_up_Young)), Pert_up_Young, color='blue', label='Young (Up)', alpha=0.5)
-ax2.plot(range(len(pred_up_Old)), pred_up_Old, color='red', linestyle='dashed')
-ax2.plot(range(len(pred_up_Young)), pred_up_Young, color='blue', linestyle='dashed')
-ax2.set_title("Up Perturbation")
-ax2.legend()
-
-plt.tight_layout()
-plt.show()
+# X_Old = np.column_stack((SaEn_80_Old, SaEn_60_Old, SaEn_40_Old, SaEn_20_Old, SaEn_05_Old,
+#                          sd_80_Old, sd_60_Old, sd_40_Old, sd_20_Old, sd_05_Old))
+#
+# X_Young = np.column_stack((SaEn_80_Young, SaEn_60_Young, SaEn_40_Young, SaEn_20_Young, SaEn_05_Young,
+#                            sd_80_Young, sd_60_Young, sd_40_Young, sd_20_Young, sd_05_Young))
+#
+# # Function to fit multiple linear regression and predict values
+# def fit_and_predict(X, y):
+#     model = LinearRegression()
+#     model.fit(X, y)
+#     y_pred = model.predict(X)
+#     return y_pred
+#
+# # Fit models
+# pred_down_Old = fit_and_predict(X_Old, Pert_down_Old)
+# pred_down_Young = fit_and_predict(X_Young, Pert_down_Young)
+# pred_up_Old = fit_and_predict(X_Old, Pert_up_Old)
+# pred_up_Young = fit_and_predict(X_Young, Pert_up_Young)
+#
+# # Create subplots
+# fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 10))
+#
+# # Plot Down Perturbation
+# ax1.scatter(range(len(Pert_down_Old)), Pert_down_Old, color='red', label='Old (Down)', alpha=0.5)
+# ax1.scatter(range(len(Pert_down_Young)), Pert_down_Young, color='blue', label='Young (Down)', alpha=0.5)
+# ax1.plot(range(len(pred_down_Old)), pred_down_Old, color='red', linestyle='dashed')
+# ax1.plot(range(len(pred_down_Young)), pred_down_Young, color='blue', linestyle='dashed')
+# ax1.set_title("Down Perturbation")
+# ax1.legend()
+#
+# # Plot Up Perturbation
+# ax2.scatter(range(len(Pert_up_Old)), Pert_up_Old, color='red', label='Old (Up)', alpha=0.5)
+# ax2.scatter(range(len(Pert_up_Young)), Pert_up_Young, color='blue', label='Young (Up)', alpha=0.5)
+# ax2.plot(range(len(pred_up_Old)), pred_up_Old, color='red', linestyle='dashed')
+# ax2.plot(range(len(pred_up_Young)), pred_up_Young, color='blue', linestyle='dashed')
+# ax2.set_title("Up Perturbation")
+# ax2.legend()
+#
+# plt.tight_layout()
+# plt.show()
