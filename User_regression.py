@@ -17,6 +17,7 @@ results = pd.read_excel(r'Results all Lowpass 50Hz only best iso trials all pert
 print(results.columns)
 # print(results['ID'])
 
+participants = results['ID'].to_numpy()
 SaEn_40 = results['SaEn_40'].to_numpy()
 SaEn_20 = results['SaEn_20'].to_numpy()
 SaEn_Adaptation_up_min_before_pert = results['SaEn_Adaptation_up_min_before_pert'].to_numpy()
@@ -30,9 +31,12 @@ Adaptation_down_min = results['Adaptation_down_min'].to_numpy()
 # Sort based on SaEn40
 sorted_indices_SaEn_40 = np.argsort(SaEn_40)
 sortd_SaEn_40 = SaEn_40[sorted_indices_SaEn_40]
+print(len(sortd_SaEn_40))
+sorted_participants_40 = participants[sorted_indices_SaEn_40]
 sortd_Adaptation_up_min_SaEn_40 = Adaptation_up_min[sorted_indices_SaEn_40]
 sortd_Adaptation_down_min_SaEn_40 = Adaptation_down_min[sorted_indices_SaEn_40]
-dist_sort_SaEn_40 = {'sortd_SaEn_40': sortd_SaEn_40,
+dist_sort_SaEn_40 = {'Participants': sorted_participants_40,
+                     'sortd_SaEn_40': sortd_SaEn_40,
                      'sortd_Adaptation_up_min_SaEn_40': sortd_Adaptation_up_min_SaEn_40,
                      'sortd_Adaptation_down_min_SaEn_40': sortd_Adaptation_down_min_SaEn_40}
 df_sort_SaEn_40 = pd.DataFrame(dist_sort_SaEn_40)
@@ -40,9 +44,11 @@ df_sort_SaEn_40 = pd.DataFrame(dist_sort_SaEn_40)
 # Sort based on SaEn60
 sorted_indices_SaEn_20 = np.argsort(SaEn_20)
 sortd_SaEn_20 = SaEn_20[sorted_indices_SaEn_20]
+sorted_participants_20 = participants[sorted_indices_SaEn_20]
 sortd_Adaptation_up_min_SaEn_20 = Adaptation_up_min[sorted_indices_SaEn_20]
 sortd_Adaptation_down_min_SaEn_20 = Adaptation_down_min[sorted_indices_SaEn_20]
-dist_sort_SaEn_20 = {'sortd_SaEn_20': sortd_SaEn_20,
+dist_sort_SaEn_20 = {'Participants': sorted_participants_20,
+                     'sortd_SaEn_20': sortd_SaEn_20,
                      'sortd_Adaptation_up_min_SaEn_20': sortd_Adaptation_up_min_SaEn_20,
                      'sortd_Adaptation_down_min_SaEn_20': sortd_Adaptation_down_min_SaEn_20}
 df_sort_SaEn_20 = pd.DataFrame(dist_sort_SaEn_20)
@@ -383,105 +389,104 @@ pd.set_option('display.max_columns', None)  # Show all columns
 pd.set_option('display.width', None)  # Adjust width to fit all columns
 pd.set_option('display.max_colwidth', None)  # Show full content in each cell
 
-q1 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 25)
-q2 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 50)
-q3 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 75)
+q1_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 25)
+q2_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 50)
+q3_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 75)
 
 # Creating quartile-based subsets
-Q1 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q1]
-Q2 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q1) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q2)]
-Q3 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q2) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q3)]
-Q4 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] > q3]
+Q1_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q1_40]
+Q2_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q1_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q2_40)]
+Q3_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q2_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q3_40)]
+Q4_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] > q3_40]
 
-print(Q1.columns)
-slope_up_Q1, intercept_up_Q1, r_value_up_Q1, p_value_up_Q1, std_err_up_Q1 = stats.linregress(Q1['sortd_SaEn_40'], Q1['sortd_Adaptation_up_min_SaEn_40'])
-slope_up_Q2, intercept_up_Q2, r_value_up_Q2, p_value_up_Q2, std_err_up_Q2 = stats.linregress(Q2['sortd_SaEn_40'], Q2['sortd_Adaptation_up_min_SaEn_40'])
-slope_up_Q3, intercept_up_Q3, r_value_up_Q3, p_value_up_Q3, std_err_up_Q3 = stats.linregress(Q3['sortd_SaEn_40'], Q3['sortd_Adaptation_up_min_SaEn_40'])
-slope_up_Q4, intercept_up_Q4, r_value_up_Q4, p_value_up_Q4, std_err_up_Q4 = stats.linregress(Q4['sortd_SaEn_40'], Q4['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_Q1_40, intercept_up_Q1_40, r_value_up_Q1_40, p_value_up_Q1_40, std_err_up_Q1_40 = stats.linregress(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_Q2_40, intercept_up_Q2_40, r_value_up_Q2_40, p_value_up_Q2_40, std_err_up_Q2_40 = stats.linregress(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_Q3_40, intercept_up_Q3_40, r_value_up_Q3_40, p_value_up_Q3_40, std_err_up_Q3_40 = stats.linregress(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_Q4_40, intercept_up_Q4_40, r_value_up_Q4_40, p_value_up_Q4_40, std_err_up_Q4_40 = stats.linregress(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_up_min_SaEn_40'])
 
-slope_down_Q1, intercept_down_Q1, r_value_down_Q1, p_value_down_Q1, std_err_down_Q1 = stats.linregress(Q1['sortd_SaEn_40'], Q1['sortd_Adaptation_down_min_SaEn_40'])
-slope_down_Q2, intercept_down_Q2, r_value_down_Q2, p_value_down_Q2, std_err_down_Q2 = stats.linregress(Q2['sortd_SaEn_40'], Q2['sortd_Adaptation_down_min_SaEn_40'])
-slope_down_Q3, intercept_down_Q3, r_value_down_Q3, p_value_down_Q3, std_err_down_Q3 = stats.linregress(Q3['sortd_SaEn_40'], Q3['sortd_Adaptation_down_min_SaEn_40'])
-slope_down_Q4, intercept_down_Q4, r_value_down_Q4, p_value_down_Q4, std_err_down_Q4 = stats.linregress(Q4['sortd_SaEn_40'], Q4['sortd_Adaptation_down_min_SaEn_40'])
+slope_down_Q1_40, intercept_down_Q1_40, r_value_down_Q1_40, p_value_down_Q1_40, std_err_down_Q1_40 = stats.linregress(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_down_min_SaEn_40'])
+slope_down_Q2_40, intercept_down_Q2_40, r_value_down_Q2_40, p_value_down_Q2_40, std_err_down_Q2_40 = stats.linregress(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_down_min_SaEn_40'])
+slope_down_Q3_40, intercept_down_Q3_40, r_value_down_Q3_40, p_value_down_Q3_40, std_err_down_Q3_40 = stats.linregress(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_down_min_SaEn_40'])
+slope_down_Q4_40, intercept_down_Q4_40, r_value_down_Q4_40, p_value_down_Q4_40, std_err_down_Q4_40 = stats.linregress(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_down_min_SaEn_40'])
 
-R_squared_up_Q1 = r_value_up_Q1**2
-R_squared_up_Q2 = r_value_up_Q2**2
-R_squared_up_Q3 = r_value_up_Q3**2
-R_squared_up_Q4 = r_value_up_Q4**2
-R_squared_down_Q1 = r_value_down_Q1**2
-R_squared_down_Q2 = r_value_down_Q2**2
-R_squared_down_Q3 = r_value_down_Q3**2
-R_squared_down_Q4 = r_value_down_Q4**2
+R_squared_up_Q1_40 = r_value_up_Q1_40**2
+R_squared_up_Q2_40 = r_value_up_Q2_40**2
+R_squared_up_Q3_40 = r_value_up_Q3_40**2
+R_squared_up_Q4_40 = r_value_up_Q4_40**2
+R_squared_down_Q1_40 = r_value_down_Q1_40**2
+R_squared_down_Q2_40 = r_value_down_Q2_40**2
+R_squared_down_Q3_40 = r_value_down_Q3_40**2
+R_squared_down_Q4_40 = r_value_down_Q4_40**2
 
-predicted_values_up_Q1 = slope_up_Q1 * Q1['sortd_SaEn_40'] + intercept_up_Q1
-predicted_values_up_Q2 = slope_up_Q2 * Q2['sortd_SaEn_40'] + intercept_up_Q2
-predicted_values_up_Q3 = slope_up_Q3 * Q3['sortd_SaEn_40'] + intercept_up_Q3
-predicted_values_up_Q4 = slope_up_Q4 * Q4['sortd_SaEn_40'] + intercept_up_Q4
+predicted_values_up_Q1_40 = slope_up_Q1_40 * Q1_40['sortd_SaEn_40'] + intercept_up_Q1_40
+predicted_values_up_Q2_40 = slope_up_Q2_40 * Q2_40['sortd_SaEn_40'] + intercept_up_Q2_40
+predicted_values_up_Q3_40 = slope_up_Q3_40 * Q3_40['sortd_SaEn_40'] + intercept_up_Q3_40
+predicted_values_up_Q4_40 = slope_up_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_up_Q4_40
 
-predicted_values_down_Q1 = slope_down_Q1 * Q1['sortd_SaEn_40'] + intercept_down_Q1
-predicted_values_down_Q2 = slope_down_Q2 * Q2['sortd_SaEn_40'] + intercept_down_Q2
-predicted_values_down_Q3 = slope_down_Q3 * Q3['sortd_SaEn_40'] + intercept_down_Q3
-predicted_values_down_Q4 = slope_down_Q4 * Q4['sortd_SaEn_40'] + intercept_down_Q4
-
-
-# Plot for perturbation up
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-fig.suptitle("Sorted based on SaEn 40 and Perturbation Up")
-
-axes[0, 0].scatter(Q1['sortd_SaEn_40'], Q1['sortd_Adaptation_up_min_SaEn_40'], color="blue")
-axes[0, 0].plot(Q1['sortd_SaEn_40'], predicted_values_up_Q1, color="red")
-axes[0, 0].set_title(f"Q1 y={round(slope_up_Q1, 2)}x+{round(intercept_up_Q1, 2)}\nR^2 = {round(R_squared_up_Q1, 3)}, p={round(p_value_up_Q1,3)}")
-axes[0, 0].set_ylabel("Adaptation Time")
-
-axes[1, 0].scatter(Q2['sortd_SaEn_40'], Q2['sortd_Adaptation_up_min_SaEn_40'], color="blue")
-axes[1, 0].plot(Q2['sortd_SaEn_40'], predicted_values_up_Q2, color="red")
-axes[1, 0].set_title(f"Q2 y={round(slope_up_Q2, 2)}x+{round(intercept_up_Q2, 2)}\nR^2 = {round(R_squared_up_Q2, 3)}, p={round(p_value_up_Q2,3)}")
-axes[1, 0].set_xlabel("SaEn_40")
-axes[1, 0].set_ylabel("Adaptation Time")
-
-axes[0, 1].scatter(Q3['sortd_SaEn_40'], Q3['sortd_Adaptation_up_min_SaEn_40'], color="blue")
-axes[0, 1].plot(Q3['sortd_SaEn_40'], predicted_values_up_Q3, color="red")
-axes[0, 1].set_title(f"Q3 y={round(slope_up_Q3, 2)}x+{round(intercept_up_Q3, 2)}\nR^2 = {round(R_squared_up_Q3, 3)}, p={round(p_value_up_Q3,3)}")
-
-axes[1, 1].scatter(Q4['sortd_SaEn_40'], Q4['sortd_Adaptation_up_min_SaEn_40'], color="blue")
-axes[1, 1].plot(Q4['sortd_SaEn_40'], predicted_values_up_Q4, color="red")
-axes[1, 1].set_title(f"Q4 y={round(slope_up_Q4, 2)}x+{round(intercept_up_Q4, 2)}\nR^2 = {round(R_squared_up_Q4, 3)}, p={round(p_value_up_Q4,3)}")
-axes[1, 1].set_ylabel("Adaptation Time")
-axes[1, 1].set_xlabel("SaEn_40")
-
-# Adjust layout
-plt.tight_layout()
-plt.show()
+predicted_values_down_Q1_40 = slope_down_Q1_40 * Q1_40['sortd_SaEn_40'] + intercept_down_Q1_40
+predicted_values_down_Q2_40 = slope_down_Q2_40 * Q2_40['sortd_SaEn_40'] + intercept_down_Q2_40
+predicted_values_down_Q3_40 = slope_down_Q3_40 * Q3_40['sortd_SaEn_40'] + intercept_down_Q3_40
+predicted_values_down_Q4_40 = slope_down_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_down_Q4_40
 
 
-# Plot for perturbation down
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-fig.suptitle("Sorted based on SaEn 40 and Perturbation down")
-
-axes[0, 0].scatter(Q1['sortd_SaEn_40'], Q1['sortd_Adaptation_down_min_SaEn_40'], color="blue")
-axes[0, 0].plot(Q1['sortd_SaEn_40'], predicted_values_down_Q1, color="red")
-axes[0, 0].set_title(f"Q1 y={round(slope_down_Q1, 2)}x+{round(intercept_down_Q1, 2)}\nR^2 = {round(R_squared_down_Q1, 3)}, p={round(p_value_down_Q1,3)}")
-axes[0, 0].set_ylabel("Adaptation Time")
-
-axes[1, 0].scatter(Q2['sortd_SaEn_40'], Q2['sortd_Adaptation_down_min_SaEn_40'], color="blue")
-axes[1, 0].plot(Q2['sortd_SaEn_40'], predicted_values_down_Q2, color="red")
-axes[1, 0].set_title(f"Q2 y={round(slope_down_Q2, 2)}x+{round(intercept_down_Q2, 2)}\nR^2 = {round(R_squared_down_Q2, 3)}, p={round(p_value_down_Q2,3)}")
-axes[1, 0].set_xlabel("SaEn_40")
-axes[1, 0].set_ylabel("Adaptation Time")
-
-axes[0, 1].scatter(Q3['sortd_SaEn_40'], Q3['sortd_Adaptation_down_min_SaEn_40'], color="blue")
-axes[0, 1].plot(Q3['sortd_SaEn_40'], predicted_values_down_Q3, color="red")
-axes[0, 1].set_title(f"Q3 y={round(slope_down_Q3, 2)}x+{round(intercept_down_Q3, 2)}\nR^2 = {round(R_squared_down_Q3, 3)}, p={round(p_value_down_Q3,3)}")
-
-axes[1, 1].scatter(Q4['sortd_SaEn_40'], Q4['sortd_Adaptation_down_min_SaEn_40'], color="blue")
-axes[1, 1].plot(Q4['sortd_SaEn_40'], predicted_values_down_Q4, color="red")
-axes[1, 1].set_title(f"Q4 y={round(slope_down_Q4, 2)}x+{round(intercept_down_Q4, 2)}\nR^2 = {round(R_squared_down_Q4, 3)}, p={round(p_value_down_Q4,3)}")
-axes[1, 1].set_ylabel("Adaptation Time")
-axes[1, 1].set_xlabel("SaEn_40")
-
-# Adjust layout
-plt.tight_layout()
-plt.show()
+# # Plot for perturbation up
+# fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+# fig.suptitle("Sorted based on SaEn 40 and Perturbation Up")
+#
+# axes[0, 0].scatter(Q1['sortd_SaEn_40'], Q1['sortd_Adaptation_up_min_SaEn_40'], color="blue")
+# axes[0, 0].plot(Q1['sortd_SaEn_40'], predicted_values_up_Q1, color="red")
+# axes[0, 0].set_title(f"Q1 y={round(slope_up_Q1, 2)}x+{round(intercept_up_Q1, 2)}\nR^2 = {round(R_squared_up_Q1, 3)}, p={round(p_value_up_Q1,3)}")
+# axes[0, 0].set_ylabel("Adaptation Time")
+#
+# axes[1, 0].scatter(Q2['sortd_SaEn_40'], Q2['sortd_Adaptation_up_min_SaEn_40'], color="blue")
+# axes[1, 0].plot(Q2['sortd_SaEn_40'], predicted_values_up_Q2, color="red")
+# axes[1, 0].set_title(f"Q2 y={round(slope_up_Q2, 2)}x+{round(intercept_up_Q2, 2)}\nR^2 = {round(R_squared_up_Q2, 3)}, p={round(p_value_up_Q2,3)}")
+# axes[1, 0].set_xlabel("SaEn_40")
+# axes[1, 0].set_ylabel("Adaptation Time")
+#
+# axes[0, 1].scatter(Q3['sortd_SaEn_40'], Q3['sortd_Adaptation_up_min_SaEn_40'], color="blue")
+# axes[0, 1].plot(Q3['sortd_SaEn_40'], predicted_values_up_Q3, color="red")
+# axes[0, 1].set_title(f"Q3 y={round(slope_up_Q3, 2)}x+{round(intercept_up_Q3, 2)}\nR^2 = {round(R_squared_up_Q3, 3)}, p={round(p_value_up_Q3,3)}")
+#
+# axes[1, 1].scatter(Q4['sortd_SaEn_40'], Q4['sortd_Adaptation_up_min_SaEn_40'], color="blue")
+# axes[1, 1].plot(Q4['sortd_SaEn_40'], predicted_values_up_Q4, color="red")
+# axes[1, 1].set_title(f"Q4 y={round(slope_up_Q4, 2)}x+{round(intercept_up_Q4, 2)}\nR^2 = {round(R_squared_up_Q4, 3)}, p={round(p_value_up_Q4,3)}")
+# axes[1, 1].set_ylabel("Adaptation Time")
+# axes[1, 1].set_xlabel("SaEn_40")
+#
+# # Adjust layout
+# plt.tight_layout()
+# plt.show()
+#
+#
+# # Plot for perturbation down
+# fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+# fig.suptitle("Sorted based on SaEn 40 and Perturbation down")
+#
+# axes[0, 0].scatter(Q1['sortd_SaEn_40'], Q1['sortd_Adaptation_down_min_SaEn_40'], color="blue")
+# axes[0, 0].plot(Q1['sortd_SaEn_40'], predicted_values_down_Q1, color="red")
+# axes[0, 0].set_title(f"Q1 y={round(slope_down_Q1, 2)}x+{round(intercept_down_Q1, 2)}\nR^2 = {round(R_squared_down_Q1, 3)}, p={round(p_value_down_Q1,3)}")
+# axes[0, 0].set_ylabel("Adaptation Time")
+#
+# axes[1, 0].scatter(Q2['sortd_SaEn_40'], Q2['sortd_Adaptation_down_min_SaEn_40'], color="blue")
+# axes[1, 0].plot(Q2['sortd_SaEn_40'], predicted_values_down_Q2, color="red")
+# axes[1, 0].set_title(f"Q2 y={round(slope_down_Q2, 2)}x+{round(intercept_down_Q2, 2)}\nR^2 = {round(R_squared_down_Q2, 3)}, p={round(p_value_down_Q2,3)}")
+# axes[1, 0].set_xlabel("SaEn_40")
+# axes[1, 0].set_ylabel("Adaptation Time")
+#
+# axes[0, 1].scatter(Q3['sortd_SaEn_40'], Q3['sortd_Adaptation_down_min_SaEn_40'], color="blue")
+# axes[0, 1].plot(Q3['sortd_SaEn_40'], predicted_values_down_Q3, color="red")
+# axes[0, 1].set_title(f"Q3 y={round(slope_down_Q3, 2)}x+{round(intercept_down_Q3, 2)}\nR^2 = {round(R_squared_down_Q3, 3)}, p={round(p_value_down_Q3,3)}")
+#
+# axes[1, 1].scatter(Q4['sortd_SaEn_40'], Q4['sortd_Adaptation_down_min_SaEn_40'], color="blue")
+# axes[1, 1].plot(Q4['sortd_SaEn_40'], predicted_values_down_Q4, color="red")
+# axes[1, 1].set_title(f"Q4 y={round(slope_down_Q4, 2)}x+{round(intercept_down_Q4, 2)}\nR^2 = {round(R_squared_down_Q4, 3)}, p={round(p_value_down_Q4,3)}")
+# axes[1, 1].set_ylabel("Adaptation Time")
+# axes[1, 1].set_xlabel("SaEn_40")
+#
+# # Adjust layout
+# plt.tight_layout()
+# plt.show()
 
 
 # Separate the SaEn and perturbations based on the quartiles of SaEn of 20
@@ -490,106 +495,105 @@ pd.set_option('display.max_columns', None)  # Show all columns
 pd.set_option('display.width', None)  # Adjust width to fit all columns
 pd.set_option('display.max_colwidth', None)  # Show full content in each cell
 
-q1 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 25)
-q2 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 50)
-q3 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 75)
+q1_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 25)
+q2_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 50)
+q3_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 75)
 
 # Creating quartile-based subsets
-Q1 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] <= q1]
-Q2 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q1) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q2)]
-Q3 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q2) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q3)]
-Q4 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] > q3]
+Q1_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] <= q1_20]
+Q2_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q1_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q2_20)]
+Q3_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q2_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q3_20)]
+Q4_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] > q3_20]
 
-print(Q1.columns)
-slope_up_Q1, intercept_up_Q1, r_value_up_Q1, p_value_up_Q1, std_err_up_Q1 = stats.linregress(Q1['sortd_SaEn_20'], Q1['sortd_Adaptation_up_min_SaEn_20'])
-slope_up_Q2, intercept_up_Q2, r_value_up_Q2, p_value_up_Q2, std_err_up_Q2 = stats.linregress(Q2['sortd_SaEn_20'], Q2['sortd_Adaptation_up_min_SaEn_20'])
-slope_up_Q3, intercept_up_Q3, r_value_up_Q3, p_value_up_Q3, std_err_up_Q3 = stats.linregress(Q3['sortd_SaEn_20'], Q3['sortd_Adaptation_up_min_SaEn_20'])
-slope_up_Q4, intercept_up_Q4, r_value_up_Q4, p_value_up_Q4, std_err_up_Q4 = stats.linregress(Q4['sortd_SaEn_20'], Q4['sortd_Adaptation_up_min_SaEn_20'])
+slope_up_Q1_20, intercept_up_Q1_20, r_value_up_Q1_20, p_value_up_Q1_20, std_err_up_Q1_20 = stats.linregress(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_up_min_SaEn_20'])
+slope_up_Q2_20, intercept_up_Q2_20, r_value_up_Q2_20, p_value_up_Q2_20, std_err_up_Q2_20 = stats.linregress(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_up_min_SaEn_20'])
+slope_up_Q3_20, intercept_up_Q3_20, r_value_up_Q3_20, p_value_up_Q3_20, std_err_up_Q3_20 = stats.linregress(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_up_min_SaEn_20'])
+slope_up_Q4_20, intercept_up_Q4_20, r_value_up_Q4_20, p_value_up_Q4_20, std_err_up_Q4_20 = stats.linregress(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_up_min_SaEn_20'])
 
-slope_down_Q1, intercept_down_Q1, r_value_down_Q1, p_value_down_Q1, std_err_down_Q1 = stats.linregress(Q1['sortd_SaEn_20'], Q1['sortd_Adaptation_down_min_SaEn_20'])
-slope_down_Q2, intercept_down_Q2, r_value_down_Q2, p_value_down_Q2, std_err_down_Q2 = stats.linregress(Q2['sortd_SaEn_20'], Q2['sortd_Adaptation_down_min_SaEn_20'])
-slope_down_Q3, intercept_down_Q3, r_value_down_Q3, p_value_down_Q3, std_err_down_Q3 = stats.linregress(Q3['sortd_SaEn_20'], Q3['sortd_Adaptation_down_min_SaEn_20'])
-slope_down_Q4, intercept_down_Q4, r_value_down_Q4, p_value_down_Q4, std_err_down_Q4 = stats.linregress(Q4['sortd_SaEn_20'], Q4['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_Q1_20, intercept_down_Q1_20, r_value_down_Q1_20, p_value_down_Q1_20, std_err_down_Q1_20 = stats.linregress(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_Q2_20, intercept_down_Q2_20, r_value_down_Q2_20, p_value_down_Q2_20, std_err_down_Q2_20 = stats.linregress(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_Q3_20, intercept_down_Q3_20, r_value_down_Q3_20, p_value_down_Q3_20, std_err_down_Q3_20 = stats.linregress(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_Q4_20, intercept_down_Q4_20, r_value_down_Q4_20, p_value_down_Q4_20, std_err_down_Q4_20 = stats.linregress(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_down_min_SaEn_20'])
 
-R_squared_up_Q1 = r_value_up_Q1**2
-R_squared_up_Q2 = r_value_up_Q2**2
-R_squared_up_Q3 = r_value_up_Q3**2
-R_squared_up_Q4 = r_value_up_Q4**2
-R_squared_down_Q1 = r_value_down_Q1**2
-R_squared_down_Q2 = r_value_down_Q2**2
-R_squared_down_Q3 = r_value_down_Q3**2
-R_squared_down_Q4 = r_value_down_Q4**2
+R_squared_up_Q1_20 = r_value_up_Q1_20**2
+R_squared_up_Q2_20 = r_value_up_Q2_20**2
+R_squared_up_Q3_20 = r_value_up_Q3_20**2
+R_squared_up_Q4_20 = r_value_up_Q4_20**2
+R_squared_down_Q1_20 = r_value_down_Q1_20**2
+R_squared_down_Q2_20 = r_value_down_Q2_20**2
+R_squared_down_Q3_20 = r_value_down_Q3_20**2
+R_squared_down_Q4_20 = r_value_down_Q4_20**2
 
-predicted_values_up_Q1 = slope_up_Q1 * Q1['sortd_SaEn_20'] + intercept_up_Q1
-predicted_values_up_Q2 = slope_up_Q2 * Q2['sortd_SaEn_20'] + intercept_up_Q2
-predicted_values_up_Q3 = slope_up_Q3 * Q3['sortd_SaEn_20'] + intercept_up_Q3
-predicted_values_up_Q4 = slope_up_Q4 * Q4['sortd_SaEn_20'] + intercept_up_Q4
+predicted_values_up_Q1_20 = slope_up_Q1_20 * Q1_20['sortd_SaEn_20'] + intercept_up_Q1_20
+predicted_values_up_Q2_20 = slope_up_Q2_20 * Q2_20['sortd_SaEn_20'] + intercept_up_Q2_20
+predicted_values_up_Q3_20 = slope_up_Q3_20 * Q3_20['sortd_SaEn_20'] + intercept_up_Q3_20
+predicted_values_up_Q4_20 = slope_up_Q4_20 * Q4_20['sortd_SaEn_20'] + intercept_up_Q4_20
 
-predicted_values_down_Q1 = slope_down_Q1 * Q1['sortd_SaEn_20'] + intercept_down_Q1
-predicted_values_down_Q2 = slope_down_Q2 * Q2['sortd_SaEn_20'] + intercept_down_Q2
-predicted_values_down_Q3 = slope_down_Q3 * Q3['sortd_SaEn_20'] + intercept_down_Q3
-predicted_values_down_Q4 = slope_down_Q4 * Q4['sortd_SaEn_20'] + intercept_down_Q4
-
-
-# Plot for perturbation up
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-fig.suptitle("Sorted based on SaEn 20")
-
-axes[0, 0].scatter(Q1['sortd_SaEn_20'], Q1['sortd_Adaptation_up_min_SaEn_20'], color="blue")
-axes[0, 0].plot(Q1['sortd_SaEn_20'], predicted_values_up_Q1, color="red")
-axes[0, 0].set_title(f"Q1 y={round(slope_up_Q1, 2)}x+{round(intercept_up_Q1, 2)}\nR^2 = {round(R_squared_up_Q1, 3)}, p={round(p_value_up_Q1,3)}")
-axes[0, 0].set_ylabel("Adaptation Time")
-
-axes[1, 0].scatter(Q2['sortd_SaEn_20'], Q2['sortd_Adaptation_up_min_SaEn_20'], color="blue")
-axes[1, 0].plot(Q2['sortd_SaEn_20'], predicted_values_up_Q2, color="red")
-axes[1, 0].set_title(f"Q2 y={round(slope_up_Q2, 2)}x+{round(intercept_up_Q2, 2)}\nR^2 = {round(R_squared_up_Q2, 3)}, p={round(p_value_up_Q2,3)}")
-axes[1, 0].set_xlabel("SaEn_20")
-axes[1, 0].set_ylabel("Adaptation Time")
-
-axes[0, 1].scatter(Q3['sortd_SaEn_20'], Q3['sortd_Adaptation_up_min_SaEn_20'], color="blue")
-axes[0, 1].plot(Q3['sortd_SaEn_20'], predicted_values_up_Q3, color="red")
-axes[0, 1].set_title(f"Q3 y={round(slope_up_Q3, 2)}x+{round(intercept_up_Q3, 2)}\nR^2 = {round(R_squared_up_Q3, 3)}, p={round(p_value_up_Q3,3)}")
-
-axes[1, 1].scatter(Q4['sortd_SaEn_20'], Q4['sortd_Adaptation_up_min_SaEn_20'], color="blue")
-axes[1, 1].plot(Q4['sortd_SaEn_20'], predicted_values_up_Q4, color="red")
-axes[1, 1].set_title(f"Q4 y={round(slope_up_Q4, 2)}x+{round(intercept_up_Q4, 2)}\nR^2 = {round(R_squared_up_Q4, 3)}, p={round(p_value_up_Q4,3)}")
-axes[1, 1].set_ylabel("Adaptation Time")
-axes[1, 1].set_xlabel("SaEn_20")
+predicted_values_down_Q1_20 = slope_down_Q1_20 * Q1_20['sortd_SaEn_20'] + intercept_down_Q1_20
+predicted_values_down_Q2_20 = slope_down_Q2_20 * Q2_20['sortd_SaEn_20'] + intercept_down_Q2_20
+predicted_values_down_Q3_20 = slope_down_Q3_20 * Q3_20['sortd_SaEn_20'] + intercept_down_Q3_20
+predicted_values_down_Q4_20 = slope_down_Q4_20 * Q4_20['sortd_SaEn_20'] + intercept_down_Q4_20
 
 
-# Adjust layout
-plt.tight_layout()
-plt.show()
-
-# Plot for perturbation down
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-fig.suptitle("Sorted based on SaEn 20")
-
-axes[0, 0].scatter(Q1['sortd_SaEn_20'], Q1['sortd_Adaptation_down_min_SaEn_20'], color="blue")
-axes[0, 0].plot(Q1['sortd_SaEn_20'], predicted_values_down_Q1, color="red")
-axes[0, 0].set_title(f"Q1 y={round(slope_down_Q1, 2)}x+{round(intercept_down_Q1, 2)}\nR^2 = {round(R_squared_down_Q1, 3)}, p={round(p_value_down_Q1,3)}")
-axes[0, 0].set_ylabel("Adaptation Time")
-
-axes[1, 0].scatter(Q2['sortd_SaEn_20'], Q2['sortd_Adaptation_down_min_SaEn_20'], color="blue")
-axes[1, 0].plot(Q2['sortd_SaEn_20'], predicted_values_down_Q2, color="red")
-axes[1, 0].set_title(f"Q2 y={round(slope_down_Q2, 2)}x+{round(intercept_down_Q2, 2)}\nR^2 = {round(R_squared_down_Q2, 3)}, p={round(p_value_down_Q2,3)}")
-axes[1, 0].set_xlabel("SaEn_20")
-axes[1, 0].set_ylabel("Adaptation Time")
-
-axes[0, 1].scatter(Q3['sortd_SaEn_20'], Q3['sortd_Adaptation_down_min_SaEn_20'], color="blue")
-axes[0, 1].plot(Q3['sortd_SaEn_20'], predicted_values_down_Q3, color="red")
-axes[0, 1].set_title(f"Q3 y={round(slope_down_Q3, 2)}x+{round(intercept_down_Q3, 2)}\nR^2 = {round(R_squared_down_Q3, 3)}, p={round(p_value_down_Q3,3)}")
-
-axes[1, 1].scatter(Q4['sortd_SaEn_20'], Q4['sortd_Adaptation_down_min_SaEn_20'], color="blue")
-axes[1, 1].plot(Q4['sortd_SaEn_20'], predicted_values_down_Q4, color="red")
-axes[1, 1].set_title(f"Q4 y={round(slope_down_Q4, 2)}x+{round(intercept_down_Q4, 2)}\nR^2 = {round(R_squared_down_Q4, 3)}, p={round(p_value_down_Q4,3)}")
-axes[1, 1].set_ylabel("Adaptation Time")
-axes[1, 1].set_xlabel("SaEn_20")
-
-
-# Adjust layout
-plt.tight_layout()
-plt.show()
+# # Plot for perturbation up
+# fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+# fig.suptitle("Sorted based on SaEn 20")
+#
+# axes[0, 0].scatter(Q1['sortd_SaEn_20'], Q1['sortd_Adaptation_up_min_SaEn_20'], color="blue")
+# axes[0, 0].plot(Q1['sortd_SaEn_20'], predicted_values_up_Q1, color="red")
+# axes[0, 0].set_title(f"Q1 y={round(slope_up_Q1, 2)}x+{round(intercept_up_Q1, 2)}\nR^2 = {round(R_squared_up_Q1, 3)}, p={round(p_value_up_Q1,3)}")
+# axes[0, 0].set_ylabel("Adaptation Time")
+#
+# axes[1, 0].scatter(Q2['sortd_SaEn_20'], Q2['sortd_Adaptation_up_min_SaEn_20'], color="blue")
+# axes[1, 0].plot(Q2['sortd_SaEn_20'], predicted_values_up_Q2, color="red")
+# axes[1, 0].set_title(f"Q2 y={round(slope_up_Q2, 2)}x+{round(intercept_up_Q2, 2)}\nR^2 = {round(R_squared_up_Q2, 3)}, p={round(p_value_up_Q2,3)}")
+# axes[1, 0].set_xlabel("SaEn_20")
+# axes[1, 0].set_ylabel("Adaptation Time")
+#
+# axes[0, 1].scatter(Q3['sortd_SaEn_20'], Q3['sortd_Adaptation_up_min_SaEn_20'], color="blue")
+# axes[0, 1].plot(Q3['sortd_SaEn_20'], predicted_values_up_Q3, color="red")
+# axes[0, 1].set_title(f"Q3 y={round(slope_up_Q3, 2)}x+{round(intercept_up_Q3, 2)}\nR^2 = {round(R_squared_up_Q3, 3)}, p={round(p_value_up_Q3,3)}")
+#
+# axes[1, 1].scatter(Q4['sortd_SaEn_20'], Q4['sortd_Adaptation_up_min_SaEn_20'], color="blue")
+# axes[1, 1].plot(Q4['sortd_SaEn_20'], predicted_values_up_Q4, color="red")
+# axes[1, 1].set_title(f"Q4 y={round(slope_up_Q4, 2)}x+{round(intercept_up_Q4, 2)}\nR^2 = {round(R_squared_up_Q4, 3)}, p={round(p_value_up_Q4,3)}")
+# axes[1, 1].set_ylabel("Adaptation Time")
+# axes[1, 1].set_xlabel("SaEn_20")
+#
+#
+# # Adjust layout
+# plt.tight_layout()
+# plt.show()
+#
+# # Plot for perturbation down
+# fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+# fig.suptitle("Sorted based on SaEn 20")
+#
+# axes[0, 0].scatter(Q1['sortd_SaEn_20'], Q1['sortd_Adaptation_down_min_SaEn_20'], color="blue")
+# axes[0, 0].plot(Q1['sortd_SaEn_20'], predicted_values_down_Q1, color="red")
+# axes[0, 0].set_title(f"Q1 y={round(slope_down_Q1, 2)}x+{round(intercept_down_Q1, 2)}\nR^2 = {round(R_squared_down_Q1, 3)}, p={round(p_value_down_Q1,3)}")
+# axes[0, 0].set_ylabel("Adaptation Time")
+#
+# axes[1, 0].scatter(Q2['sortd_SaEn_20'], Q2['sortd_Adaptation_down_min_SaEn_20'], color="blue")
+# axes[1, 0].plot(Q2['sortd_SaEn_20'], predicted_values_down_Q2, color="red")
+# axes[1, 0].set_title(f"Q2 y={round(slope_down_Q2, 2)}x+{round(intercept_down_Q2, 2)}\nR^2 = {round(R_squared_down_Q2, 3)}, p={round(p_value_down_Q2,3)}")
+# axes[1, 0].set_xlabel("SaEn_20")
+# axes[1, 0].set_ylabel("Adaptation Time")
+#
+# axes[0, 1].scatter(Q3['sortd_SaEn_20'], Q3['sortd_Adaptation_down_min_SaEn_20'], color="blue")
+# axes[0, 1].plot(Q3['sortd_SaEn_20'], predicted_values_down_Q3, color="red")
+# axes[0, 1].set_title(f"Q3 y={round(slope_down_Q3, 2)}x+{round(intercept_down_Q3, 2)}\nR^2 = {round(R_squared_down_Q3, 3)}, p={round(p_value_down_Q3,3)}")
+#
+# axes[1, 1].scatter(Q4['sortd_SaEn_20'], Q4['sortd_Adaptation_down_min_SaEn_20'], color="blue")
+# axes[1, 1].plot(Q4['sortd_SaEn_20'], predicted_values_down_Q4, color="red")
+# axes[1, 1].set_title(f"Q4 y={round(slope_down_Q4, 2)}x+{round(intercept_down_Q4, 2)}\nR^2 = {round(R_squared_down_Q4, 3)}, p={round(p_value_down_Q4,3)}")
+# axes[1, 1].set_ylabel("Adaptation Time")
+# axes[1, 1].set_xlabel("SaEn_20")
+#
+#
+# # Adjust layout
+# plt.tight_layout()
+# plt.show()
 
 
 # # Separate the SaEn and perturbations based on the quartiles of max SaEn
@@ -936,3 +940,59 @@ plt.show()
 # # Adjust layout
 # plt.tight_layout()
 # plt.show()
+
+
+
+# Graph with all data regresion and the quartile regression using the SaEn at 40 for the perturbation up
+print(Q1_40)
+print(Q2_40)
+print(Q3_40)
+print(Q4_40)
+slope_up_40, intercept_up_40, r_value_up_40, p_value_up_40, std_err_up_40 = stats.linregress(sortd_SaEn_40, sortd_Adaptation_up_min_SaEn_40)
+R_squared_up_40 = r_value_up_40**2
+predicted_values_up_40 = slope_up_40 * sortd_SaEn_40 + intercept_up_40
+
+plt.scatter(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'], color="#E6194B")
+plt.scatter(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'], color="#3CB44B")
+plt.scatter(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'], color="#FFE119")
+plt.scatter(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_up_min_SaEn_40'], color="#4363D8")
+
+plt.plot(Q1_40['sortd_SaEn_40'], predicted_values_up_Q1_40, color="#E6194B", label=f"Q1 slope={round(slope_up_Q1_40,2)} R^2={round(R_squared_up_Q1_40,3)} p={round(p_value_up_Q1_40,3)}")
+plt.plot(Q2_40['sortd_SaEn_40'], predicted_values_up_Q2_40, color="#3CB44B", label=f"Q2 slope={round(slope_up_Q2_40,2)} R^2={round(R_squared_up_Q2_40,3)} p={round(p_value_up_Q2_40,3)}")
+plt.plot(Q3_40['sortd_SaEn_40'], predicted_values_up_Q3_40, color="#FFE119", label=f"Q3 slope={round(slope_up_Q3_40,2)} R^2={round(R_squared_up_Q3_40,3)} p={round(p_value_up_Q3_40,3)}")
+plt.plot(Q4_40['sortd_SaEn_40'], predicted_values_up_Q4_40, color="#4363D8", label=f"Q4 slope={round(slope_up_Q4_40,2)} R^2={round(R_squared_up_Q4_40,3)} p={round(p_value_up_Q4_40,3)}")
+
+plt.plot(sortd_SaEn_40, predicted_values_up_40, color="black", label=f"Overall slope={round(slope_up_40,2)} R^2={round(R_squared_up_40,3)} p={round(p_value_up_40,3)}")
+
+plt.xlabel('SaEn at 40% of MVC')
+plt.ylabel('Adaptation time during upward perturbation')
+plt.legend(fontsize=12)
+plt.show()
+
+
+# Graph with all data regresion and the quartile regression sing the SaEn at 20 for the perturbation down
+print(Q1_20['Participants'])
+print(Q2_20['Participants'])
+print(Q3_20['Participants'])
+print(Q4_20['Participants'])
+
+slope_down_20, intercept_down_20, r_value_down_20, p_value_down_20, std_err_down_20 = stats.linregress(sortd_SaEn_20, sortd_Adaptation_down_min_SaEn_20)
+R_squared_down_20 = r_value_down_20**2
+predicted_values_down_20 = slope_down_20 * sortd_SaEn_20 + intercept_down_20
+
+plt.scatter(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'], color="#E6194B")
+plt.scatter(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'], color="#3CB44B")
+plt.scatter(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'], color="#FFE119")
+plt.scatter(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_down_min_SaEn_20'], color="#4363D8")
+
+plt.plot(Q1_20['sortd_SaEn_20'], predicted_values_down_Q1_20, color="#E6194B", label=f"Q1 slope={round(slope_down_Q1_20,2)} R^2={round(R_squared_down_Q1_20,3)} p={round(p_value_down_Q1_20,3)}")
+plt.plot(Q2_20['sortd_SaEn_20'], predicted_values_down_Q2_20, color="#3CB44B", label=f"Q2 slope={round(slope_down_Q2_20,2)} R^2={round(R_squared_down_Q2_20,3)} p={round(p_value_down_Q2_20,3)}")
+plt.plot(Q3_20['sortd_SaEn_20'], predicted_values_down_Q3_20, color="#FFE119", label=f"Q3 slope={round(slope_down_Q3_20,2)} R^2={round(R_squared_down_Q3_20,3)} p={round(p_value_down_Q3_20,3)}")
+plt.plot(Q4_20['sortd_SaEn_20'], predicted_values_down_Q4_20, color="#4363D8", label=f"Q4 slope={round(slope_down_Q4_20,2)} R^2={round(R_squared_down_Q4_20,3)} p={round(p_value_down_Q4_20,3)}")
+
+plt.plot(sortd_SaEn_20, predicted_values_down_20, color="black", label=f"Overall slope={round(slope_down_20,2)} R^2={round(R_squared_down_20,3)} p={round(p_value_down_20,3)}")
+
+plt.xlabel('SaEn at 20% of MVC')
+plt.ylabel('Adaptation time during downward perturbation')
+plt.legend(fontsize=12)
+plt.show()
