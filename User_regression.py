@@ -384,49 +384,49 @@ df_sort_SaEn_Adaptation_down_min_before_pert = pd.DataFrame(dist_sort_SaEn_Adapt
 #     plt.show()
 
 # Separate the SaEn and perturbations based on the quartiles of SaEn of 40
-pd.set_option('display.max_rows', None)  # Show all rows
-pd.set_option('display.max_columns', None)  # Show all columns
-pd.set_option('display.width', None)  # Adjust width to fit all columns
-pd.set_option('display.max_colwidth', None)  # Show full content in each cell
-
-q1_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 25)
-q2_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 50)
-q3_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 75)
-
-# Creating quartile-based subsets
-Q1_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q1_40]
-Q2_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q1_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q2_40)]
-Q3_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q2_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q3_40)]
-Q4_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] > q3_40]
-
-slope_up_Q1_40, intercept_up_Q1_40, r_value_up_Q1_40, p_value_up_Q1_40, std_err_up_Q1_40 = stats.linregress(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'])
-slope_up_Q2_40, intercept_up_Q2_40, r_value_up_Q2_40, p_value_up_Q2_40, std_err_up_Q2_40 = stats.linregress(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'])
-slope_up_Q3_40, intercept_up_Q3_40, r_value_up_Q3_40, p_value_up_Q3_40, std_err_up_Q3_40 = stats.linregress(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'])
-slope_up_Q4_40, intercept_up_Q4_40, r_value_up_Q4_40, p_value_up_Q4_40, std_err_up_Q4_40 = stats.linregress(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_up_min_SaEn_40'])
-
-slope_down_Q1_40, intercept_down_Q1_40, r_value_down_Q1_40, p_value_down_Q1_40, std_err_down_Q1_40 = stats.linregress(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_down_min_SaEn_40'])
-slope_down_Q2_40, intercept_down_Q2_40, r_value_down_Q2_40, p_value_down_Q2_40, std_err_down_Q2_40 = stats.linregress(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_down_min_SaEn_40'])
-slope_down_Q3_40, intercept_down_Q3_40, r_value_down_Q3_40, p_value_down_Q3_40, std_err_down_Q3_40 = stats.linregress(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_down_min_SaEn_40'])
-slope_down_Q4_40, intercept_down_Q4_40, r_value_down_Q4_40, p_value_down_Q4_40, std_err_down_Q4_40 = stats.linregress(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_down_min_SaEn_40'])
-
-R_squared_up_Q1_40 = r_value_up_Q1_40**2
-R_squared_up_Q2_40 = r_value_up_Q2_40**2
-R_squared_up_Q3_40 = r_value_up_Q3_40**2
-R_squared_up_Q4_40 = r_value_up_Q4_40**2
-R_squared_down_Q1_40 = r_value_down_Q1_40**2
-R_squared_down_Q2_40 = r_value_down_Q2_40**2
-R_squared_down_Q3_40 = r_value_down_Q3_40**2
-R_squared_down_Q4_40 = r_value_down_Q4_40**2
-
-predicted_values_up_Q1_40 = slope_up_Q1_40 * Q1_40['sortd_SaEn_40'] + intercept_up_Q1_40
-predicted_values_up_Q2_40 = slope_up_Q2_40 * Q2_40['sortd_SaEn_40'] + intercept_up_Q2_40
-predicted_values_up_Q3_40 = slope_up_Q3_40 * Q3_40['sortd_SaEn_40'] + intercept_up_Q3_40
-predicted_values_up_Q4_40 = slope_up_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_up_Q4_40
-
-predicted_values_down_Q1_40 = slope_down_Q1_40 * Q1_40['sortd_SaEn_40'] + intercept_down_Q1_40
-predicted_values_down_Q2_40 = slope_down_Q2_40 * Q2_40['sortd_SaEn_40'] + intercept_down_Q2_40
-predicted_values_down_Q3_40 = slope_down_Q3_40 * Q3_40['sortd_SaEn_40'] + intercept_down_Q3_40
-predicted_values_down_Q4_40 = slope_down_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_down_Q4_40
+# pd.set_option('display.max_rows', None)  # Show all rows
+# pd.set_option('display.max_columns', None)  # Show all columns
+# pd.set_option('display.width', None)  # Adjust width to fit all columns
+# pd.set_option('display.max_colwidth', None)  # Show full content in each cell
+#
+# q1_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 25)
+# q2_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 50)
+# q3_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 75)
+#
+# # Creating quartile-based subsets
+# Q1_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q1_40]
+# Q2_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q1_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q2_40)]
+# Q3_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q2_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q3_40)]
+# Q4_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] > q3_40]
+#
+# slope_up_Q1_40, intercept_up_Q1_40, r_value_up_Q1_40, p_value_up_Q1_40, std_err_up_Q1_40 = stats.linregress(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'])
+# slope_up_Q2_40, intercept_up_Q2_40, r_value_up_Q2_40, p_value_up_Q2_40, std_err_up_Q2_40 = stats.linregress(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'])
+# slope_up_Q3_40, intercept_up_Q3_40, r_value_up_Q3_40, p_value_up_Q3_40, std_err_up_Q3_40 = stats.linregress(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'])
+# slope_up_Q4_40, intercept_up_Q4_40, r_value_up_Q4_40, p_value_up_Q4_40, std_err_up_Q4_40 = stats.linregress(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_up_min_SaEn_40'])
+#
+# slope_down_Q1_40, intercept_down_Q1_40, r_value_down_Q1_40, p_value_down_Q1_40, std_err_down_Q1_40 = stats.linregress(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_down_min_SaEn_40'])
+# slope_down_Q2_40, intercept_down_Q2_40, r_value_down_Q2_40, p_value_down_Q2_40, std_err_down_Q2_40 = stats.linregress(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_down_min_SaEn_40'])
+# slope_down_Q3_40, intercept_down_Q3_40, r_value_down_Q3_40, p_value_down_Q3_40, std_err_down_Q3_40 = stats.linregress(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_down_min_SaEn_40'])
+# slope_down_Q4_40, intercept_down_Q4_40, r_value_down_Q4_40, p_value_down_Q4_40, std_err_down_Q4_40 = stats.linregress(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_down_min_SaEn_40'])
+#
+# R_squared_up_Q1_40 = r_value_up_Q1_40**2
+# R_squared_up_Q2_40 = r_value_up_Q2_40**2
+# R_squared_up_Q3_40 = r_value_up_Q3_40**2
+# R_squared_up_Q4_40 = r_value_up_Q4_40**2
+# R_squared_down_Q1_40 = r_value_down_Q1_40**2
+# R_squared_down_Q2_40 = r_value_down_Q2_40**2
+# R_squared_down_Q3_40 = r_value_down_Q3_40**2
+# R_squared_down_Q4_40 = r_value_down_Q4_40**2
+#
+# predicted_values_up_Q1_40 = slope_up_Q1_40 * Q1_40['sortd_SaEn_40'] + intercept_up_Q1_40
+# predicted_values_up_Q2_40 = slope_up_Q2_40 * Q2_40['sortd_SaEn_40'] + intercept_up_Q2_40
+# predicted_values_up_Q3_40 = slope_up_Q3_40 * Q3_40['sortd_SaEn_40'] + intercept_up_Q3_40
+# predicted_values_up_Q4_40 = slope_up_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_up_Q4_40
+#
+# predicted_values_down_Q1_40 = slope_down_Q1_40 * Q1_40['sortd_SaEn_40'] + intercept_down_Q1_40
+# predicted_values_down_Q2_40 = slope_down_Q2_40 * Q2_40['sortd_SaEn_40'] + intercept_down_Q2_40
+# predicted_values_down_Q3_40 = slope_down_Q3_40 * Q3_40['sortd_SaEn_40'] + intercept_down_Q3_40
+# predicted_values_down_Q4_40 = slope_down_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_down_Q4_40
 
 
 # # Plot for perturbation up
@@ -490,49 +490,49 @@ predicted_values_down_Q4_40 = slope_down_Q4_40 * Q4_40['sortd_SaEn_40'] + interc
 
 
 # Separate the SaEn and perturbations based on the quartiles of SaEn of 20
-pd.set_option('display.max_rows', None)  # Show all rows
-pd.set_option('display.max_columns', None)  # Show all columns
-pd.set_option('display.width', None)  # Adjust width to fit all columns
-pd.set_option('display.max_colwidth', None)  # Show full content in each cell
-
-q1_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 25)
-q2_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 50)
-q3_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 75)
-
-# Creating quartile-based subsets
-Q1_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] <= q1_20]
-Q2_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q1_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q2_20)]
-Q3_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q2_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q3_20)]
-Q4_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] > q3_20]
-
-slope_up_Q1_20, intercept_up_Q1_20, r_value_up_Q1_20, p_value_up_Q1_20, std_err_up_Q1_20 = stats.linregress(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_up_min_SaEn_20'])
-slope_up_Q2_20, intercept_up_Q2_20, r_value_up_Q2_20, p_value_up_Q2_20, std_err_up_Q2_20 = stats.linregress(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_up_min_SaEn_20'])
-slope_up_Q3_20, intercept_up_Q3_20, r_value_up_Q3_20, p_value_up_Q3_20, std_err_up_Q3_20 = stats.linregress(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_up_min_SaEn_20'])
-slope_up_Q4_20, intercept_up_Q4_20, r_value_up_Q4_20, p_value_up_Q4_20, std_err_up_Q4_20 = stats.linregress(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_up_min_SaEn_20'])
-
-slope_down_Q1_20, intercept_down_Q1_20, r_value_down_Q1_20, p_value_down_Q1_20, std_err_down_Q1_20 = stats.linregress(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'])
-slope_down_Q2_20, intercept_down_Q2_20, r_value_down_Q2_20, p_value_down_Q2_20, std_err_down_Q2_20 = stats.linregress(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'])
-slope_down_Q3_20, intercept_down_Q3_20, r_value_down_Q3_20, p_value_down_Q3_20, std_err_down_Q3_20 = stats.linregress(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'])
-slope_down_Q4_20, intercept_down_Q4_20, r_value_down_Q4_20, p_value_down_Q4_20, std_err_down_Q4_20 = stats.linregress(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_down_min_SaEn_20'])
-
-R_squared_up_Q1_20 = r_value_up_Q1_20**2
-R_squared_up_Q2_20 = r_value_up_Q2_20**2
-R_squared_up_Q3_20 = r_value_up_Q3_20**2
-R_squared_up_Q4_20 = r_value_up_Q4_20**2
-R_squared_down_Q1_20 = r_value_down_Q1_20**2
-R_squared_down_Q2_20 = r_value_down_Q2_20**2
-R_squared_down_Q3_20 = r_value_down_Q3_20**2
-R_squared_down_Q4_20 = r_value_down_Q4_20**2
-
-predicted_values_up_Q1_20 = slope_up_Q1_20 * Q1_20['sortd_SaEn_20'] + intercept_up_Q1_20
-predicted_values_up_Q2_20 = slope_up_Q2_20 * Q2_20['sortd_SaEn_20'] + intercept_up_Q2_20
-predicted_values_up_Q3_20 = slope_up_Q3_20 * Q3_20['sortd_SaEn_20'] + intercept_up_Q3_20
-predicted_values_up_Q4_20 = slope_up_Q4_20 * Q4_20['sortd_SaEn_20'] + intercept_up_Q4_20
-
-predicted_values_down_Q1_20 = slope_down_Q1_20 * Q1_20['sortd_SaEn_20'] + intercept_down_Q1_20
-predicted_values_down_Q2_20 = slope_down_Q2_20 * Q2_20['sortd_SaEn_20'] + intercept_down_Q2_20
-predicted_values_down_Q3_20 = slope_down_Q3_20 * Q3_20['sortd_SaEn_20'] + intercept_down_Q3_20
-predicted_values_down_Q4_20 = slope_down_Q4_20 * Q4_20['sortd_SaEn_20'] + intercept_down_Q4_20
+# pd.set_option('display.max_rows', None)  # Show all rows
+# pd.set_option('display.max_columns', None)  # Show all columns
+# pd.set_option('display.width', None)  # Adjust width to fit all columns
+# pd.set_option('display.max_colwidth', None)  # Show full content in each cell
+#
+# q1_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 25)
+# q2_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 50)
+# q3_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 75)
+#
+# # Creating quartile-based subsets
+# Q1_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] <= q1_20]
+# Q2_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q1_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q2_20)]
+# Q3_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q2_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q3_20)]
+# Q4_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] > q3_20]
+#
+# slope_up_Q1_20, intercept_up_Q1_20, r_value_up_Q1_20, p_value_up_Q1_20, std_err_up_Q1_20 = stats.linregress(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_up_min_SaEn_20'])
+# slope_up_Q2_20, intercept_up_Q2_20, r_value_up_Q2_20, p_value_up_Q2_20, std_err_up_Q2_20 = stats.linregress(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_up_min_SaEn_20'])
+# slope_up_Q3_20, intercept_up_Q3_20, r_value_up_Q3_20, p_value_up_Q3_20, std_err_up_Q3_20 = stats.linregress(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_up_min_SaEn_20'])
+# slope_up_Q4_20, intercept_up_Q4_20, r_value_up_Q4_20, p_value_up_Q4_20, std_err_up_Q4_20 = stats.linregress(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_up_min_SaEn_20'])
+#
+# slope_down_Q1_20, intercept_down_Q1_20, r_value_down_Q1_20, p_value_down_Q1_20, std_err_down_Q1_20 = stats.linregress(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'])
+# slope_down_Q2_20, intercept_down_Q2_20, r_value_down_Q2_20, p_value_down_Q2_20, std_err_down_Q2_20 = stats.linregress(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'])
+# slope_down_Q3_20, intercept_down_Q3_20, r_value_down_Q3_20, p_value_down_Q3_20, std_err_down_Q3_20 = stats.linregress(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'])
+# slope_down_Q4_20, intercept_down_Q4_20, r_value_down_Q4_20, p_value_down_Q4_20, std_err_down_Q4_20 = stats.linregress(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_down_min_SaEn_20'])
+#
+# R_squared_up_Q1_20 = r_value_up_Q1_20**2
+# R_squared_up_Q2_20 = r_value_up_Q2_20**2
+# R_squared_up_Q3_20 = r_value_up_Q3_20**2
+# R_squared_up_Q4_20 = r_value_up_Q4_20**2
+# R_squared_down_Q1_20 = r_value_down_Q1_20**2
+# R_squared_down_Q2_20 = r_value_down_Q2_20**2
+# R_squared_down_Q3_20 = r_value_down_Q3_20**2
+# R_squared_down_Q4_20 = r_value_down_Q4_20**2
+#
+# predicted_values_up_Q1_20 = slope_up_Q1_20 * Q1_20['sortd_SaEn_20'] + intercept_up_Q1_20
+# predicted_values_up_Q2_20 = slope_up_Q2_20 * Q2_20['sortd_SaEn_20'] + intercept_up_Q2_20
+# predicted_values_up_Q3_20 = slope_up_Q3_20 * Q3_20['sortd_SaEn_20'] + intercept_up_Q3_20
+# predicted_values_up_Q4_20 = slope_up_Q4_20 * Q4_20['sortd_SaEn_20'] + intercept_up_Q4_20
+#
+# predicted_values_down_Q1_20 = slope_down_Q1_20 * Q1_20['sortd_SaEn_20'] + intercept_down_Q1_20
+# predicted_values_down_Q2_20 = slope_down_Q2_20 * Q2_20['sortd_SaEn_20'] + intercept_down_Q2_20
+# predicted_values_down_Q3_20 = slope_down_Q3_20 * Q3_20['sortd_SaEn_20'] + intercept_down_Q3_20
+# predicted_values_down_Q4_20 = slope_down_Q4_20 * Q4_20['sortd_SaEn_20'] + intercept_down_Q4_20
 
 
 # # Plot for perturbation up
@@ -944,14 +944,72 @@ predicted_values_down_Q4_20 = slope_down_Q4_20 * Q4_20['sortd_SaEn_20'] + interc
 
 
 # Graph with all data regresion and the quartile regression using the SaEn at 40 for the perturbation up
-print(Q1_40)
-print(Q2_40)
-print(Q3_40)
-print(Q4_40)
-slope_up_40, intercept_up_40, r_value_up_40, p_value_up_40, std_err_up_40 = stats.linregress(sortd_SaEn_40, sortd_Adaptation_up_min_SaEn_40)
-R_squared_up_40 = r_value_up_40**2
-predicted_values_up_40 = slope_up_40 * sortd_SaEn_40 + intercept_up_40
 
+# Creating the SORTED dataframe with all data of participants ID, SaEn40, and Adaptation_up_min
+pd.set_option('display.max_rows', None)  # Show all rows
+pd.set_option('display.max_columns', None)  # Show all columns
+pd.set_option('display.width', None)  # Adjust width to fit all columns
+pd.set_option('display.max_colwidth', None)  # Show full content in each cell
+
+
+participants = results['ID'].to_numpy()
+SaEn_40 = results['SaEn_40'].to_numpy()
+Adaptation_up_min = results['Adaptation_up_min'].to_numpy()
+# 
+sorted_indices_SaEn_40 = np.argsort(SaEn_40)
+sortd_SaEn_40 = SaEn_40[sorted_indices_SaEn_40]
+sortd_Adaptation_up_min_SaEn_40 = Adaptation_up_min[sorted_indices_SaEn_40]
+sorted_participants_40 = participants[sorted_indices_SaEn_40]
+dist_sort_SaEn_40 = {'Participants': sorted_participants_40,
+                     'sortd_SaEn_40': sortd_SaEn_40,
+                     'sortd_Adaptation_up_min_SaEn_40': sortd_Adaptation_up_min_SaEn_40}
+df_sort_SaEn_40 = pd.DataFrame(dist_sort_SaEn_40)
+
+# Taking out the outliers using the 1.5*IQR threshold
+q1_pert_up = np.percentile(df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'], 25)
+q2_pert_up = np.percentile(df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'], 50)
+q3_pert_up = np.percentile(df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'], 75)
+IQR = q3_pert_up - q1_pert_up
+lower_bound = q1_pert_up - 1.5 * IQR
+upper_bound = q3_pert_up + 1.5 * IQR
+
+df_sort_SaEn_40 = df_sort_SaEn_40[
+    (df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'] >= lower_bound) &
+    (df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'] <= upper_bound)]
+
+# Calculating the bounds for the quartiles of the SaEn40
+q1_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 25)
+q2_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 50)
+q3_40 = np.percentile(df_sort_SaEn_40['sortd_SaEn_40'], 75)
+
+# Creating quartile-based subsets
+Q1_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q1_40]
+Q2_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q1_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q2_40)]
+Q3_40 = df_sort_SaEn_40[(df_sort_SaEn_40['sortd_SaEn_40'] > q2_40) & (df_sort_SaEn_40['sortd_SaEn_40'] <= q3_40)]
+Q4_40 = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] > q3_40]
+
+# Calculation of the regression line for all quartiles
+slope_up_Q1_40, intercept_up_Q1_40, r_value_up_Q1_40, p_value_up_Q1_40, std_err_up_Q1_40 = stats.linregress(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_Q2_40, intercept_up_Q2_40, r_value_up_Q2_40, p_value_up_Q2_40, std_err_up_Q2_40 = stats.linregress(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_Q3_40, intercept_up_Q3_40, r_value_up_Q3_40, p_value_up_Q3_40, std_err_up_Q3_40 = stats.linregress(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_Q4_40, intercept_up_Q4_40, r_value_up_Q4_40, p_value_up_Q4_40, std_err_up_Q4_40 = stats.linregress(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_up_min_SaEn_40'])
+
+R_squared_up_Q1_40 = r_value_up_Q1_40**2
+R_squared_up_Q2_40 = r_value_up_Q2_40**2
+R_squared_up_Q3_40 = r_value_up_Q3_40**2
+R_squared_up_Q4_40 = r_value_up_Q4_40**2
+
+predicted_values_up_Q1_40 = slope_up_Q1_40 * Q1_40['sortd_SaEn_40'] + intercept_up_Q1_40
+predicted_values_up_Q2_40 = slope_up_Q2_40 * Q2_40['sortd_SaEn_40'] + intercept_up_Q2_40
+predicted_values_up_Q3_40 = slope_up_Q3_40 * Q3_40['sortd_SaEn_40'] + intercept_up_Q3_40
+predicted_values_up_Q4_40 = slope_up_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_up_Q4_40
+
+# Calculation of the regression line for all data as a whole
+slope_up_40, intercept_up_40, r_value_up_40, p_value_up_40, std_err_up_40 = stats.linregress( df_sort_SaEn_40['sortd_SaEn_40'],  df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'])
+R_squared_up_40 = r_value_up_40**2
+predicted_values_up_40 = slope_up_40 * df_sort_SaEn_40['sortd_SaEn_40'] + intercept_up_40
+
+# plot results
 plt.scatter(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'], color="#E6194B")
 plt.scatter(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'], color="#3CB44B")
 plt.scatter(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'], color="#FFE119")
@@ -962,7 +1020,7 @@ plt.plot(Q2_40['sortd_SaEn_40'], predicted_values_up_Q2_40, color="#3CB44B", lab
 plt.plot(Q3_40['sortd_SaEn_40'], predicted_values_up_Q3_40, color="#FFE119", label=f"Q3 slope={round(slope_up_Q3_40,2)} R^2={round(R_squared_up_Q3_40,3)} p={round(p_value_up_Q3_40,3)}")
 plt.plot(Q4_40['sortd_SaEn_40'], predicted_values_up_Q4_40, color="#4363D8", label=f"Q4 slope={round(slope_up_Q4_40,2)} R^2={round(R_squared_up_Q4_40,3)} p={round(p_value_up_Q4_40,3)}")
 
-plt.plot(sortd_SaEn_40, predicted_values_up_40, color="black", label=f"Overall slope={round(slope_up_40,2)} R^2={round(R_squared_up_40,3)} p={round(p_value_up_40,3)}")
+plt.plot(df_sort_SaEn_40['sortd_SaEn_40'], predicted_values_up_40, color="black", label=f"Overall slope={round(slope_up_40,2)} R^2={round(R_squared_up_40,3)} p={round(p_value_up_40,3)}")
 
 plt.xlabel('SaEn at 40% of MVC')
 plt.ylabel('Adaptation time during upward perturbation')
@@ -970,16 +1028,101 @@ plt.legend(fontsize=12)
 plt.show()
 
 
+# Creating lower_half and upper_half
+# lower_half = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q2_40]
+# upper_half = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] >= q2_40]
+#
+# slope_up_lower_half, intercept_up_lower_half, r_value_up_lower_half, p_value_up_lower_half, std_err_up_lower_half = stats.linregress(lower_half['sortd_SaEn_40'], lower_half['sortd_Adaptation_up_min_SaEn_40'])
+# slope_up_upper_half, intercept_up_upper_half, r_value_up_upper_half, p_value_up_upper_half, std_err_up_upper_half = stats.linregress(upper_half['sortd_SaEn_40'], upper_half['sortd_Adaptation_up_min_SaEn_40'])
+#
+# R_squared_up_lower_half = r_value_up_lower_half**2
+# R_squared_up_upper_half = r_value_up_upper_half**2
+#
+# predicted_values_up_lower_half = slope_up_lower_half * lower_half['sortd_SaEn_40'] + intercept_up_lower_half
+# predicted_values_up_upper_half = slope_up_upper_half * upper_half['sortd_SaEn_40'] + intercept_up_upper_half
+#
+# slope_up_40, intercept_up_40, r_value_up_40, p_value_up_40, std_err_up_40 = stats.linregress(df_sort_SaEn_40['sortd_SaEn_40'], df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'])
+# R_squared_up_40 = r_value_up_40**2
+# predicted_values_up_40 = slope_up_40 * df_sort_SaEn_40['sortd_SaEn_40'] + intercept_up_40
+# plt.scatter(lower_half['sortd_SaEn_40'], lower_half['sortd_Adaptation_up_min_SaEn_40'], color="#E6194B")
+# plt.scatter(upper_half['sortd_SaEn_40'], upper_half['sortd_Adaptation_up_min_SaEn_40'], color="#3CB44B")
+#
+# plt.plot(lower_half['sortd_SaEn_40'], predicted_values_up_lower_half, color="#E6194B", label=f"Q1 slope={round(slope_up_lower_half,2)} R^2={round(R_squared_up_lower_half,3)} p={round(p_value_up_lower_half,3)}")
+# plt.plot(upper_half['sortd_SaEn_40'], predicted_values_up_upper_half, color="#3CB44B", label=f"Q2 slope={round(slope_up_upper_half,2)} R^2={round(R_squared_up_upper_half,3)} p={round(p_value_up_upper_half,3)}")
+#
+# plt.plot(df_sort_SaEn_40['sortd_SaEn_40'], predicted_values_up_40, color="black", label=f"Overall slope={round(slope_up_40,2)} R^2={round(R_squared_up_40,3)} p={round(p_value_up_40,3)}")
+#
+# plt.xlabel('SaEn at 40% of MVC')
+# plt.ylabel('Adaptation time during upward perturbation')
+# plt.legend(fontsize=12)
+# plt.show()
+############################################################################################################
 # Graph with all data regresion and the quartile regression sing the SaEn at 20 for the perturbation down
-print(Q1_20['Participants'])
-print(Q2_20['Participants'])
-print(Q3_20['Participants'])
-print(Q4_20['Participants'])
+# Graph with all data regresion and the quartile regression using the SaEn at 40 for the perturbation up
 
-slope_down_20, intercept_down_20, r_value_down_20, p_value_down_20, std_err_down_20 = stats.linregress(sortd_SaEn_20, sortd_Adaptation_down_min_SaEn_20)
+# Creating the SORTED dataframe with all data of participants ID, SaEn20, and Adaptation_down_min
+pd.set_option('display.max_rows', None)  # Show all rows
+pd.set_option('display.max_columns', None)  # Show all columns
+pd.set_option('display.width', None)  # Adjust width to fit all columns
+pd.set_option('display.max_colwidth', None)  # Show full content in each cell
+
+
+participants = results['ID'].to_numpy()
+SaEn_20 = results['SaEn_20'].to_numpy()
+Adaptation_down_min = results['Adaptation_down_min'].to_numpy()
+# 
+sorted_indices_SaEn_20 = np.argsort(SaEn_20)
+sortd_SaEn_20 = SaEn_20[sorted_indices_SaEn_20]
+sortd_Adaptation_down_min_SaEn_20 = Adaptation_down_min[sorted_indices_SaEn_20]
+sorted_participants_20 = participants[sorted_indices_SaEn_20]
+dist_sort_SaEn_20 = {'Participants': sorted_participants_20,
+                     'sortd_SaEn_20': sortd_SaEn_20,
+                     'sortd_Adaptation_down_min_SaEn_20': sortd_Adaptation_down_min_SaEn_20}
+df_sort_SaEn_20 = pd.DataFrame(dist_sort_SaEn_20)
+
+# Taking out the outliers using the 1.5*IQR threshold
+q1_pert_down = np.percentile(df_sort_SaEn_20['sortd_Adaptation_down_min_SaEn_20'], 25)
+q3_pert_down = np.percentile(df_sort_SaEn_20['sortd_Adaptation_down_min_SaEn_20'], 75)
+IQR = q3_pert_down - q1_pert_down
+lower_bound = q1_pert_down - 1.5 * IQR
+downper_bound = q3_pert_down + 1.5 * IQR
+df_sort_SaEn_20 = df_sort_SaEn_20[
+    (df_sort_SaEn_20['sortd_Adaptation_down_min_SaEn_20'] >= lower_bound) &
+    (df_sort_SaEn_20['sortd_Adaptation_down_min_SaEn_20'] <= downper_bound)]
+
+# Calculating the bounds for the quartiles of the SaEn20
+q1_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 25)
+q2_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 50)
+q3_20 = np.percentile(df_sort_SaEn_20['sortd_SaEn_20'], 75)
+
+# Creating quartile-based subsets
+Q1_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] <= q1_20]
+Q2_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q1_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q2_20)]
+Q3_20 = df_sort_SaEn_20[(df_sort_SaEn_20['sortd_SaEn_20'] > q2_20) & (df_sort_SaEn_20['sortd_SaEn_20'] <= q3_20)]
+Q4_20 = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] > q3_20]
+
+# Calculation of the regression line for all quartiles
+slope_down_Q1_20, intercept_down_Q1_20, r_value_down_Q1_20, p_value_down_Q1_20, std_err_down_Q1_20 = stats.linregress(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_Q2_20, intercept_down_Q2_20, r_value_down_Q2_20, p_value_down_Q2_20, std_err_down_Q2_20 = stats.linregress(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_Q3_20, intercept_down_Q3_20, r_value_down_Q3_20, p_value_down_Q3_20, std_err_down_Q3_20 = stats.linregress(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_Q4_20, intercept_down_Q4_20, r_value_down_Q4_20, p_value_down_Q4_20, std_err_down_Q4_20 = stats.linregress(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_down_min_SaEn_20'])
+
+R_squared_down_Q1_20 = r_value_down_Q1_20**2
+R_squared_down_Q2_20 = r_value_down_Q2_20**2
+R_squared_down_Q3_20 = r_value_down_Q3_20**2
+R_squared_down_Q4_20 = r_value_down_Q4_20**2
+
+predicted_values_down_Q1_20 = slope_down_Q1_20 * Q1_20['sortd_SaEn_20'] + intercept_down_Q1_20
+predicted_values_down_Q2_20 = slope_down_Q2_20 * Q2_20['sortd_SaEn_20'] + intercept_down_Q2_20
+predicted_values_down_Q3_20 = slope_down_Q3_20 * Q3_20['sortd_SaEn_20'] + intercept_down_Q3_20
+predicted_values_down_Q4_20 = slope_down_Q4_20 * Q4_20['sortd_SaEn_20'] + intercept_down_Q4_20
+
+# Calculation of the regression line for all data as a whole
+slope_down_20, intercept_down_20, r_value_down_20, p_value_down_20, std_err_down_20 = stats.linregress( df_sort_SaEn_20['sortd_SaEn_20'],  df_sort_SaEn_20['sortd_Adaptation_down_min_SaEn_20'])
 R_squared_down_20 = r_value_down_20**2
-predicted_values_down_20 = slope_down_20 * sortd_SaEn_20 + intercept_down_20
+predicted_values_down_20 = slope_down_20 * df_sort_SaEn_20['sortd_SaEn_20'] + intercept_down_20
 
+# plot results
 plt.scatter(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'], color="#E6194B")
 plt.scatter(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'], color="#3CB44B")
 plt.scatter(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'], color="#FFE119")
@@ -990,7 +1133,7 @@ plt.plot(Q2_20['sortd_SaEn_20'], predicted_values_down_Q2_20, color="#3CB44B", l
 plt.plot(Q3_20['sortd_SaEn_20'], predicted_values_down_Q3_20, color="#FFE119", label=f"Q3 slope={round(slope_down_Q3_20,2)} R^2={round(R_squared_down_Q3_20,3)} p={round(p_value_down_Q3_20,3)}")
 plt.plot(Q4_20['sortd_SaEn_20'], predicted_values_down_Q4_20, color="#4363D8", label=f"Q4 slope={round(slope_down_Q4_20,2)} R^2={round(R_squared_down_Q4_20,3)} p={round(p_value_down_Q4_20,3)}")
 
-plt.plot(sortd_SaEn_20, predicted_values_down_20, color="black", label=f"Overall slope={round(slope_down_20,2)} R^2={round(R_squared_down_20,3)} p={round(p_value_down_20,3)}")
+plt.plot(df_sort_SaEn_20['sortd_SaEn_20'], predicted_values_down_20, color="black", label=f"Overall slope={round(slope_down_20,2)} R^2={round(R_squared_down_20,3)} p={round(p_value_down_20,3)}")
 
 plt.xlabel('SaEn at 20% of MVC')
 plt.ylabel('Adaptation time during downward perturbation')
