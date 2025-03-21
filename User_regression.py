@@ -1029,36 +1029,35 @@ plt.show()
 
 
 # Creating lower_half and upper_half
-# lower_half = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q2_40]
-# upper_half = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] >= q2_40]
-#
-# slope_up_lower_half, intercept_up_lower_half, r_value_up_lower_half, p_value_up_lower_half, std_err_up_lower_half = stats.linregress(lower_half['sortd_SaEn_40'], lower_half['sortd_Adaptation_up_min_SaEn_40'])
-# slope_up_upper_half, intercept_up_upper_half, r_value_up_upper_half, p_value_up_upper_half, std_err_up_upper_half = stats.linregress(upper_half['sortd_SaEn_40'], upper_half['sortd_Adaptation_up_min_SaEn_40'])
-#
-# R_squared_up_lower_half = r_value_up_lower_half**2
-# R_squared_up_upper_half = r_value_up_upper_half**2
-#
-# predicted_values_up_lower_half = slope_up_lower_half * lower_half['sortd_SaEn_40'] + intercept_up_lower_half
-# predicted_values_up_upper_half = slope_up_upper_half * upper_half['sortd_SaEn_40'] + intercept_up_upper_half
-#
-# slope_up_40, intercept_up_40, r_value_up_40, p_value_up_40, std_err_up_40 = stats.linregress(df_sort_SaEn_40['sortd_SaEn_40'], df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'])
-# R_squared_up_40 = r_value_up_40**2
-# predicted_values_up_40 = slope_up_40 * df_sort_SaEn_40['sortd_SaEn_40'] + intercept_up_40
-# plt.scatter(lower_half['sortd_SaEn_40'], lower_half['sortd_Adaptation_up_min_SaEn_40'], color="#E6194B")
-# plt.scatter(upper_half['sortd_SaEn_40'], upper_half['sortd_Adaptation_up_min_SaEn_40'], color="#3CB44B")
-#
-# plt.plot(lower_half['sortd_SaEn_40'], predicted_values_up_lower_half, color="#E6194B", label=f"Q1 slope={round(slope_up_lower_half,2)} R^2={round(R_squared_up_lower_half,3)} p={round(p_value_up_lower_half,3)}")
-# plt.plot(upper_half['sortd_SaEn_40'], predicted_values_up_upper_half, color="#3CB44B", label=f"Q2 slope={round(slope_up_upper_half,2)} R^2={round(R_squared_up_upper_half,3)} p={round(p_value_up_upper_half,3)}")
-#
-# plt.plot(df_sort_SaEn_40['sortd_SaEn_40'], predicted_values_up_40, color="black", label=f"Overall slope={round(slope_up_40,2)} R^2={round(R_squared_up_40,3)} p={round(p_value_up_40,3)}")
-#
-# plt.xlabel('SaEn at 40% of MVC')
-# plt.ylabel('Adaptation time during upward perturbation')
-# plt.legend(fontsize=12)
-# plt.show()
+lower_half = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] <= q2_40]
+upper_half = df_sort_SaEn_40[df_sort_SaEn_40['sortd_SaEn_40'] >= q2_40]
+
+slope_up_lower_half, intercept_up_lower_half, r_value_up_lower_half, p_value_up_lower_half, std_err_up_lower_half = stats.linregress(lower_half['sortd_SaEn_40'], lower_half['sortd_Adaptation_up_min_SaEn_40'])
+slope_up_upper_half, intercept_up_upper_half, r_value_up_upper_half, p_value_up_upper_half, std_err_up_upper_half = stats.linregress(upper_half['sortd_SaEn_40'], upper_half['sortd_Adaptation_up_min_SaEn_40'])
+
+R_squared_up_lower_half = r_value_up_lower_half**2
+R_squared_up_upper_half = r_value_up_upper_half**2
+
+predicted_values_up_lower_half = slope_up_lower_half * lower_half['sortd_SaEn_40'] + intercept_up_lower_half
+predicted_values_up_upper_half = slope_up_upper_half * upper_half['sortd_SaEn_40'] + intercept_up_upper_half
+
+slope_up_40, intercept_up_40, r_value_up_40, p_value_up_40, std_err_up_40 = stats.linregress(df_sort_SaEn_40['sortd_SaEn_40'], df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'])
+R_squared_up_40 = r_value_up_40**2
+predicted_values_up_40 = slope_up_40 * df_sort_SaEn_40['sortd_SaEn_40'] + intercept_up_40
+plt.scatter(lower_half['sortd_SaEn_40'], lower_half['sortd_Adaptation_up_min_SaEn_40'], color="#E6194B")
+plt.scatter(upper_half['sortd_SaEn_40'], upper_half['sortd_Adaptation_up_min_SaEn_40'], color="#3CB44B")
+
+plt.plot(lower_half['sortd_SaEn_40'], predicted_values_up_lower_half, color="#E6194B", label=f"Q1 slope={round(slope_up_lower_half,2)} R^2={round(R_squared_up_lower_half,3)} p={round(p_value_up_lower_half,3)}")
+plt.plot(upper_half['sortd_SaEn_40'], predicted_values_up_upper_half, color="#3CB44B", label=f"Q2 slope={round(slope_up_upper_half,2)} R^2={round(R_squared_up_upper_half,3)} p={round(p_value_up_upper_half,3)}")
+
+plt.plot(df_sort_SaEn_40['sortd_SaEn_40'], predicted_values_up_40, color="black", label=f"Overall slope={round(slope_up_40,2)} R^2={round(R_squared_up_40,3)} p={round(p_value_up_40,3)}")
+
+plt.xlabel('SaEn at 40% of MVC')
+plt.ylabel('Adaptation time during upward perturbation')
+plt.legend(fontsize=12)
+plt.show()
 ############################################################################################################
 # Graph with all data regresion and the quartile regression sing the SaEn at 20 for the perturbation down
-# Graph with all data regresion and the quartile regression using the SaEn at 40 for the perturbation up
 
 # Creating the SORTED dataframe with all data of participants ID, SaEn20, and Adaptation_down_min
 pd.set_option('display.max_rows', None)  # Show all rows
@@ -1138,4 +1137,84 @@ plt.plot(df_sort_SaEn_20['sortd_SaEn_20'], predicted_values_down_20, color="blac
 plt.xlabel('SaEn at 20% of MVC')
 plt.ylabel('Adaptation time during downward perturbation')
 plt.legend(fontsize=12)
+plt.show()
+
+# Creating lower_half and upper_half
+lower_half = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] <= q2_20]
+upper_half = df_sort_SaEn_20[df_sort_SaEn_20['sortd_SaEn_20'] >= q2_20]
+
+slope_down_lower_half, intercept_down_lower_half, r_value_down_lower_half, p_value_down_lower_half, std_err_down_lower_half = stats.linregress(lower_half['sortd_SaEn_20'], lower_half['sortd_Adaptation_down_min_SaEn_20'])
+slope_down_upper_half, intercept_down_upper_half, r_value_down_upper_half, p_value_down_upper_half, std_err_down_upper_half = stats.linregress(upper_half['sortd_SaEn_20'], upper_half['sortd_Adaptation_down_min_SaEn_20'])
+
+R_squared_down_lower_half = r_value_down_lower_half**2
+R_squared_down_upper_half = r_value_down_upper_half**2
+
+predicted_values_down_lower_half = slope_down_lower_half * lower_half['sortd_SaEn_20'] + intercept_down_lower_half
+predicted_values_down_upper_half = slope_down_upper_half * upper_half['sortd_SaEn_20'] + intercept_down_upper_half
+
+slope_down_20, intercept_down_20, r_value_down_20, p_value_down_20, std_err_down_20 = stats.linregress(df_sort_SaEn_20['sortd_SaEn_20'], df_sort_SaEn_20['sortd_Adaptation_down_min_SaEn_20'])
+R_squared_up_20 = r_value_down_20**2
+predicted_values_down_20 = slope_down_20 * df_sort_SaEn_20['sortd_SaEn_20'] + intercept_down_20
+plt.scatter(lower_half['sortd_SaEn_20'], lower_half['sortd_Adaptation_down_min_SaEn_20'], color="#E6194B")
+plt.scatter(upper_half['sortd_SaEn_20'], upper_half['sortd_Adaptation_down_min_SaEn_20'], color="#3CB44B")
+
+plt.plot(lower_half['sortd_SaEn_20'], predicted_values_down_lower_half, color="#E6194B", label=f"Q1 slope={round(slope_down_lower_half,2)} R^2={round(R_squared_down_lower_half,3)} p={round(p_value_down_lower_half,3)}")
+plt.plot(upper_half['sortd_SaEn_20'], predicted_values_down_upper_half, color="#3CB44B", label=f"Q2 slope={round(slope_down_upper_half,2)} R^2={round(R_squared_down_upper_half,3)} p={round(p_value_down_upper_half,3)}")
+
+plt.plot(df_sort_SaEn_20['sortd_SaEn_20'], predicted_values_down_20, color="black", label=f"Overall slope={round(slope_down_20,2)} R^2={round(R_squared_down_20,3)} p={round(p_value_down_20,3)}")
+
+plt.xlabel('SaEn at 20% of MVC')
+plt.ylabel('Adaptation time during downward perturbation')
+plt.legend(fontsize=12)
+plt.show()
+
+
+
+#####################################################################################
+# Tryouts with older and young adults separetly
+SaEn_40_Old = results[results['ID_group'] == 'Old']['SaEn_40'].to_numpy()
+SaEn_20_Old = results[results['ID_group'] == 'Old']['SaEn_20'].to_numpy()
+SaEn_40_Young = results[results['ID_group'] == 'Young']['SaEn_40'].to_numpy()
+SaEn_20_Young = results[results['ID_group'] == 'Young']['SaEn_20'].to_numpy()
+Pert_down_Old = results[results['ID_group'] == 'Old']['Adaptation_down_min'].to_numpy()
+Pert_up_Old = results[results['ID_group'] == 'Old']['Adaptation_up_min'].to_numpy()
+Pert_down_Young = results[results['ID_group'] == 'Young']['Adaptation_down_min'].to_numpy()
+Pert_up_Young = results[results['ID_group'] == 'Young']['Adaptation_up_min'].to_numpy()
+
+slope_up_40_old, intercept_up_40_old, r_value_up_40_old, p_value_up_40_old, std_err_up_40_old = stats.linregress(SaEn_40_Old, Pert_up_Old)
+R_squared_up_40_old = r_value_up_40_old**2
+predicted_values_up_40_old = slope_up_40_old * SaEn_40_Old + intercept_up_40_old
+
+slope_up_40_young, intercept_up_40_young, r_value_up_40_young, p_value_up_40_young, std_err_up_40_young = stats.linregress(SaEn_40_Young, Pert_up_Young)
+R_squared_up_40_young = r_value_up_40_young**2
+predicted_values_up_40_young = slope_up_40_young * SaEn_40_Young + intercept_up_40_young
+
+slope_down_20_old, intercept_down_20_old, r_value_down_20_old, p_value_down_20_old, std_err_down_20_old = stats.linregress(SaEn_20_Old, Pert_down_Old)
+R_squared_down_20_old = r_value_down_20_old**2
+predicted_values_down_20_old = slope_down_20_old * SaEn_20_Old + intercept_down_20_old
+
+slope_down_20_young, intercept_down_20_young, r_value_down_20_young, p_value_down_20_young, std_err_down_20_young = stats.linregress(SaEn_20_Young, Pert_down_Young)
+R_squared_down_20_young = r_value_down_20_young**2
+predicted_values_down_20_young = slope_down_20_young * SaEn_20_Young + intercept_down_20_young
+
+plt.scatter(SaEn_40_Young, Pert_up_Young, color="#E6194B")
+plt.scatter(SaEn_40_Old, Pert_up_Old, color="#3CB44B")
+
+plt.plot(SaEn_40_Young, predicted_values_up_40_young, color="#E6194B", label=f"Young slope={round(slope_up_40_young,2)} R^2={round(R_squared_up_40_young,3)} p={round(p_value_up_40_young,3)}")
+plt.plot(SaEn_40_Old, predicted_values_up_40_old, color="#3CB44B", label=f"Old slope={round(slope_up_40_old,2)} R^2={round(R_squared_up_40_old,3)} p={round(p_value_up_40_old,3)}")
+
+plt.xlabel('SaEn at 40% of MVC')
+plt.ylabel('Adaptation time during upward perturbation')
+plt.legend()
+plt.show()
+
+plt.scatter(SaEn_20_Young, Pert_down_Young, color="#E6194B")
+plt.scatter(SaEn_20_Old, Pert_down_Old, color="#3CB44B")
+
+plt.plot(SaEn_20_Young, predicted_values_down_20_young, color="#E6194B", label=f"Young slope={round(slope_down_20_young,2)} R^2={round(R_squared_down_20_young,3)} p={round(p_value_down_20_young,3)}")
+plt.plot(SaEn_20_Old, predicted_values_down_20_old, color="#3CB44B", label=f"Old slope={round(slope_down_20_old,2)} R^2={round(R_squared_down_20_old,3)} p={round(p_value_down_20_old,3)}")
+
+plt.xlabel('SaEn at 20% of MVC')
+plt.ylabel('Adaptation time during downward perturbation')
+plt.legend()
 plt.show()
