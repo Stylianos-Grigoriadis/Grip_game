@@ -11,7 +11,7 @@ import scipy.stats as stats
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 
-directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results'
+directory = r'C:\Users\user\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results'
 os.chdir(directory)
 results = pd.read_excel(r'Data for regression.xlsx')
 print(results.columns)
@@ -1011,14 +1011,14 @@ R_squared_up_40 = r_value_up_40**2
 predicted_values_up_40 = slope_up_40 * df_sort_SaEn_40['sortd_SaEn_40'] + intercept_up_40
 print(f'Participants are now {len(predicted_values_up_40)}')
 # plot results
-plt.scatter(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'], color="#E6194B")
-plt.scatter(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'], color="#3CB44B")
-plt.scatter(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'], color="#FFE119")
+plt.scatter(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'], color="k")
+plt.scatter(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'], color="k")
+plt.scatter(Q3_40['sortd_SaEn_40'], Q3_40['sortd_Adaptation_up_min_SaEn_40'], color="k")
 plt.scatter(Q4_40['sortd_SaEn_40'], Q4_40['sortd_Adaptation_up_min_SaEn_40'], color="#4363D8")
 
-plt.plot(Q1_40['sortd_SaEn_40'], predicted_values_up_Q1_40, color="#E6194B", label=f"Q1 slope={round(slope_up_Q1_40,2)} R^2={round(R_squared_up_Q1_40,3)} p={round(p_value_up_Q1_40,3)}")
-plt.plot(Q2_40['sortd_SaEn_40'], predicted_values_up_Q2_40, color="#3CB44B", label=f"Q2 slope={round(slope_up_Q2_40,2)} R^2={round(R_squared_up_Q2_40,3)} p={round(p_value_up_Q2_40,3)}")
-plt.plot(Q3_40['sortd_SaEn_40'], predicted_values_up_Q3_40, color="#FFE119", label=f"Q3 slope={round(slope_up_Q3_40,2)} R^2={round(R_squared_up_Q3_40,3)} p={round(p_value_up_Q3_40,3)}")
+# plt.plot(Q1_40['sortd_SaEn_40'], predicted_values_up_Q1_40, color="#E6194B", label=f"Q1 slope={round(slope_up_Q1_40,2)} R^2={round(R_squared_up_Q1_40,3)} p={round(p_value_up_Q1_40,3)}")
+# plt.plot(Q2_40['sortd_SaEn_40'], predicted_values_up_Q2_40, color="#3CB44B", label=f"Q2 slope={round(slope_up_Q2_40,2)} R^2={round(R_squared_up_Q2_40,3)} p={round(p_value_up_Q2_40,3)}")
+# plt.plot(Q3_40['sortd_SaEn_40'], predicted_values_up_Q3_40, color="#FFE119", label=f"Q3 slope={round(slope_up_Q3_40,2)} R^2={round(R_squared_up_Q3_40,3)} p={round(p_value_up_Q3_40,3)}")
 plt.plot(Q4_40['sortd_SaEn_40'], predicted_values_up_Q4_40, color="#4363D8", label=f"Q4 slope={round(slope_up_Q4_40,2)} R^2={round(R_squared_up_Q4_40,3)} p={round(p_value_up_Q4_40,3)}")
 
 plt.plot(df_sort_SaEn_40['sortd_SaEn_40'], predicted_values_up_40, color="black", label=f"Overall slope={round(slope_up_40,2)} R^2={round(R_squared_up_40,3)} p={round(p_value_up_40,3)}")
@@ -1123,14 +1123,14 @@ R_squared_down_20 = r_value_down_20**2
 predicted_values_down_20 = slope_down_20 * df_sort_SaEn_20['sortd_SaEn_20'] + intercept_down_20
 
 # plot results
-plt.scatter(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'], color="#E6194B")
-plt.scatter(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'], color="#3CB44B")
-plt.scatter(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'], color="#FFE119")
+plt.scatter(Q1_20['sortd_SaEn_20'], Q1_20['sortd_Adaptation_down_min_SaEn_20'], color="k")
+plt.scatter(Q2_20['sortd_SaEn_20'], Q2_20['sortd_Adaptation_down_min_SaEn_20'], color="k")
+plt.scatter(Q3_20['sortd_SaEn_20'], Q3_20['sortd_Adaptation_down_min_SaEn_20'], color="k")
 plt.scatter(Q4_20['sortd_SaEn_20'], Q4_20['sortd_Adaptation_down_min_SaEn_20'], color="#4363D8")
 
-plt.plot(Q1_20['sortd_SaEn_20'], predicted_values_down_Q1_20, color="#E6194B", label=f"Q1 slope={round(slope_down_Q1_20,2)} R^2={round(R_squared_down_Q1_20,3)} p={round(p_value_down_Q1_20,3)}")
-plt.plot(Q2_20['sortd_SaEn_20'], predicted_values_down_Q2_20, color="#3CB44B", label=f"Q2 slope={round(slope_down_Q2_20,2)} R^2={round(R_squared_down_Q2_20,3)} p={round(p_value_down_Q2_20,3)}")
-plt.plot(Q3_20['sortd_SaEn_20'], predicted_values_down_Q3_20, color="#FFE119", label=f"Q3 slope={round(slope_down_Q3_20,2)} R^2={round(R_squared_down_Q3_20,3)} p={round(p_value_down_Q3_20,3)}")
+# plt.plot(Q1_20['sortd_SaEn_20'], predicted_values_down_Q1_20, color="#E6194B", label=f"Q1 slope={round(slope_down_Q1_20,2)} R^2={round(R_squared_down_Q1_20,3)} p={round(p_value_down_Q1_20,3)}")
+# plt.plot(Q2_20['sortd_SaEn_20'], predicted_values_down_Q2_20, color="#3CB44B", label=f"Q2 slope={round(slope_down_Q2_20,2)} R^2={round(R_squared_down_Q2_20,3)} p={round(p_value_down_Q2_20,3)}")
+# plt.plot(Q3_20['sortd_SaEn_20'], predicted_values_down_Q3_20, color="#FFE119", label=f"Q3 slope={round(slope_down_Q3_20,2)} R^2={round(R_squared_down_Q3_20,3)} p={round(p_value_down_Q3_20,3)}")
 plt.plot(Q4_20['sortd_SaEn_20'], predicted_values_down_Q4_20, color="#4363D8", label=f"Q4 slope={round(slope_down_Q4_20,2)} R^2={round(R_squared_down_Q4_20,3)} p={round(p_value_down_Q4_20,3)}")
 
 plt.plot(df_sort_SaEn_20['sortd_SaEn_20'], predicted_values_down_20, color="black", label=f"Overall slope={round(slope_down_20,2)} R^2={round(R_squared_down_20,3)} p={round(p_value_down_20,3)}")
