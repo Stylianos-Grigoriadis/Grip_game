@@ -13,7 +13,7 @@ plt.rcParams['font.size'] = 16
 
 directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results'
 os.chdir(directory)
-results = pd.read_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials.xlsx')
+results = pd.read_excel(r'Data for regression.xlsx')
 print(results.columns)
 # print(results['ID'])
 
@@ -972,6 +972,7 @@ q3_pert_up = np.percentile(df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'], 7
 IQR = q3_pert_up - q1_pert_up
 lower_bound = q1_pert_up - 1.5 * IQR
 upper_bound = q3_pert_up + 1.5 * IQR
+print(upper_bound)
 
 df_sort_SaEn_40 = df_sort_SaEn_40[
     (df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'] >= lower_bound) &
@@ -1008,7 +1009,7 @@ predicted_values_up_Q4_40 = slope_up_Q4_40 * Q4_40['sortd_SaEn_40'] + intercept_
 slope_up_40, intercept_up_40, r_value_up_40, p_value_up_40, std_err_up_40 = stats.linregress( df_sort_SaEn_40['sortd_SaEn_40'],  df_sort_SaEn_40['sortd_Adaptation_up_min_SaEn_40'])
 R_squared_up_40 = r_value_up_40**2
 predicted_values_up_40 = slope_up_40 * df_sort_SaEn_40['sortd_SaEn_40'] + intercept_up_40
-
+print(f'Participants are now {len(predicted_values_up_40)}')
 # plot results
 plt.scatter(Q1_40['sortd_SaEn_40'], Q1_40['sortd_Adaptation_up_min_SaEn_40'], color="#E6194B")
 plt.scatter(Q2_40['sortd_SaEn_40'], Q2_40['sortd_Adaptation_up_min_SaEn_40'], color="#3CB44B")
