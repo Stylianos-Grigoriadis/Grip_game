@@ -96,10 +96,10 @@ ax.plot(old_positions, old_means, color='red', linestyle='--')
 
 # Manually create legend elements
 legend_elements = [
-    mpatches.Patch(color='lightblue', label='  Young'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='  Old'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Old Average', linestyle='None'),
+    mpatches.Patch(color='lightblue', label='  Young adults'),
+    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young adults Average', linestyle='None'),
+    mpatches.Patch(color='lightcoral', label='  Older adults'),
+    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Older adults Average', linestyle='None'),
     # mlines.Line2D([], [], color='k', marker=r'$\ast$', markersize=10, linestyle='None',
     #               label=r'  Sig > $SaEn_{5\%}$ Both Groups'),
     # mlines.Line2D([], [], color='k', marker=r'$\ast\ast$', markersize=25, linestyle='None',
@@ -123,7 +123,7 @@ ax.legend(handles=legend_elements, loc='upper left', frameon=False)
 
 # Customize the plot
 # ax.set_title(f'Sample Entropy Curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
-ax.set_title(f'Sample Entropy Curve between Young and Old adults')
+ax.set_title(f'Sample Entropy Curve between Young and Older adults')
 
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
@@ -174,10 +174,10 @@ young_adults_color = 'blue'
 
 # Manually create legend elements
 legend_elements = [
-    mpatches.Patch(color='lightblue', label='  Young'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='  Old'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Old Average', linestyle='None'),
+    mpatches.Patch(color='lightblue', label='  Young adults'),
+    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young adults Average', linestyle='None'),
+    mpatches.Patch(color='lightcoral', label='  Older adults'),
+    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Older adults Average', linestyle='None'),
     #
     # # SD markers for older adults
     # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast$', markersize=10, linestyle='None', label=r'  Sig > $SD_{5\%}$ Young Adults'),
@@ -236,7 +236,7 @@ ax.legend(handles=legend_elements, loc='upper left', frameon=False)
 
 # Customize the plot
 # ax.set_title(f'Standard Deviation curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
-ax.set_title(f'Standard Deviation curve between Young and Old adults')
+ax.set_title(f'Standard Deviation curve between Young and Older adults')
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Standard Deviation')
@@ -284,17 +284,17 @@ ax.plot(old_positions, old_means, color='red', linestyle='--')
 
 # Manually create legend elements
 legend_elements = [
-    mpatches.Patch(color='lightblue', label='Young'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='Young Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='Old'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='Old Average', linestyle='None')
+    mpatches.Patch(color='lightblue', label='Young adults'),
+    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='Young adults Average', linestyle='None'),
+    mpatches.Patch(color='lightcoral', label='Older adults'),
+    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='Older adults Average', linestyle='None')
 ]
 
 # Add the legend to the plot
 ax.legend(handles=legend_elements, loc='upper right', frameon=False)
 
 # Customize the plot
-ax.set_title(f'Time to adapt curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
+ax.set_title(f'Time to adapt curve between Young and Older adults')
 
 ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['Perturbation\ndownwards', 'Perturbation\nupwards'])
