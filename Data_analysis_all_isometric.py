@@ -235,10 +235,10 @@ for file in files:
 
 
     # Calculation of time to adaptation for all perturbation trials
-    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd(Pert_down_T1, 250, sd, 100, consecutive_values, 100, 'Pert_down_T1', plot=True)
-    time_of_adaptation_down_T2 = lb.adaptation_time_using_sd(Pert_down_T2, 250, sd, 100, consecutive_values, 100, 'Pert_down_T2', plot=True)
-    time_of_adaptation_up_T1 = lb.adaptation_time_using_sd(Pert_up_T1, 250, sd, 100, consecutive_values, 100, 'Pert_up_T1', plot=True)
-    time_of_adaptation_up_T2 = lb.adaptation_time_using_sd(Pert_up_T2, 250, sd, 100, consecutive_values, 100, 'Pert_up_T2', plot=True)
+    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd, 100, consecutive_values, 100, 'Pert_down_T1', plot=False)
+    time_of_adaptation_down_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T2, 250, sd, 100, consecutive_values, 100, 'Pert_down_T2', plot=False)
+    time_of_adaptation_up_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T1, 250, sd, 100, consecutive_values, 100, 'Pert_up_T1', plot=False)
+    time_of_adaptation_up_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T2, 250, sd, 100, consecutive_values, 100, 'Pert_up_T2', plot=False)
 
     if not ID == 'Old.18' and not ID == 'Old.7':
         Pert_down_T1_array = Pert_down_T1['Performance'][300:1200].to_numpy()
@@ -551,6 +551,6 @@ dist = {
 
 }
 # #
-# new_excel = pd.DataFrame(dist)
-# os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results')
-# new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials 2.xlsx')
+new_excel = pd.DataFrame(dist)
+os.chdir(r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results')
+new_excel.to_excel(r'Results all Lowpass 50Hz only best iso trials all pert trials 2.xlsx')

@@ -410,7 +410,7 @@ def asymptotes(df):
             'adaptation_time' : adaptation_index*time_for_each_target}
     return dict
 
-def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot=False):
+def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot=False):
     """
     This function returns the time after the perturbation which was needed to adapt to the perturbation
     Parameters
@@ -435,23 +435,24 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     # First synchronize the Time and ClosestSampleTime columns and create a new df with
     # only the synchronized values
     df = synchronization_of_Time_and_ClosestSampleTime_Anestis(df)
-
+    # print(df.columns)
+    # plt.plot(df['Performance'], label ='Performance')
+    # plt.plot(df['Target'], label ='Target')
+    # plt.legend()
+    # plt.show()
     # Calculate the spatial error and the average and sd of the spatial error
     # after the first_values
     spatial_er = spatial_error(df)
 
-    # The following 2 lines calculate the mean and sd of the 'first_values' before the perturbation
-    # to use for calculating the adaptation time
-    mean = np.mean(spatial_er[first_values:perturbation_index])
-    sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
-
     # The following line calculate the lowest sd for 'values_for_sd' in overlapping window and
     # the lowest sd is the sd used for further analysis
-    list_for_mean_and_sd = spatial_er[perturbation_index:]
+    list_for_mean_and_sd = spatial_er[first_values:perturbation_index]
+    # print(len(list_for_mean_and_sd))
     list_of_sd = []
     list_of_means = []
     for i in range(len(list_for_mean_and_sd) - values_for_sd):
         average = np.mean(list_for_mean_and_sd[i:i+values_for_sd])
+        # print(i+values_for_sd)
         sd = np.std(list_for_mean_and_sd[i:i+values_for_sd])
         list_of_means.append(average)
         list_of_sd.append(sd)
@@ -459,6 +460,7 @@ def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, co
     min_sd_index = list_of_sd.index(min_sd)
     average_at_min_sd = list_of_means[min_sd_index]
     # plt.plot(list_of_sd)
+    # plt.plot(list_for_mean_and_sd)
     # plt.show()
 
     # Create an array with consecutive_values equal number

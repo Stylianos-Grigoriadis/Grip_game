@@ -140,9 +140,7 @@ def Butterworth(fs,fc,var):
             fc:     cutoff frequency for example 30Hz
             var:    data series
     """
-    w = fc / (fs / 2)
-
-    b, a = signal.butter(N=2, Wn=w, btype='low', fs=fs)
+    b, a = signal.butter(N=2, Wn=fc, btype='low', fs=fs)
     return signal.filtfilt(b, a, var)
 
 def Average(lst):
@@ -244,7 +242,6 @@ def derivative(array,fs):
         der.append((array[i+1]-array[i])/dt)
     return der
 
-
 def DFA_NONAN(data, scales, order=1, plot=True):
     """Perform Detrended Fluctuation Analysis on data
 
@@ -341,6 +338,7 @@ def DFA_NONAN(data, scales, order=1, plot=True):
 
     # Return the scales used, fluctuation functions and the alpha value
     return scales, fluctuation, alpha
+
 def Pink_noise_generator():
     pass
 
@@ -374,7 +372,7 @@ def pink_noise_generator2(number_of_sets,targets_per_set,RM,time_per_set,percent
         signal = [i * std for i in signal]
         mean_post = np.mean(signal)
         signal = [i + (mean - mean_post) for i in signal]
-        DFA_a = DFA(signal)
+        DFA_a = DFA_NONAN(signal)
         # the mean value is 70% of 1RM therefore we want our signal to be between 50% and 90% of 1RM
         max = (mean * max_perc) / 70
         min = (mean * min_perc) / 70
@@ -386,3 +384,19 @@ def pink_noise_generator2(number_of_sets,targets_per_set,RM,time_per_set,percent
     step_for_time = total_time / (number_of_sets * targets_per_set)
     Time = np.arange(0, total_time, step_for_time)
     return signal,Time
+
+def residual_analysis(signal, sampling_freq, list_cutoff_freq):
+    residuals_list = []
+    signal = np.array(signal)
+    for i in range(len(list_cutoff_freq)):
+        filtered_signal = Butterworth(sampling_freq,list_cutoff_freq[i],signal)
+        filtered_signal = np.array(filtered_signal)
+        sum_squares = np.sum((signal - filtered_signal)**2)
+        residual = np.sqrt(sum_squares/len(signal))
+        residuals_list.append(residual)
+
+    plt.plot(list_cutoff_freq, residuals_list)
+    plt.show()
+
+
+
