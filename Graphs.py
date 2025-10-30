@@ -181,167 +181,205 @@ plt.rcParams['font.size'] = 16
 
 
 # Graph for perturbation trials
+#
+# def synchronization_of_Time_and_ClosestSampleTime_Anestis(df):
+#     """ This function creates a new dataframe by synchronizing the Time column to the ClosestSampleTime column and then returns a new dataframe with the correct values"""
+#
+#     time_index = []
+#     for i in range(len(df)):
+#         # Calculate the difference of the element i of the column ClosestSampleTime with every value of the column Time
+#         closest_index = (df['Time'] - df['ClosestSampleTime'].iloc[i]).abs()
+#         # Drop the None values of the closest_index so that in the next step the .empty attribute if it has only None values it would show False
+#         closest_index = closest_index.dropna()
+#
+#         if not closest_index.empty:
+#             # Find the index of the minimum difference
+#             closest_index = closest_index.idxmin()
+#             # Keep only the index of minimum difference
+#             time_index.append(closest_index)
+#     # Create all other columns
+#     time = df.loc[time_index, 'Time'].to_numpy()
+#     performance = df.loc[time_index, 'Performance'].to_numpy()
+#     targets = df['Target'].dropna().to_numpy()
+#     time_close_to_target = df['ClosestSampleTime'].dropna().to_numpy()
+#
+#     # Create the dataframe which will be returned afterward.
+#     dist = {'Indices': time_index,
+#             'Time': time,
+#             'Performance': performance,
+#             'ClosestSampleTime': time_close_to_target,
+#             'Target': targets}
+#     new_df = pd.DataFrame(dist)
+#
+#     return new_df
+#
+# def spatial_error(df):
+#     """ Calculate the spatial error of the Performance and Target
+#     Parameters
+#     Input
+#             df              :   the Dataframe
+#     Output
+#             spatial_error   :   the spatial_error between the Performance and Target
+#     """
+#
+#     spatial_error = []
+#     for i in range(len(df['Time'])):
+#         spatial_error.append((abs(df['Performance'][i]-df['Target'][i])))
+#     spatial_error = np.array(spatial_error)
+#     return spatial_error
+#
+# def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot=False):
+#     """
+#     This function returns the time after the perturbation which was needed to adapt to the perturbation
+#     Parameters
+#     Input
+#             df                  :   The Dataframe
+#             perturbation_index  :   The index where the perturbation occurred
+#             sd_factor           :   This will be multiplied with the sd of the error before the perturbation
+#                                     and if the error after the is less than the mean + sd*sd_factor and more than
+#                                     the mean - sd*sd_factor, the algorithm will consider that the adaptation of the
+#                                     perturbation occurred
+#             first_values        :   At first the error will be too much so to calculate the mean and sd before the perturbation
+#                                     right, we erase some values from the beginning
+#             consecutive_values  :   This is how many values the algorithm needs to consider so that it decides that the adaptation occurred.
+#             total targets       :   The total number of targets
+#             Plot                :   Plot the spatial error and the time of adaptation (default value False)
+#
+#     Output
+#             time_of_adaptation  :   The time it took the df['Performance'] to steadily reach df['Target']. This
+#                                     number corresponds to the first value of time at which for the next X consecutive_values
+#                                     the spatial error was lower than the average +- (sd * sd_factor)
+#     """
+#     # First synchronize the Time and ClosestSampleTime columns and create a new df with
+#     # only the synchronized values
+#     df = synchronization_of_Time_and_ClosestSampleTime_Anestis(df)
+#
+#     # Calculate the spatial error and the average and sd of the spatial error
+#     # after the first_values
+#     spatial_er = spatial_error(df)
+#
+#     # The following 2 lines calculate the mean and sd of the 'first_values' before the perturbation
+#     # to use for calculating the adaptation time
+#     mean = np.mean(spatial_er[first_values:perturbation_index])
+#     sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
+#
+#     # The following line calculate the lowest sd for 'values_for_sd' in overlapping window and
+#     # the lowest sd is the sd used for further analysis
+#     list_for_mean_and_sd = spatial_er[perturbation_index:]
+#     list_of_sd = []
+#     list_of_means = []
+#     for i in range(len(list_for_mean_and_sd) - values_for_sd):
+#         average = np.mean(list_for_mean_and_sd[i:i+values_for_sd])
+#         sd = np.std(list_for_mean_and_sd[i:i+values_for_sd])
+#         list_of_means.append(average)
+#         list_of_sd.append(sd)
+#     min_sd = min(list_of_sd)
+#     min_sd_index = list_of_sd.index(min_sd)
+#     average_at_min_sd = list_of_means[min_sd_index]
+#     # plt.plot(list_of_sd)
+#     # plt.show()
+#
+#     # Create an array with consecutive_values equal number
+#     consecutive_values_list = np.arange(0,consecutive_values,1)
+#     print((consecutive_values_list))
+#
+#     # Iterate the spatial error after the perturbation_index to calculate the time of adaptation
+#     for i in range(len(spatial_er) - consecutive_values+1):
+#         if i >= perturbation_index:
+#
+#             if (all(spatial_er[i + j] < average_at_min_sd + min_sd * sd_factor for j in consecutive_values_list) and
+#                 all(spatial_er[i + j] > average_at_min_sd - min_sd * sd_factor for j in consecutive_values_list)):
+#                 time_of_adaptation = df['Time'][i] - df['Time'][perturbation_index]
+#                 break
+#
+#     if plot == True:
+#         try:
+#             time_of_adaptation
+#             time = np.linspace(-10,10,len(spatial_er))
+#             plt.plot(time, spatial_er, label='Spatial Error')
+#             plt.axhline(y=average_at_min_sd, c='k', label = 'Average')
+#             plt.axhline(y=average_at_min_sd + min_sd*sd_factor, c='k', ls=":", label=f'{sd_factor}*Sd')
+#             plt.axhline(y=average_at_min_sd - min_sd*sd_factor, c='k', ls=":")
+#             plt.axvline(x=time_of_adaptation, lw=3, c='red', label='Adaptation instance')
+#             plt.axvline(x=0, linestyle='--', c='gray', label='Perturbation instance')
+#
+#             plt.legend()
+#             plt.ylabel('Spatial Error (kg)')
+#             plt.xlabel('Time (sec)')
+#             # plt.title(f'{name}\ntime for adaptation: {round(time_of_adaptation,3)} sec')
+#             plt.title('Perturbation Trial')
+#
+#             plt.show()
+#         except NameError:
+#             print(f"No adaptation was evident for {name}")
+#
+#     try:
+#         time_of_adaptation
+#         return time_of_adaptation
+#     except:
+#         time_of_adaptation = None
+#         return time_of_adaptation
+#
+#
+# # Calculation of time to adaptation for all perturbation trials
+#
+# directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Data\Strength data\Young.8'
+# os.chdir(directory)
+#
+# Pert_down_T1 = pd.read_csv('Pert_down_T1.csv', skiprows=2)
+# Pert_down_T2 = pd.read_csv('Pert_down_T2.csv', skiprows=2)
+# Pert_up_T1 = pd.read_csv('Pert_up_T1.csv', skiprows=2)
+# Pert_up_T2 = pd.read_csv('Pert_up_T2.csv', skiprows=2)
+#
+# Pert_down_T1['Performance'] = lib.Butterworth(75, 50, Pert_down_T1['Performance'])
+# Pert_down_T2['Performance'] = lib.Butterworth(75, 50, Pert_down_T2['Performance'])
+# Pert_up_T1['Performance'] = lib.Butterworth(75, 50, Pert_up_T1['Performance'])
+# Pert_up_T2['Performance'] = lib.Butterworth(75, 50, Pert_up_T2['Performance'])
+#
+# sd = 2
+# consecutive_values = 37
+#
+# time_of_adaptation_down_T1 = adaptation_time_using_sd(Pert_down_T1, 250, sd, 100, consecutive_values, 100, 'Pert_down_T1', plot=True)
+# time_of_adaptation_down_T2 = adaptation_time_using_sd(Pert_down_T2, 250, sd, 100, consecutive_values, 100, 'Pert_down_T2', plot=True)
+# time_of_adaptation_up_T1 = adaptation_time_using_sd(Pert_up_T1, 250, sd, 100, consecutive_values, 100, 'Pert_up_T1', plot=True)
+# time_of_adaptation_up_T2 = adaptation_time_using_sd(Pert_up_T2, 250, sd, 100, consecutive_values, 100, 'Pert_up_T2', plot=True)
 
-def synchronization_of_Time_and_ClosestSampleTime_Anestis(df):
-    """ This function creates a new dataframe by synchronizing the Time column to the ClosestSampleTime column and then returns a new dataframe with the correct values"""
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.size'] = 25
 
-    time_index = []
-    for i in range(len(df)):
-        # Calculate the difference of the element i of the column ClosestSampleTime with every value of the column Time
-        closest_index = (df['Time'] - df['ClosestSampleTime'].iloc[i]).abs()
-        # Drop the None values of the closest_index so that in the next step the .empty attribute if it has only None values it would show False
-        closest_index = closest_index.dropna()
+# X axis: %MVC
+x = np.linspace(0, 100, 500)
 
-        if not closest_index.empty:
-            # Find the index of the minimum difference
-            closest_index = closest_index.idxmin()
-            # Keep only the index of minimum difference
-            time_index.append(closest_index)
-    # Create all other columns
-    time = df.loc[time_index, 'Time'].to_numpy()
-    performance = df.loc[time_index, 'Performance'].to_numpy()
-    targets = df['Target'].dropna().to_numpy()
-    time_close_to_target = df['ClosestSampleTime'].dropna().to_numpy()
+# Primary Y axis: Sample Entropy (red)
+y_saen = 0.5 + 0.1 * np.exp(-0.5 * ((x - 40) / 10)**2)
 
-    # Create the dataframe which will be returned afterward.
-    dist = {'Indices': time_index,
-            'Time': time,
-            'Performance': performance,
-            'ClosestSampleTime': time_close_to_target,
-            'Target': targets}
-    new_df = pd.DataFrame(dist)
+# Secondary Y axis: Standard Deviation (blue), exponential from 0.1 to 2.1
+y_sd = 0.1 * (2.1 / 0.1) ** (x / 100)
 
-    return new_df
+# Create figure and first axis
+fig, ax1 = plt.subplots(figsize=(8, 5))
 
-def spatial_error(df):
-    """ Calculate the spatial error of the Performance and Target
-    Parameters
-    Input
-            df              :   the Dataframe
-    Output
-            spatial_error   :   the spatial_error between the Performance and Target
-    """
+# Plot Sample Entropy (SaEn)
+ax1.plot(x, y_saen, color='red', linewidth=2, label='Sample Entropy (SaEn)')
+ax1.set_xlabel('Percentage of MVC (%)')
+ax1.set_ylabel('Sample Entropy (SaEn)', color='red')
+ax1.tick_params(axis='y', labelcolor='red')
+# Set specific y-ticks and labels
+yticks = [0.45, 0.50, 0.55, 0.60, 0.65]
+ax1.set_yticks(yticks)
+ax1.set_yticklabels([f"{ytick:.2f}" for ytick in yticks])
+ax1.set_xlim(0, 100)
+# ax1.set_yticklabels([])  # Remove numbers from primary y-axis
+ax1.grid(True, linestyle='--', alpha=0.6)
 
-    spatial_error = []
-    for i in range(len(df['Time'])):
-        spatial_error.append((abs(df['Performance'][i]-df['Target'][i])))
-    spatial_error = np.array(spatial_error)
-    return spatial_error
+# Create secondary axis
+ax2 = ax1.twinx()
+ax2.plot(x, y_sd, color='blue', linewidth=2, linestyle='--', label='Standard Deviation (SD)')
+ax2.set_ylabel('Standard Deviation (SD)', color='blue')
+ax2.tick_params(axis='y', labelcolor='blue')
+# ax2.set_yticklabels([])  # Remove numbers from primary y-axis
 
-def adaptation_time_using_sd(df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot=False):
-    """
-    This function returns the time after the perturbation which was needed to adapt to the perturbation
-    Parameters
-    Input
-            df                  :   The Dataframe
-            perturbation_index  :   The index where the perturbation occurred
-            sd_factor           :   This will be multiplied with the sd of the error before the perturbation
-                                    and if the error after the is less than the mean + sd*sd_factor and more than
-                                    the mean - sd*sd_factor, the algorithm will consider that the adaptation of the
-                                    perturbation occurred
-            first_values        :   At first the error will be too much so to calculate the mean and sd before the perturbation
-                                    right, we erase some values from the beginning
-            consecutive_values  :   This is how many values the algorithm needs to consider so that it decides that the adaptation occurred.
-            total targets       :   The total number of targets
-            Plot                :   Plot the spatial error and the time of adaptation (default value False)
+# Title
+# plt.title('Sample Entropy and Standard Deviation Across %MVC', fontsize=14)
 
-    Output
-            time_of_adaptation  :   The time it took the df['Performance'] to steadily reach df['Target']. This
-                                    number corresponds to the first value of time at which for the next X consecutive_values
-                                    the spatial error was lower than the average +- (sd * sd_factor)
-    """
-    # First synchronize the Time and ClosestSampleTime columns and create a new df with
-    # only the synchronized values
-    df = synchronization_of_Time_and_ClosestSampleTime_Anestis(df)
-
-    # Calculate the spatial error and the average and sd of the spatial error
-    # after the first_values
-    spatial_er = spatial_error(df)
-
-    # The following 2 lines calculate the mean and sd of the 'first_values' before the perturbation
-    # to use for calculating the adaptation time
-    mean = np.mean(spatial_er[first_values:perturbation_index])
-    sd_before_perturbation = np.std(spatial_er[first_values:perturbation_index])
-
-    # The following line calculate the lowest sd for 'values_for_sd' in overlapping window and
-    # the lowest sd is the sd used for further analysis
-    list_for_mean_and_sd = spatial_er[perturbation_index:]
-    list_of_sd = []
-    list_of_means = []
-    for i in range(len(list_for_mean_and_sd) - values_for_sd):
-        average = np.mean(list_for_mean_and_sd[i:i+values_for_sd])
-        sd = np.std(list_for_mean_and_sd[i:i+values_for_sd])
-        list_of_means.append(average)
-        list_of_sd.append(sd)
-    min_sd = min(list_of_sd)
-    min_sd_index = list_of_sd.index(min_sd)
-    average_at_min_sd = list_of_means[min_sd_index]
-    # plt.plot(list_of_sd)
-    # plt.show()
-
-    # Create an array with consecutive_values equal number
-    consecutive_values_list = np.arange(0,consecutive_values,1)
-    print((consecutive_values_list))
-
-    # Iterate the spatial error after the perturbation_index to calculate the time of adaptation
-    for i in range(len(spatial_er) - consecutive_values+1):
-        if i >= perturbation_index:
-
-            if (all(spatial_er[i + j] < average_at_min_sd + min_sd * sd_factor for j in consecutive_values_list) and
-                all(spatial_er[i + j] > average_at_min_sd - min_sd * sd_factor for j in consecutive_values_list)):
-                time_of_adaptation = df['Time'][i] - df['Time'][perturbation_index]
-                break
-
-    if plot == True:
-        try:
-            time_of_adaptation
-            time = np.linspace(-10,10,len(spatial_er))
-            plt.plot(time, spatial_er, label='Spatial Error')
-            plt.axhline(y=average_at_min_sd, c='k', label = 'Average')
-            plt.axhline(y=average_at_min_sd + min_sd*sd_factor, c='k', ls=":", label=f'{sd_factor}*Sd')
-            plt.axhline(y=average_at_min_sd - min_sd*sd_factor, c='k', ls=":")
-            plt.axvline(x=time_of_adaptation, lw=3, c='red', label='Adaptation instance')
-            plt.axvline(x=0, linestyle='--', c='gray', label='Perturbation instance')
-
-            plt.legend()
-            plt.ylabel('Spatial Error (kg)')
-            plt.xlabel('Time (sec)')
-            # plt.title(f'{name}\ntime for adaptation: {round(time_of_adaptation,3)} sec')
-            plt.title('Perturbation Trial')
-
-            plt.show()
-        except NameError:
-            print(f"No adaptation was evident for {name}")
-
-    try:
-        time_of_adaptation
-        return time_of_adaptation
-    except:
-        time_of_adaptation = None
-        return time_of_adaptation
-
-
-# Calculation of time to adaptation for all perturbation trials
-
-directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Data\Strength data\Young.8'
-os.chdir(directory)
-
-Pert_down_T1 = pd.read_csv('Pert_down_T1.csv', skiprows=2)
-Pert_down_T2 = pd.read_csv('Pert_down_T2.csv', skiprows=2)
-Pert_up_T1 = pd.read_csv('Pert_up_T1.csv', skiprows=2)
-Pert_up_T2 = pd.read_csv('Pert_up_T2.csv', skiprows=2)
-
-Pert_down_T1['Performance'] = lib.Butterworth(75, 50, Pert_down_T1['Performance'])
-Pert_down_T2['Performance'] = lib.Butterworth(75, 50, Pert_down_T2['Performance'])
-Pert_up_T1['Performance'] = lib.Butterworth(75, 50, Pert_up_T1['Performance'])
-Pert_up_T2['Performance'] = lib.Butterworth(75, 50, Pert_up_T2['Performance'])
-
-sd = 2
-consecutive_values = 37
-
-time_of_adaptation_down_T1 = adaptation_time_using_sd(Pert_down_T1, 250, sd, 100, consecutive_values, 100, 'Pert_down_T1', plot=True)
-time_of_adaptation_down_T2 = adaptation_time_using_sd(Pert_down_T2, 250, sd, 100, consecutive_values, 100, 'Pert_down_T2', plot=True)
-time_of_adaptation_up_T1 = adaptation_time_using_sd(Pert_up_T1, 250, sd, 100, consecutive_values, 100, 'Pert_up_T1', plot=True)
-time_of_adaptation_up_T2 = adaptation_time_using_sd(Pert_up_T2, 250, sd, 100, consecutive_values, 100, 'Pert_up_T2', plot=True)
-
-
+plt.show()
