@@ -129,7 +129,7 @@ ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Sample Entropy')
 ax.set_xlabel('Percentage of MVC')
-ax.set_ylim([0, 0.5])
+ax.set_ylim([0, 0.35])
 
 # Display the plot
 plt.show()
@@ -241,7 +241,7 @@ ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
 ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
 ax.set_ylabel('Standard Deviation')
 ax.set_xlabel('Percentage of MVC')
-ax.set_ylim([0, 4.5])
+ax.set_ylim([0, 2.7])
 
 # Display the plot
 plt.show()
