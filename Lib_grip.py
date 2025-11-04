@@ -479,17 +479,47 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
     if plot == True:
         try:
             time_of_adaptation
-            plt.plot(df['Time'], spatial_er, label='Spatial Error')
-            plt.axhline(y=average_at_min_sd, c='k', label = 'Average')
-            plt.axhline(y=average_at_min_sd + min_sd*sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
-            plt.axhline(y=average_at_min_sd - min_sd*sd_factor, c='k', ls=":")
-            plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
-            plt.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
+            # plt.plot(df['Time'], spatial_er, label='Spatial Error')
+            # plt.axhline(y=average_at_min_sd, c='k', label = 'Average')
+            # plt.axhline(y=average_at_min_sd + min_sd*sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
+            # plt.axhline(y=average_at_min_sd - min_sd*sd_factor, c='k', ls=":")
+            # plt.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red', label='Adaptation instance')
+            # plt.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
+            #
+            # plt.legend()
+            # plt.ylabel('Force difference (kg)')
+            # plt.xlabel('Time (sec)')
+            # plt.title(f'{name}\ntime for adaptation: {round(time_of_adaptation,3)} sec')
+            # plt.show()
 
-            plt.legend()
-            plt.ylabel('Force difference (kg)')
-            plt.xlabel('Time (sec)')
-            plt.title(f'{name}\ntime for adaptation: {round(time_of_adaptation,3)} sec')
+            fig, ax1 = plt.subplots(figsize=(8, 5))
+
+            # Primary axis (spatial error)
+            ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='blue')
+            ax1.axhline(y=average_at_min_sd, c='k', label='Average')
+            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
+            ax1.axhline(y=average_at_min_sd - min_sd * sd_factor, c='k', ls=":")
+            ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red',
+                        label='Adaptation instance')
+            ax1.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
+
+            ax1.set_xlabel('Time (sec)')
+            ax1.set_ylabel('Force difference (kg)', color='blue')
+            ax1.tick_params(axis='y', labelcolor='blue')
+
+            # Secondary axis (Performance)
+            ax2 = ax1.twinx()
+            ax2.plot(df['Time'], df['Performance'], color='darkgreen', lw=2, label='Force output')
+            ax2.plot(df['Time'], df['Target'], color='gold', lw=2, label='Target')
+            ax2.set_ylabel('Force (kg)', color='darkgreen')
+            ax2.tick_params(axis='y', labelcolor='darkgreen')
+
+            # Combine legends from both axes
+            lines_1, labels_1 = ax1.get_legend_handles_labels()
+            lines_2, labels_2 = ax2.get_legend_handles_labels()
+            ax1.legend(lines_1 + lines_2, labels_1 + labels_2, loc='upper right', prop={'weight': 'bold', 'size': 12})
+
+            plt.title(f'Release Force Perturbation')
             plt.show()
         except NameError:
             print(f"No adaptation was evident for {name}")

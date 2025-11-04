@@ -42,8 +42,8 @@ for file in files:
     print("hello")
     # df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot = False
 
-    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T1', plot=False)
-    time_of_adaptation_down_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T2', plot=False)
+    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T1', plot=True)
+    time_of_adaptation_down_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T2', plot=True)
     time_of_adaptation_up_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T1', plot=False)
     time_of_adaptation_up_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T2', plot=False)
 

@@ -5,6 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.size'] = 15
+
+
 N=200
 time = np.linspace(0,10,N)
 
@@ -29,21 +33,20 @@ SD_pink = round(np.std(pink_z),2)
 plt.figure(figsize=(8, 4))
 plt.plot(time, brown_z, color='red', linewidth=3, label=f'Signal 1, SaEn = {SaEn_brown}, SD = {SD_brown}')
 plt.plot(time, pink_z, color='blue', linewidth=3, label=f'Signal 2, SaEn = {SaEn_pink}, SD = {SD_pink}')
-
+plt.legend(prop={'weight': 'bold'})
 # Styling
-plt.legend(
-    fontsize=30,
-    loc='upper right',
-    frameon=True,
-    fancybox=True,
-    shadow=True,
-    framealpha=0.9,
-    prop={'weight': 'bold'}  # <-- makes legend text bold
-)
+# plt.legend(
+#     loc='upper right',
+#     frameon=True,
+#     fancybox=True,
+#     shadow=True,
+#     framealpha=0.9,
+#     prop={'weight': 'bold'}  # <-- makes legend text bold
+# )
 
-plt.title('Signals Comparison', fontsize=14, fontweight='bold')
-plt.xlabel('Time (s)', fontsize=12, fontweight='bold')
-plt.ylabel('Force output (N)', fontsize=12, fontweight='bold')
+plt.title('Signals Comparison', fontweight='bold')
+plt.xlabel('Time (s)')
+plt.ylabel('Force output (N)')
 
 plt.tight_layout()
 plt.show()
