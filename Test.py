@@ -12,10 +12,8 @@ plt.rcParams['font.size'] = 15
 N=200
 time = np.linspace(0,10,N)
 
-brown = cn.powerlaw_psd_gaussian(3,N)
-random = np.random.rand(N)
-brown_random = brown
-brown_z = lb.z_transform(brown_random,5,40)
+brown = cn.powerlaw_psd_gaussian(1.3,N)
+brown_z = lb.z_transform(brown,5,40)
 pink = lb.fgn_sim(N,0.99)
 pink_z = lb.z_transform(pink,2.5,40)
 
@@ -50,4 +48,8 @@ plt.ylabel('Force output (N)')
 
 plt.tight_layout()
 plt.show()
+
+
+lb.quality_assessment_of_temporal_structure_FFT_method(brown_z)
+lb.quality_assessment_of_temporal_structure_FFT_method(pink_z)
 

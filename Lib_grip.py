@@ -1,10 +1,25 @@
 import numpy as np
+# import fathon
+# from fathon import fathonUtils as fu
 import matplotlib.pyplot as plt
+from scipy.stats import linregress
 import pandas as pd
 import colorednoise as cn
 import random
 from scipy.optimize import curve_fit
-from scipy.fft import fft, ifft
+from scipy.signal import decimate
+from scipy.signal import welch
+from scipy import stats
+import itertools
+from itertools import chain
+from scipy.stats import pearsonr
+from scipy.signal import welch
+from scipy.interpolate import UnivariateSpline
+from scipy.signal import butter, filtfilt
+from scipy.signal import butter, sosfiltfilt
+from sklearn.decomposition import PCA
+import polars as pl
+
 
 def Ent_Ap(data, dim, r):
     """
@@ -849,3 +864,46 @@ def fgn_sim(n=1000, H=0.7):
     ans = std * z + mean
     return ans
 
+def quality_assessment_of_temporal_structure_FFT_method(signal):
+    # Apply FFT
+    fft_output = np.fft.fft(signal)  # FFT of the signal
+    fft_magnitude = np.abs(fft_output)  # Magnitude of the FFT
+
+    # Calculate frequency bins
+    frequencies = np.fft.fftfreq(len(signal), d=1/0.01)  # Frequency bins
+
+    # Keep only the positive frequencies
+    positive_freqs = frequencies[1:len(frequencies) // 2]  # Skip the zero frequency
+    positive_magnitude = fft_magnitude[1:len(frequencies) // 2]  # Skip the zero frequency
+
+     # Figure of Frequincies vs Magnitude
+    plt.figure(figsize=(10,6))
+    plt.plot(positive_freqs, positive_magnitude)
+    # plt.title(f'{name}\nFFT of Sine Wave')
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Magnitude')
+    plt.grid()
+    plt.show()
+
+    positive_freqs_log = np.log10(positive_freqs[positive_freqs > 0])
+    positive_magnitude_log = np.log10(positive_magnitude[positive_freqs > 0])
+
+    r, p = pearsonr(positive_freqs_log, positive_magnitude_log)
+
+    # Perform linear regression (best fit) to assess the slope
+    slope, intercept, r_value, p_value, std_err = stats.linregress(positive_freqs_log, positive_magnitude_log)
+    # print(f'r_value = {r_value}')
+    # print(f'p_value = {p_value}')
+
+    # Plot the log-log results
+    plt.figure(figsize=(10,6))
+    plt.scatter(positive_freqs_log, positive_magnitude_log, label='Log-Log Data', color='blue')
+    plt.plot(positive_freqs_log, slope * positive_freqs_log + intercept, label=f'Fit: \nSlope = {slope:.2f}\nr = {r}\np = {p}', color='red')
+    plt.title(f'Log-Log Plot of FFT (Frequency vs Magnitude)')
+    plt.xlabel('Log(Frequency) (Hz)')
+    plt.ylabel('Log(Magnitude)')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+    return slope, positive_freqs_log, positive_magnitude_log, intercept, r, p, positive_freqs, positive_magnitude
