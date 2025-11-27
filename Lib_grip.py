@@ -538,20 +538,21 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
             # plt.show()
 
             fig, ax1 = plt.subplots(figsize=(8, 5))
-            fig.patch.set_facecolor('#F6F6F0')  # Figure background
-            ax1.set_facecolor('#F6F6F0')
+
             # Primary axis (spatial error)
-            ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='blue', lw=5)
+            ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='#1F497D', lw=8)
             ax1.axhline(y=average_at_min_sd, c='k', label='Average')
-            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
+            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":")
             ax1.axhline(y=average_at_min_sd - min_sd * sd_factor, c='k', ls=":")
-            ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red',
+            ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=5, c='red',
                         label='Adaptation instance')
             ax1.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
 
-            ax1.set_xlabel('Time (sec)', fontweight='bold')
-            ax1.set_ylabel('Force difference between \ntarget and avatar (kg)', color='blue', fontweight='bold')
-            ax1.tick_params(axis='y', labelcolor='blue')
+            # ax1.set_xlabel('Time (sec)', fontweight='bold')
+            # ax1.set_ylabel('Force difference between \ntarget and avatar (kg)', color='blue', fontweight='bold')
+            ax1.tick_params(axis='y', labelcolor='#1F497D', labelsize=50)
+            ax1.tick_params(axis='x', labelcolor='red', labelsize=50)
+
 
             # Secondary axis (Performance)
             # ax2 = ax1.twinx()

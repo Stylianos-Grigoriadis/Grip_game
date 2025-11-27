@@ -56,8 +56,7 @@ import pandas as pd
 # lb.quality_assessment_of_temporal_structure_FFT_method(pink_z)
 #
 
-directory_path = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Data\Strength data'
-files = glob.glob(os.path.join(directory_path, "*"))
+file = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Data\Strength data\Old.13'
 
 Adaptation_down_T1_list = []
 Adaptation_down_T2_list = []
@@ -65,38 +64,85 @@ Adaptation_up_T1_list = []
 Adaptation_up_T2_list = []
 ID_list = []
 
-for file in files:
-    os.chdir(file)
-    ID = os.path.basename(file)
-    ID_list.append(ID)
-    print(ID)
-    Pert_down_T1 = pd.read_csv(r'Pert_down_T1.csv', skiprows=2)
-    Pert_down_T2 = pd.read_csv(r'Pert_down_T2.csv', skiprows=2)
-    Pert_up_T1 = pd.read_csv(r'Pert_up_T1.csv', skiprows=2)
-    Pert_up_T2 = pd.read_csv(r'Pert_up_T2.csv', skiprows=2)
+os.chdir(file)
+ID = os.path.basename(file)
+ID_list.append(ID)
+print(ID)
+Isometric_80_T1 = pd.read_csv(r'Isometric_80_T1.csv', skiprows=2)
+Isometric_60_T1 = pd.read_csv(r'Isometric_60_T1.csv', skiprows=2)
+Isometric_40_T1 = pd.read_csv(r'Isometric_40_T1.csv', skiprows=2)
+Isometric_20_T1 = pd.read_csv(r'Isometric_20_T1.csv', skiprows=2)
+Isometric_05_T1 = pd.read_csv(r'Isometric_05_T1.csv', skiprows=2)
 
-    # list_cutoff_freq = np.arange(1, 37, 1)
-    #
-    # lib.residual_analysis(Pert_down_T1['Performance'], 75, list_cutoff_freq)
-    # lib.residual_analysis(Pert_down_T2['Performance'], 75, list_cutoff_freq)
-    # lib.residual_analysis(Pert_up_T1['Performance'], 75, list_cutoff_freq)
-    # lib.residual_analysis(Pert_up_T2['Performance'], 75, list_cutoff_freq)
+# list_cutoff_freq = np.arange(1, 37, 1)
+#
+# lib.residual_analysis(Pert_down_T1['Performance'], 75, list_cutoff_freq)
+# lib.residual_analysis(Pert_down_T2['Performance'], 75, list_cutoff_freq)
+# lib.residual_analysis(Pert_up_T1['Performance'], 75, list_cutoff_freq)
+# lib.residual_analysis(Pert_up_T2['Performance'], 75, list_cutoff_freq)
 
 
-    Pert_down_T1['Performance'] = lib.Butterworth(75, 10, Pert_down_T1['Performance'])
-    Pert_down_T2['Performance'] = lib.Butterworth(75, 10, Pert_down_T2['Performance'])
-    Pert_up_T1['Performance'] = lib.Butterworth(75, 10, Pert_up_T1['Performance'])
-    Pert_up_T2['Performance'] = lib.Butterworth(75, 10, Pert_up_T2['Performance'])
+Isometric_80_T1['Performance'] = lib.Butterworth(75, 10, Isometric_80_T1['Performance'])
+Isometric_60_T1['Performance'] = lib.Butterworth(75, 10, Isometric_60_T1['Performance'])
+Isometric_40_T1['Performance'] = lib.Butterworth(75, 10, Isometric_40_T1['Performance'])
+Isometric_20_T1['Performance'] = lib.Butterworth(75, 10, Isometric_20_T1['Performance'])
+Isometric_05_T1['Performance'] = lib.Butterworth(75, 10, Isometric_05_T1['Performance'])
 
-    sd_factor = 2
-    consecutive_values = 37
-    print("hello")
-    # df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot = False
-    plt.rcParams['font.family'] = 'Arial'  # or 'Helvetica'
-    plt.rcParams['font.size'] = 15
-    plt.rcParams['font.weight'] = 'bold'
 
-    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T1', plot=True)
-    time_of_adaptation_down_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T2', plot=True)
-    time_of_adaptation_up_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T1', plot=False)
-    time_of_adaptation_up_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T2', plot=False)
+time = np.linspace(0,7,525)
+fig, ax1 = plt.subplots(figsize=(8, 5))
+
+lw=8
+ax1.plot(time, Isometric_80_T1['Performance'][100:625], lw=lw)
+ax1.plot(time, Isometric_60_T1['Performance'][100:625], lw=lw)
+ax1.plot(time, Isometric_40_T1['Performance'][100:625], lw=lw)
+ax1.plot(time, Isometric_20_T1['Performance'][100:625], lw=lw)
+ax1.plot(time, Isometric_05_T1['Performance'][100:625], lw=lw)
+
+ax1.tick_params(axis='x', labelcolor='k', labelsize=50)
+
+# Set background colors
+fig.patch.set_facecolor('#F6F6F0')
+ax1.set_facecolor('#F6F6F0')
+
+# Force x-axis ticks
+ax1.set_xticks([0,1,2,3,4,5,6,7])
+ax1.set_yticklabels([])
+
+
+plt.show()
+
+#
+# fig, ax1 = plt.subplots(figsize=(8, 5))
+#
+# # Primary axis (spatial error)
+# ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='#1F497D', lw=8)
+# ax1.axhline(y=average_at_min_sd, c='k', label='Average')
+# ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":")
+# ax1.axhline(y=average_at_min_sd - min_sd * sd_factor, c='k', ls=":")
+# ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=5, c='red',
+#             label='Adaptation instance')
+# ax1.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
+#
+# # ax1.set_xlabel('Time (sec)', fontweight='bold')
+# # ax1.set_ylabel('Force difference between \ntarget and avatar (kg)', color='blue', fontweight='bold')
+# ax1.tick_params(axis='y', labelcolor='#1F497D', labelsize=50)
+# ax1.tick_params(axis='x', labelcolor='red', labelsize=50)
+#
+# fig.patch.set_facecolor('#F6F6F0')
+# ax1.set_facecolor('#F6F6F0')
+# plt.show()
+
+
+# sd_factor = 2
+# consecutive_values = 37
+# print("hello")
+# df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot = False
+# plt.rcParams['font.family'] = 'Arial'  # or 'Helvetica'
+# plt.rcParams['font.size'] = 15
+# plt.rcParams['font.weight'] = 'bold'
+#
+# time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T1', plot=True)
+# time_of_adaptation_down_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T2', plot=True)
+# time_of_adaptation_up_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T1', plot=False)
+# time_of_adaptation_up_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T2', plot=False)
