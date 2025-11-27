@@ -395,8 +395,8 @@ def residual_analysis(signal, sampling_freq, list_cutoff_freq):
         residual = np.sqrt(sum_squares/len(signal))
         residuals_list.append(residual)
 
-    # plt.plot(list_cutoff_freq, residuals_list)
-    # plt.show()
+    plt.plot(list_cutoff_freq, residuals_list)
+    plt.show()
 
 
 
