@@ -536,39 +536,83 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
             #
             # plt.title(f'Release Force Perturbation')
             # plt.show()
+            spatial_er = spatial_er * 9.81
+            average_at_min_sd = average_at_min_sd * 9.81
+            min_sd = min_sd * 9.81
+            df['Performance'] = df['Performance'] * 9.81
+            df['Target'] = df['Target'] * 9.81
+            df['Time'] = df['Time'] -10
 
-            fig, ax1 = plt.subplots(figsize=(8, 5))
-            fig.patch.set_facecolor('#F6F6F0')  # Figure background
-            ax1.set_facecolor('#F6F6F0')
+            lw = 3
+            fig, ax1 = plt.subplots(figsize=(15, 7))
+
             # Primary axis (spatial error)
-            ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='blue', lw=5)
+            ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='#1F497D', lw=lw)
             ax1.axhline(y=average_at_min_sd, c='k', label='Average')
-            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label=f'{sd_factor}*std')
+            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label='2SD of Average')
             ax1.axhline(y=average_at_min_sd - min_sd * sd_factor, c='k', ls=":")
-            ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=3, c='red',
+            ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=lw, c='red',
                         label='Adaptation instance')
-            ax1.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance')
+            ax1.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance', lw=lw)
+            ax1.axvline(x=df['Time'][perturbation_index]-1.3, linestyle='--', c='#FF0099', label='Start of SD calculation', lw=lw)
 
-            ax1.set_xlabel('Time (sec)', fontweight='bold')
-            ax1.set_ylabel('Force difference between \ntarget and avatar (kg)', color='blue', fontweight='bold')
-            ax1.tick_params(axis='y', labelcolor='blue')
+            ax1.set_xlabel('Time (sec)', weight='bold')
+            ax1.set_ylabel('Spatial Error (N)', color='#1F497D', weight='bold')
+            ax1.tick_params(axis='y', labelcolor='#1F497D')
 
             # Secondary axis (Performance)
-            # ax2 = ax1.twinx()
-            # ax2.plot(df['Time'], df['Performance'], color='darkgreen', lw=2, label='Force output')
-            # ax2.plot(df['Time'], df['Target'], color='gold', lw=2, label='Target')
-            # ax2.set_ylabel('Force (kg)', color='darkgreen')
-            # ax2.tick_params(axis='y', labelcolor='darkgreen')
+            ax2 = ax1.twinx()
+            ax2.plot(df['Time'], df['Performance'], color='darkgreen', lw=lw, label='Force output')
+            ax2.plot(df['Time'], df['Target'], color='gold', lw=lw, label='Target')
+            ax2.set_ylabel('Force (N)', color='darkgreen', weight='bold')
+            ax2.tick_params(axis='y', labelcolor='darkgreen' )
 
-            # Combine legends from both axes
-            # lines_1, labels_1 = ax1.get_legend_handles_labels()
-            # lines_2, labels_2 = ax2.get_legend_handles_labels()
-            # ax1.legend(lines_1, labels_1, loc='upper right', prop={'weight': 'bold', 'size': 12})
+            lines_1, labels_1 = ax1.get_legend_handles_labels()
+            lines_2, labels_2 = ax2.get_legend_handles_labels()
+
+            all_lines = lines_1 + lines_2
+            all_labels = labels_1 + labels_2
+
+            ax1.legend(all_lines, all_labels, loc='upper right', prop={'weight': 'bold', 'size': 12})
 
             # plt.title(f'')
-            fig.patch.set_facecolor('#F6F6F0')
-            ax1.set_facecolor('#F6F6F0')
+            # fig.patch.set_facecolor('#F6F6F0')
+            # ax1.set_facecolor('#F6F6F0')
+            # Make x-tick labels bold
+
+            # Get current ticks
+            xticks = list(ax1.get_xticks())
+
+            # Add -1.3 if it is not already included
+            if -1.3 not in xticks:
+                xticks.append(-1.3)
+
+            # Sort them so the axis is ordered correctly
+            xticks = sorted(xticks)
+
+            # Apply updated tick list
+            ax1.set_xticks(xticks)
+            print(ax1.get_xticklabels())
+            for tick, label in zip(ax1.get_xticks(), ax1.get_xticklabels()):
+                if tick == -1.3:
+                    label.set_color('#FF0099')
+                    label.set_fontweight('bold')
+            #
+            # for label in ax1.get_xticklabels():
+            #     label.set_fontweight('bold')
+            #
+            # # Make y-tick labels bold
+            # for label in ax1.get_yticklabels():
+            #     label.set_fontweight('bold')
+            #
+            # # Make y-tick secondary axis labels bold
+            # for label in ax2.get_yticklabels():
+            #     label.set_fontweight('bold')
+            plt.savefig(
+                r"C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Writting\Paper 1 grip strength\Journals tryouts\Journal of Applied Physiology\Graphical abstract\my_plot.png",
+                dpi=300, bbox_inches='tight')
             plt.show()
+
         except NameError:
             print(f"No adaptation was evident for {name}")
 

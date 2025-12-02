@@ -73,7 +73,7 @@ df = pd.DataFrame(dist)
 print(df)
 excel_directory = r'C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Data collection\Results'
 os.chdir(excel_directory)
-df.to_excel(r'Results Perturbation Anestis way sd before pert 3.xlsx')
+# df.to_excel(r'Results Perturbation Anestis way sd before pert 3.xlsx')
 
 
 
