@@ -62,7 +62,7 @@ def _add_jittered_points(ax, data, positions, color, jitter, alpha, marker):
         ax.scatter(x, group, color=color, alpha=alpha, s=30, marker=marker, zorder=3)
 
 
-def plot_sample_entropy(young_SaEn, old_SaEn, show_points=False, jitter=0.05, alpha=0.6, marker='o', ylim=(0, 0.35), show_mean=True):
+def plot_sample_entropy(young_SaEn, old_SaEn, show_points=False, jitter=0.05, alpha=0.6, marker='o', ylim=(0, 0.5), show_mean=True):
     fig, ax = plt.subplots(figsize=(8, 6))
 
     young_positions = [1, 4, 7, 10, 13]
@@ -98,8 +98,8 @@ def plot_sample_entropy(young_SaEn, old_SaEn, show_points=False, jitter=0.05, al
         ax.plot(old_positions, old_means, color='red', linestyle='--', zorder=2)
 
         legend_elements += [
-            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young mean'),
-            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older mean'),
+            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young adults Average'),
+            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older adults Average'),
         ]
 
     ax.legend(handles=legend_elements, loc='upper left', frameon=False)
@@ -114,7 +114,7 @@ def plot_sample_entropy(young_SaEn, old_SaEn, show_points=False, jitter=0.05, al
     plt.show()
 
 
-def plot_standard_deviation(young_sd, old_sd, show_points=False, jitter=0.05, alpha=0.6, marker='o', ylim=(0, 2.7), show_mean=True):
+def plot_standard_deviation(young_sd, old_sd, show_points=False, jitter=0.05, alpha=0.6, marker='o', ylim=(0, 4.5), show_mean=True):
     fig, ax = plt.subplots(figsize=(8, 6))
 
     young_positions = [1, 4, 7, 10, 13]
@@ -150,8 +150,8 @@ def plot_standard_deviation(young_sd, old_sd, show_points=False, jitter=0.05, al
         ax.plot(old_positions, old_means, color='red', linestyle='--', zorder=2)
 
         legend_elements += [
-            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young mean'),
-            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older mean'),
+            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young adults Average'),
+            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older adults Average'),
         ]
 
     ax.legend(handles=legend_elements, loc='upper left', frameon=False)
@@ -202,8 +202,8 @@ def plot_time_of_adaptation(young_time, old_time, show_points=False, jitter=0.05
         ax.plot(old_positions, old_means, color='red', linestyle='--', zorder=2)
 
         legend_elements += [
-            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young mean'),
-            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older mean'),
+            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young adults Average'),
+            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older adults Average'),
         ]
 
     ax.legend(handles=legend_elements, loc='upper right', frameon=False)
@@ -216,7 +216,7 @@ def plot_time_of_adaptation(young_time, old_time, show_points=False, jitter=0.05
 
     plt.show()
 
-plot_sample_entropy(young_SaEn, old_SaEn, show_points=True, jitter=0.05, ylim=(0, 0.35), show_mean=True, alpha=0.3, marker='D')
-plot_standard_deviation(young_sd, old_sd, show_points=True, jitter=0.05, ylim=(0, 4), show_mean=True, alpha=0.3, marker='D')
-plot_time_of_adaptation(young_time_of_adaptation, old_time_of_adaptation, show_points=True, jitter=0.05, ylim=(0, 7), show_mean=True, alpha=0.3, marker='D')
+plot_sample_entropy(young_SaEn, old_SaEn, show_points=True, jitter=0.05, show_mean=True, alpha=0.3, marker='s')
+plot_standard_deviation(young_sd, old_sd, show_points=True, jitter=0.05, show_mean=True, alpha=0.3, marker='s')
+plot_time_of_adaptation(young_time_of_adaptation, old_time_of_adaptation, show_points=True, jitter=0.05, show_mean=True, alpha=0.3, marker='s')
 
