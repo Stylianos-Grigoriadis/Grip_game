@@ -45,9 +45,6 @@ Pert_down_Young = results[results['ID_group'] == 'Young']['Adaptation_down_min']
 Pert_up_Young = results[results['ID_group'] == 'Young']['Adaptation_up_min'].to_numpy()
 
 
-
-
-
 old_SaEn = [SaEn_05_Old, SaEn_20_Old, SaEn_40_Old, SaEn_60_Old, SaEn_80_Old]
 young_SaEn = [SaEn_05_Young, SaEn_20_Young, SaEn_40_Young, SaEn_60_Young, SaEn_80_Young]
 
@@ -59,247 +56,167 @@ young_time_of_adaptation = [Pert_down_Young, Pert_up_Young]
 
 
 
-
-# Graph for SaEn
-
-fig, ax = plt.subplots(figsize=(8, 6))
-young_positions = [1, 4, 7, 10, 13]
-plus_factor = 0.6
-old_positions = [young_positions[0]+plus_factor, young_positions[1]+plus_factor, young_positions[2]+plus_factor, young_positions[3]+plus_factor, young_positions[4]+plus_factor]
-# Create the box plot
-ax.boxplot(young_SaEn,
-           positions=young_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightblue', color='blue'),
-           meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
-           medianprops=dict(color='none'))
-
-ax.boxplot(old_SaEn,
-           positions=old_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightcoral', color='red'),
-           meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
-           medianprops=dict(color='none'))
-
-# Calculate means for each group
-young_means = [np.mean(data) for data in young_SaEn]
-old_means = [np.mean(data) for data in old_SaEn]
-
-# Plot dashed lines connecting the mean markers
-ax.plot(young_positions, young_means, color='blue', linestyle='--')
-ax.plot(old_positions, old_means, color='red', linestyle='--')
+def _add_jittered_points(ax, data, positions, color, jitter, alpha, marker):
+    for pos, group in zip(positions, data):
+        x = np.random.normal(loc=pos, scale=jitter, size=len(group))
+        ax.scatter(x, group, color=color, alpha=alpha, s=30, marker=marker, zorder=3)
 
 
-# Manually create legend elements
-legend_elements = [
-    mpatches.Patch(color='lightblue', label='  Young adults'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young adults Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='  Older adults'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Older adults Average', linestyle='None'),
-    # mlines.Line2D([], [], color='k', marker=r'$\ast$', markersize=10, linestyle='None',
-    #               label=r'  Sig > $SaEn_{5\%}$ Both Groups'),
-    # mlines.Line2D([], [], color='k', marker=r'$\ast\ast$', markersize=25, linestyle='None',
-    #               label=r'  Sig > $SaEn_{20\%}$ Both Groups'),
-]
+def plot_sample_entropy(young_SaEn, old_SaEn, show_points=False, jitter=0.05, alpha=0.6, marker='o', ylim=(0, 0.35), show_mean=True):
+    fig, ax = plt.subplots(figsize=(8, 6))
 
-# y_text_position = 0.35
-# minus_factor = 0.02
-#
-# ax.text(young_positions[2] + plus_factor/2, y_text_position, '*', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
-# ax.text(young_positions[2] + plus_factor/2, y_text_position - minus_factor, '**', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
-#
-# ax.text(young_positions[3] + plus_factor/2, y_text_position, '*', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
-# ax.text(young_positions[3] + plus_factor/2, y_text_position - minus_factor, '**', ha='center', va='bottom', fontsize=40, color='k', fontweight='bold')
+    young_positions = [1, 4, 7, 10, 13]
+    plus_factor = 0.6
+    old_positions = [x + plus_factor for x in young_positions]
 
+    ax.boxplot(young_SaEn, positions=young_positions, patch_artist=True,
+               showmeans=show_mean, showfliers=False,
+               boxprops=dict(facecolor='lightblue', color='blue', zorder=1),
+               meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
+               medianprops=dict(color='none'))
 
+    ax.boxplot(old_SaEn, positions=old_positions, patch_artist=True,
+               showmeans=show_mean, showfliers=False,
+               boxprops=dict(facecolor='lightcoral', color='red', zorder=1),
+               meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
+               medianprops=dict(color='none'))
 
+    if show_points:
+        _add_jittered_points(ax, young_SaEn, young_positions, 'blue', jitter, alpha, marker)
+        _add_jittered_points(ax, old_SaEn, old_positions, 'red', jitter, alpha, marker)
 
-# Add the legend to the plot
-ax.legend(handles=legend_elements, loc='upper left', frameon=False)
+    legend_elements = [
+        mpatches.Patch(color='lightblue', label='Young adults'),
+        mpatches.Patch(color='lightcoral', label='Older adults'),
+    ]
 
-# Customize the plot
-# ax.set_title(f'Sample Entropy Curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
-ax.set_title(f'Sample Entropy Curve between Young and Older adults')
+    if show_mean:
+        young_means = [np.mean(data) for data in young_SaEn]
+        old_means = [np.mean(data) for data in old_SaEn]
 
-ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
-ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
-ax.set_ylabel('Sample Entropy')
-ax.set_xlabel('Percentage of MVC')
-ax.set_ylim([0, 0.35])
+        ax.plot(young_positions, young_means, color='blue', linestyle='--', zorder=2)
+        ax.plot(old_positions, old_means, color='red', linestyle='--', zorder=2)
 
-# Display the plot
-plt.show()
+        legend_elements += [
+            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young mean'),
+            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older mean'),
+        ]
 
+    ax.legend(handles=legend_elements, loc='upper left', frameon=False)
 
-# Graph for SD
+    ax.set_title('Sample Entropy Curve between Young and Older adults')
+    ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
+    ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
+    ax.set_ylabel('Sample Entropy')
+    ax.set_xlabel('Percentage of MVC')
+    ax.set_ylim(ylim)
 
-fig, ax = plt.subplots(figsize=(8, 6))
-young_positions = [1, 4, 7, 10, 13]
-plus_factor = 0.6
-
-old_positions = [young_positions[0]+plus_factor, young_positions[1]+plus_factor, young_positions[2]+plus_factor, young_positions[3]+plus_factor, young_positions[4]+plus_factor]
-# Create the box plot
-ax.boxplot(young_sd,
-           positions=young_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightblue', color='blue'),
-           meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
-           medianprops=dict(color='none'))
-
-ax.boxplot(old_sd,
-           positions=old_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightcoral', color='red'),
-           meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
-           medianprops=dict(color='none'))
-
-# Calculate means for each group
-young_means = [np.mean(data) for data in young_sd]
-old_means = [np.mean(data) for data in old_sd]
-
-# Plot dashed lines connecting the mean markers
-ax.plot(young_positions, young_means, color='blue', linestyle='--')
-ax.plot(old_positions, old_means, color='red', linestyle='--')
-
-old_adults_color = 'red'
-young_adults_color = 'blue'
-
-# Manually create legend elements
-legend_elements = [
-    mpatches.Patch(color='lightblue', label='  Young adults'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='  Young adults Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='  Older adults'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='  Older adults Average', linestyle='None'),
-    #
-    # # SD markers for older adults
-    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast$', markersize=10, linestyle='None', label=r'  Sig > $SD_{5\%}$ Young Adults'),
-    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast$', markersize=25, linestyle='None', label=r'  Sig > $SD_{20\%}$ Young Adults'),
-    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast\ast$', markersize=40, linestyle='None', label=r'  Sig > $SD_{40\%}$ Young Adults'),
-    # mlines.Line2D([], [], color=young_adults_color, marker=r'$\ast\ast\ast\ast$', markersize=55, linestyle='None', label=r'  Sig > $SD_{60\%}$ Young Adults'),
-    #
-    # # SD markers for older adults
-    # mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast$', markersize=10, linestyle='None', label=r'  Sig > $SD_{5\%}$ Older Adults'),
-    # mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast\ast$', markersize=25, linestyle='None', label=r'  Sig > $SD_{20\%}$ Older Adults'),
-    # mlines.Line2D([], [], color=old_adults_color, marker=r'$\ast\ast\ast$', markersize=40, linestyle='None', label=r'  Sig > $SD_{40\%}$ Older Adults'),
-
-]
-#
-# minus_factor = 0.17
-# old_basic_40 = 0.9
-# old_basic_60 = 1.7
-# old_basic_80 = 2.7
-#
-# young_basic_20 = -0.3
-# young_basic_40 = -0.3
-# young_basic_60 = -0.3
-# young_basic_80 = -0.3
-#
-# ax.text(young_positions[1] + plus_factor/2, young_basic_20, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-# ax.text(young_positions[2] + plus_factor/2, young_basic_40, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-# ax.text(young_positions[3] + plus_factor/2, young_basic_60, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-# ax.text(young_positions[4] + plus_factor/2, young_basic_80, '*', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-#
-# ax.text(young_positions[2] + plus_factor/2, young_basic_40 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-# ax.text(young_positions[3] + plus_factor/2, young_basic_60 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-# ax.text(young_positions[4] + plus_factor/2, young_basic_80 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-#
-# ax.text(young_positions[3] + plus_factor/2, young_basic_60 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-# ax.text(young_positions[4] + plus_factor/2, young_basic_80 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-#
-# ax.text(young_positions[4] + plus_factor/2, young_basic_80 - 3*minus_factor, '****', ha='center', va='bottom', fontsize=40, color=young_adults_color, fontweight='bold')
-#
-#
-# ax.text(young_positions[2] + plus_factor/2, old_basic_40, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-# ax.text(young_positions[3] + plus_factor/2, old_basic_60, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-# ax.text(young_positions[4] + plus_factor/2, old_basic_80, '*', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-#
-# ax.text(young_positions[2] + plus_factor/2, old_basic_40 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-# ax.text(young_positions[3] + plus_factor/2, old_basic_60 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-# ax.text(young_positions[4] + plus_factor/2, old_basic_80 - minus_factor, '**', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-#
-# ax.text(young_positions[3] + plus_factor/2, old_basic_60 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
-# ax.text(young_positions[4] + plus_factor/2, old_basic_80 - 2*minus_factor, '***', ha='center', va='bottom', fontsize=40, color=old_adults_color, fontweight='bold')
+    plt.show()
 
 
-# Add the legend to the plot
-ax.legend(handles=legend_elements, loc='upper left', frameon=False)
+def plot_standard_deviation(young_sd, old_sd, show_points=False, jitter=0.05, alpha=0.6, marker='o', ylim=(0, 2.7), show_mean=True):
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    young_positions = [1, 4, 7, 10, 13]
+    plus_factor = 0.6
+    old_positions = [x + plus_factor for x in young_positions]
+
+    ax.boxplot(young_sd, positions=young_positions, patch_artist=True,
+               showmeans=show_mean, showfliers=False,
+               boxprops=dict(facecolor='lightblue', color='blue', zorder=1),
+               meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
+               medianprops=dict(color='none'))
+
+    ax.boxplot(old_sd, positions=old_positions, patch_artist=True,
+               showmeans=show_mean, showfliers=False,
+               boxprops=dict(facecolor='lightcoral', color='red', zorder=1),
+               meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
+               medianprops=dict(color='none'))
+
+    if show_points:
+        _add_jittered_points(ax, young_sd, young_positions, 'blue', jitter, alpha, marker)
+        _add_jittered_points(ax, old_sd, old_positions, 'red', jitter, alpha, marker)
+
+    legend_elements = [
+        mpatches.Patch(color='lightblue', label='Young adults'),
+        mpatches.Patch(color='lightcoral', label='Older adults'),
+    ]
+
+    if show_mean:
+        young_means = [np.mean(data) for data in young_sd]
+        old_means = [np.mean(data) for data in old_sd]
+
+        ax.plot(young_positions, young_means, color='blue', linestyle='--', zorder=2)
+        ax.plot(old_positions, old_means, color='red', linestyle='--', zorder=2)
+
+        legend_elements += [
+            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young mean'),
+            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older mean'),
+        ]
+
+    ax.legend(handles=legend_elements, loc='upper left', frameon=False)
+
+    ax.set_title('Standard Deviation curve between Young and Older adults')
+    ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
+    ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
+    ax.set_ylabel('Standard Deviation')
+    ax.set_xlabel('Percentage of MVC')
+    ax.set_ylim(ylim)
+
+    plt.show()
 
 
+def plot_time_of_adaptation(young_time, old_time, show_points=False, jitter=0.05, alpha=0.6, marker='o', ylim=(0, 7), show_mean=True):
+    fig, ax = plt.subplots(figsize=(8, 6))
 
-# Customize the plot
-# ax.set_title(f'Standard Deviation curve between Young (n={len(SaEn_80_Young)}) and Old (n={len(SaEn_80_Old)}) adults')
-ax.set_title(f'Standard Deviation curve between Young and Older adults')
-ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
-ax.set_xticklabels(['5%', '20%', '40%', '60%', '80%'])
-ax.set_ylabel('Standard Deviation')
-ax.set_xlabel('Percentage of MVC')
-ax.set_ylim([0, 2.7])
+    young_positions = [1, 4]
+    plus_factor = 0.6
+    old_positions = [x + plus_factor for x in young_positions]
 
-# Display the plot
-plt.show()
+    ax.boxplot(young_time, positions=young_positions, patch_artist=True,
+               showmeans=show_mean, showfliers=False,
+               boxprops=dict(facecolor='lightblue', color='blue', zorder=1),
+               meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
+               medianprops=dict(color='none'))
 
+    ax.boxplot(old_time, positions=old_positions, patch_artist=True,
+               showmeans=show_mean, showfliers=False,
+               boxprops=dict(facecolor='lightcoral', color='red', zorder=1),
+               meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
+               medianprops=dict(color='none'))
 
+    if show_points:
+        _add_jittered_points(ax, young_time, young_positions, 'blue', jitter, alpha, marker)
+        _add_jittered_points(ax, old_time, old_positions, 'red', jitter, alpha, marker)
 
-# Graph for time of adaptation
+    legend_elements = [
+        mpatches.Patch(color='lightblue', label='Young adults'),
+        mpatches.Patch(color='lightcoral', label='Older adults'),
+    ]
 
-fig, ax = plt.subplots(figsize=(8, 6))
-young_positions = [1, 4]
-plus_factor = 0.6
-old_positions = [young_positions[0]+plus_factor, young_positions[1]+plus_factor]
-# Create the box plot
-ax.boxplot(young_time_of_adaptation,
-           positions=young_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightblue', color='blue'),
-           meanprops=dict(marker='o', markeredgecolor='blue', markerfacecolor='blue'),
-           medianprops=dict(color='none'))
+    if show_mean:
+        young_means = [np.mean(data) for data in young_time]
+        old_means = [np.mean(data) for data in old_time]
 
-ax.boxplot(old_time_of_adaptation,
-           positions=old_positions,
-           patch_artist=True,
-           showmeans=True,
-           showfliers=False,
-           boxprops=dict(facecolor='lightcoral', color='red'),
-           meanprops=dict(marker='o', markeredgecolor='red', markerfacecolor='red'),
-           medianprops=dict(color='none'))
+        ax.plot(young_positions, young_means, color='blue', linestyle='--', zorder=2)
+        ax.plot(old_positions, old_means, color='red', linestyle='--', zorder=2)
 
-# Calculate means for each group
-young_means = [np.mean(data) for data in young_time_of_adaptation]
-old_means = [np.mean(data) for data in old_time_of_adaptation]
+        legend_elements += [
+            mlines.Line2D([], [], color='blue', marker='o', linestyle='None', label='Young mean'),
+            mlines.Line2D([], [], color='red', marker='o', linestyle='None', label='Older mean'),
+        ]
 
-# Plot dashed lines connecting the mean markers
-ax.plot(young_positions, young_means, color='blue', linestyle='--')
-ax.plot(old_positions, old_means, color='red', linestyle='--')
+    ax.legend(handles=legend_elements, loc='upper right', frameon=False)
 
+    ax.set_title('Time to adapt curve between Young and Older adults')
+    ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
+    ax.set_xticklabels(['Perturbation\ndownwards', 'Perturbation\nupwards'])
+    ax.set_ylabel('Time to adapt')
+    ax.set_ylim(ylim)
 
-# Manually create legend elements
-legend_elements = [
-    mpatches.Patch(color='lightblue', label='Young adults'),
-    mlines.Line2D([], [], color='blue', marker='o', markersize=8, label='Young adults Average', linestyle='None'),
-    mpatches.Patch(color='lightcoral', label='Older adults'),
-    mlines.Line2D([], [], color='red', marker='o', markersize=8, label='Older adults Average', linestyle='None')
-]
+    plt.show()
 
-# Add the legend to the plot
-ax.legend(handles=legend_elements, loc='upper right', frameon=False)
+plot_sample_entropy(young_SaEn, old_SaEn, show_points=True, jitter=0.05, ylim=(0, 0.35), show_mean=True, alpha=0.3, marker='D')
+plot_standard_deviation(young_sd, old_sd, show_points=True, jitter=0.05, ylim=(0, 4), show_mean=True, alpha=0.3, marker='D')
+plot_time_of_adaptation(young_time_of_adaptation, old_time_of_adaptation, show_points=True, jitter=0.05, ylim=(0, 7), show_mean=True, alpha=0.3, marker='D')
 
-# Customize the plot
-ax.set_title(f'Time to adapt curve between Young and Older adults')
-
-ax.set_xticks([(x + y) / 2 for x, y in zip(young_positions, old_positions)])
-ax.set_xticklabels(['Perturbation\ndownwards', 'Perturbation\nupwards'])
-ax.set_ylabel('Time to adapt')
-ax.set_ylim([0, 7])
-
-# Display the plot
-plt.show()
