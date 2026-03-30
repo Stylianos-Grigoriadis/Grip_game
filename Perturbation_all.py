@@ -18,6 +18,7 @@ Adaptation_up_T1_list = []
 Adaptation_up_T2_list = []
 
 for file in files:
+
     os.chdir(file)
     ID = os.path.basename(file)
     ID_list.append(ID)
@@ -34,7 +35,7 @@ for file in files:
 
     list_cutoff_freq = np.arange(1, 37, 1)
 
-    lib.residual_analysis(Pert_down_T1_for_filter['Performance'], 75, list_cutoff_freq)
+    # lib.residual_analysis(Pert_down_T1_for_filter['Performance'], 75, list_cutoff_freq)
 
 
     sd_factor = 2
@@ -42,7 +43,7 @@ for file in files:
     print("hello")
     # df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot = False
 
-    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T1', plot=True)
+    time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T1', plot=False)
     time_of_adaptation_down_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T2', plot=True)
     time_of_adaptation_up_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T1', plot=False)
     time_of_adaptation_up_T2 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_up_T2, 250, sd_factor, 100, consecutive_values, 100, 'Pert_up_T2', plot=False)

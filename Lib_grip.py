@@ -21,6 +21,8 @@ from sklearn.decomposition import PCA
 import polars as pl
 import statsmodels.api as sm
 import scipy.sparse as sp
+import matplotlib.patheffects as pe
+
 
 def Ent_Ap(data, dim, r):
     """
@@ -482,6 +484,7 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
     # Create an array with consecutive_values equal number
     consecutive_values_list = np.arange(0,consecutive_values,1)
 
+
     # Iterate the spatial error after the perturbation_index to calculate the time of adaptation
     for i in range(len(spatial_er) - consecutive_values+1):
         if i >= perturbation_index:
@@ -549,13 +552,22 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
 
             # Primary axis (spatial error)
             ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='#1F497D', lw=lw)
-            ax1.axhline(y=average_at_min_sd, c='k', label='Average')
-            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label='2SD of Average')
-            ax1.axhline(y=average_at_min_sd - min_sd * sd_factor, c='k', ls=":")
-            ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation, lw=lw, c='red',
+            # ax1.axhline(y=average_at_min_sd, c='k', label='Average')
+            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label='Average + 2SD\n(Adaptation threshold')
+            # ax1.axhline(y=average_at_min_sd - min_sd * sd_factor, c='k', ls=":")
+            ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation,
+                        lw=lw + 2,
+                        color='red',
+                        linestyle='-.',
                         label='Adaptation instance')
             ax1.axvline(x=df['Time'][perturbation_index], linestyle='--', c='gray', label='Perturbation instance', lw=lw)
-            ax1.axvline(x=df['Time'][perturbation_index]-1.3, linestyle='--', c='#FF0099', label='Start of SD calculation', lw=lw)
+            ax1.axvspan(df['Time'][perturbation_index] - 1.3,
+                        df['Time'][perturbation_index],
+                        facecolor='none',  # no solid fill
+                        edgecolor='black',  # hatch color
+                        hatch='///',  # 45° diagonal lines
+                        linewidth=0,
+                        label='SD calculation window')
 
             ax1.set_xlabel('Time (sec)', weight='bold')
             ax1.set_ylabel('Spatial Error (N)', color='#1F497D', weight='bold')
@@ -563,10 +575,17 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
 
             # Secondary axis (Performance)
             ax2 = ax1.twinx()
-            ax2.plot(df['Time'], df['Performance'], color='darkgreen', lw=lw, label='Force output')
-            ax2.plot(df['Time'], df['Target'], color='gold', lw=lw, label='Target')
+            line_force, = ax2.plot(df['Time'], df['Performance'],
+                                   color='white', lw=lw - 1,
+                                   label='Force output')
+
+            line_force.set_path_effects([
+                pe.Stroke(linewidth=lw + 2, foreground='darkgreen'),
+                pe.Normal()
+            ])
+            ax2.plot(df['Time'], df['Target'], color='#FF0099', lw=lw, label='Target', linestyle=(0, (5, 2, 1, 2)))
             ax2.set_ylabel('Force (N)', color='darkgreen', weight='bold')
-            ax2.tick_params(axis='y', labelcolor='darkgreen' )
+            ax2.tick_params(axis='y', labelcolor='darkgreen')
 
             lines_1, labels_1 = ax1.get_legend_handles_labels()
             lines_2, labels_2 = ax2.get_legend_handles_labels()
@@ -596,7 +615,7 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
             print(ax1.get_xticklabels())
             for tick, label in zip(ax1.get_xticks(), ax1.get_xticklabels()):
                 if tick == -1.3:
-                    label.set_color('#FF0099')
+                    # label.set_color('gold')
                     label.set_fontweight('bold')
             #
             # for label in ax1.get_xticklabels():
@@ -609,9 +628,9 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
             # # Make y-tick secondary axis labels bold
             # for label in ax2.get_yticklabels():
             #     label.set_fontweight('bold')
-            plt.savefig(
-                r"C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Writting\Paper 1 grip strength\Journals tryouts\Journal of Applied Physiology\Graphical abstract\my_plot.png",
-                dpi=300, bbox_inches='tight')
+            # plt.savefig(
+            #     r"C:\Users\Stylianos\OneDrive - Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης\My Files\PhD\Projects\Grip perturbation\Writting\Paper 1 grip strength\Journals tryouts\Journal of Applied Physiology\Graphical abstract\my_plot.png",
+            #     dpi=300, bbox_inches='tight')
             plt.show()
 
         except NameError:
