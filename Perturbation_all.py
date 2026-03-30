@@ -40,7 +40,6 @@ for file in files:
 
     sd_factor = 2
     consecutive_values = 37
-    print("hello")
     # df, perturbation_index, sd_factor, first_values, consecutive_values, values_for_sd, name, plot = False
 
     time_of_adaptation_down_T1 = lb.adaptation_time_using_sd_right_before_perturbation(Pert_down_T1, 250, sd_factor, 100, consecutive_values, 100, 'Pert_down_T1', plot=False)
@@ -53,6 +52,7 @@ for file in files:
 
     if time_of_adaptation_down_T2 != None:
         time_of_adaptation_down_T2 = round(time_of_adaptation_down_T2, 3)
+        print(time_of_adaptation_down_T2)
 
     if time_of_adaptation_up_T1 != None:
         time_of_adaptation_up_T1 = round(time_of_adaptation_up_T1, 3)
