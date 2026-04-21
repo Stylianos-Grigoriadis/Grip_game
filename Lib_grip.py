@@ -553,7 +553,7 @@ def adaptation_time_using_sd_right_before_perturbation(df, perturbation_index, s
             # Primary axis (spatial error)
             ax1.plot(df['Time'], spatial_er, label='Spatial Error', color='#1F497D', lw=lw)
             # ax1.axhline(y=average_at_min_sd, c='k', label='Average')
-            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label='Average + 2SD\n(Adaptation threshold')
+            ax1.axhline(y=average_at_min_sd + min_sd * sd_factor, c='k', ls=":", label='Average + 2SD\n(Adaptation threshold)')
             # ax1.axhline(y=average_at_min_sd - min_sd * sd_factor, c='k', ls=":")
             ax1.axvline(x=df['Time'][perturbation_index] + time_of_adaptation,
                         lw=lw + 2,
